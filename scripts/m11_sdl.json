@@ -1,0 +1,33 @@
+{
+  "module": "imgui::backend::sdl",
+  "fn_prefix": "cImGui_ImplSDL3_",
+  "type_prefixes": [
+    "ImGui_ImplSDL3_",
+    "ImGui",
+    "Im",
+    "SDL_"
+  ],
+  "header": "// SDL3 platform backend for imgui (init, event pump, frame hook).",
+  "opaques": [
+    "SDL_Window",
+    "SDL_Renderer",
+    "SDL_Gamepad",
+    "SDL_Event"
+  ],
+  "overrides": {
+    "SDL_Window": "WindowHandle",
+    "SDL_Renderer": "RendererHandle",
+    "SDL_Gamepad": "GamepadHandle",
+    "SDL_Event": "EventRef"
+  },
+  "external_types": {
+    "ImDrawData": "imgui::DrawData"
+  },
+  "functions": [
+    "cImGui_ImplSDL3_InitForOpenGL",
+    "cImGui_ImplSDL3_InitForOther",
+    "cImGui_ImplSDL3_Shutdown",
+    "cImGui_ImplSDL3_NewFrame",
+    "cImGui_ImplSDL3_ProcessEvent"
+  ]
+}

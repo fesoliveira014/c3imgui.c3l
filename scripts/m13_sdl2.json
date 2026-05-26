@@ -1,0 +1,43 @@
+{
+  "module": "imgui::backend::sdl2",
+  "fn_prefix": "cImGui_ImplSDL2_",
+  "type_prefixes": [
+    "ImGui_ImplSDL2_",
+    "ImGui",
+    "Im"
+  ],
+  "header": "// Backend binding: imgui_impl_sdl2.h. Generated from dear_bindings.",
+  "opaques": [
+    "SDL_Event",
+    "SDL_Renderer",
+    "SDL_Window",
+    "_SDL_GameController"
+  ],
+  "typedefs": [],
+  "callbacks": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData",
+    "ImDrawIdx": "imgui::DrawIdx"
+  },
+  "enums": [
+    "ImGui_ImplSDL2_GamepadMode",
+    "ImGui_ImplSDL2_MouseCaptureMode"
+  ],
+  "structs": [],
+  "functions": [
+    "cImGui_ImplSDL2_GetContentScaleForDisplay",
+    "cImGui_ImplSDL2_GetContentScaleForWindow",
+    "cImGui_ImplSDL2_InitForD3D",
+    "cImGui_ImplSDL2_InitForMetal",
+    "cImGui_ImplSDL2_InitForOpenGL",
+    "cImGui_ImplSDL2_InitForOther",
+    "cImGui_ImplSDL2_InitForSDLRenderer",
+    "cImGui_ImplSDL2_InitForVulkan",
+    "cImGui_ImplSDL2_NewFrame",
+    "cImGui_ImplSDL2_ProcessEvent",
+    "cImGui_ImplSDL2_SetGamepadMode",
+    "cImGui_ImplSDL2_SetGamepadModeEx",
+    "cImGui_ImplSDL2_SetMouseCaptureMode",
+    "cImGui_ImplSDL2_Shutdown"
+  ]
+}

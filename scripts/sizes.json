@@ -1,0 +1,18 @@
+{
+  "ImGuiViewport": 120,
+  "ImFontConfig": 160,
+  "ImGuiInputTextCallbackData": 72,
+  "ImGuiSizeCallbackData": 32,
+  "ImGuiPayload": 64,
+  "ImGuiListClipper": 56,
+  "ImTextureRef": 16,
+  "ImGuiTableSortSpecs": 16,
+  "ImGuiTableColumnSortSpecs": 12,
+  "ImGuiSelectionRequest": 24,
+  "ImColor": 16,
+  "ImDrawCmd": 72,
+  "ImFontAtlasRect": 24,
+  "ImFontGlyph": 44,
+  "ImGuiWindowClass": 40,
+  "ImGuiSelectionExternalStorage": 16
+}

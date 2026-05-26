@@ -1,0 +1,20 @@
+module imgui::backend::dx10;
+
+import imgui;
+
+// Backend binding: imgui_impl_dx10.h. Generated from dear_bindings.
+
+// opaque handles
+typedef ID3D10Buffer = inline void*;
+typedef ID3D10Device = inline void*;
+typedef ID3D10SamplerState = inline void*;
+typedef RenderState = inline void*;
+
+// functions
+extern fn bool create_device_objects() @cname("cImGui_ImplDX10_CreateDeviceObjects");
+extern fn bool init(ID3D10Device device) @cname("cImGui_ImplDX10_Init");
+extern fn void invalidate_device_objects() @cname("cImGui_ImplDX10_InvalidateDeviceObjects");
+extern fn void new_frame() @cname("cImGui_ImplDX10_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data) @cname("cImGui_ImplDX10_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplDX10_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplDX10_UpdateTexture");

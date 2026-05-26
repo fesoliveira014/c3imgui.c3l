@@ -1,0 +1,41 @@
+{
+  "module": "imgui::backend::dx12",
+  "fn_prefix": "cImGui_ImplDX12_",
+  "type_prefixes": [
+    "ImGui_ImplDX12_",
+    "ImGui",
+    "Im"
+  ],
+  "header": "// Backend binding: imgui_impl_dx12.h. Generated from dear_bindings.",
+  "opaques": [
+    "D3D12_CPU_DESCRIPTOR_HANDLE",
+    "D3D12_GPU_DESCRIPTOR_HANDLE",
+    "DXGI_FORMAT",
+    "ID3D12CommandQueue",
+    "ID3D12DescriptorHeap",
+    "ID3D12Device",
+    "ID3D12GraphicsCommandList",
+    "ImGui_ImplDX12_InitInfo",
+    "ImGui_ImplDX12_InitInfo_ImDrawData",
+    "ImGui_ImplDX12_RenderState"
+  ],
+  "typedefs": [],
+  "callbacks": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData",
+    "ImDrawIdx": "imgui::DrawIdx",
+    "ImTextureData": "imgui::TextureData"
+  },
+  "enums": [],
+  "structs": [],
+  "functions": [
+    "cImGui_ImplDX12_CreateDeviceObjects",
+    "cImGui_ImplDX12_Init",
+    "cImGui_ImplDX12_InitID3D12DevicePtr",
+    "cImGui_ImplDX12_InvalidateDeviceObjects",
+    "cImGui_ImplDX12_NewFrame",
+    "cImGui_ImplDX12_RenderDrawData",
+    "cImGui_ImplDX12_Shutdown",
+    "cImGui_ImplDX12_UpdateTexture"
+  ]
+}

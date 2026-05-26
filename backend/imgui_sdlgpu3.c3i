@@ -1,0 +1,28 @@
+module imgui::backend::sdlgpu3;
+
+import imgui;
+
+// Backend binding: imgui_impl_sdlgpu3.h. Generated from dear_bindings.
+
+// opaque handles
+typedef InitInfo = inline void*;
+typedef RenderState = inline void*;
+typedef SDL_GPUCommandBuffer = inline void*;
+typedef SDL_GPUDevice = inline void*;
+typedef SDL_GPUGraphicsPipeline = inline void*;
+typedef SDL_GPUPresentMode = inline void*;
+typedef SDL_GPURenderPass = inline void*;
+typedef SDL_GPUSampleCount = inline void*;
+typedef SDL_GPUSwapchainComposition = inline void*;
+typedef SDL_GPUTextureFormat = inline void*;
+
+// functions
+extern fn void create_device_objects() @cname("cImGui_ImplSDLGPU3_CreateDeviceObjects");
+extern fn void destroy_device_objects() @cname("cImGui_ImplSDLGPU3_DestroyDeviceObjects");
+extern fn bool init(InitInfo info) @cname("cImGui_ImplSDLGPU3_Init");
+extern fn void new_frame() @cname("cImGui_ImplSDLGPU3_NewFrame");
+extern fn void prepare_draw_data(imgui::DrawData draw_data, SDL_GPUCommandBuffer command_buffer) @cname("cImGui_ImplSDLGPU3_PrepareDrawData");
+extern fn void render_draw_data(imgui::DrawData draw_data, SDL_GPUCommandBuffer command_buffer, SDL_GPURenderPass render_pass) @cname("cImGui_ImplSDLGPU3_RenderDrawData");
+extern fn void render_draw_data_ex(imgui::DrawData draw_data, SDL_GPUCommandBuffer command_buffer, SDL_GPURenderPass render_pass, SDL_GPUGraphicsPipeline pipeline) @cname("cImGui_ImplSDLGPU3_RenderDrawDataEx");
+extern fn void shutdown() @cname("cImGui_ImplSDLGPU3_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplSDLGPU3_UpdateTexture");

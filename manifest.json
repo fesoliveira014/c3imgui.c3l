@@ -1,0 +1,138 @@
+{
+  "provides" : "c3imgui",
+  // Sub-modules (incl. backends under `backend/`) live in subdirs of the
+  // package root. c3c discovers them via these directory entries.
+  // Note: bare `**` only works on POSIX c3c; Windows c3c requires explicit
+  //       file or `<dir>/**` form.
+  "sources" : [ "./**", "backend/**" ],
+  "linklib-dir" : "linked-libs",
+  "targets" : {
+    "android-aarch64" : {
+      // Android NDK build not yet scripted. .c3i bindings exist; consumer must
+      // produce libdcimgui.a via the NDK toolchain manually.
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : []
+    },
+    "freebsd-x64" : {
+      // Same set as Linux. Run `bash c3imgui.c3l/scripts/build_linux_x64.sh`
+      // natively on FreeBSD (it works with the OS clang++).
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "linux-aarch64" : {
+      // Build with: bash c3imgui.c3l/scripts/build_linux_aarch64.sh
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "linux-riscv32" : {
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "linux-riscv64" : {
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "linux-x86" : {
+      // 32-bit Linux: rerun build_linux_x64.sh with CXXFLAGS+=("-m32").
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "linux-x64" : {
+      // Adds /usr/local/lib to search path (where SDL3 lives on this host).
+      "link-args" : ["-L/usr/local/lib"],
+      "dependencies" : [],
+      // Order matters: dcimgui first (consumer-facing), then its transitive deps
+      // (SDL3, GL) so the linker can resolve them when dcimgui's backend objects
+      // reference them. Consumer must still link `-lstdc++` AFTER these — easiest
+      // way is to add it to the consumer's project.json link-args.
+      //
+      // If you enable optional backends (glfw/vulkan/glut/allegro/SDL2) via
+      // build_linux_x64.sh's bundling, append them here too — e.g. add "glfw"
+      // if libglfw3-dev is installed and got bundled. The build script logs
+      // which optionals were included.
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "macos-aarch64" : {
+      // Build with: bash c3imgui.c3l/scripts/build_macos_aarch64.sh (on macOS).
+      // Apple frameworks live in link-args because they need -framework syntax.
+      "link-args" : [
+        "-framework", "Cocoa",
+        "-framework", "Metal",
+        "-framework", "QuartzCore",
+        "-framework", "GameController",
+        "-framework", "IOKit"
+      ],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3"]
+    },
+    "macos-x64" : {
+      "link-args" : [
+        "-framework", "Cocoa",
+        "-framework", "Metal",
+        "-framework", "QuartzCore",
+        "-framework", "GameController",
+        "-framework", "IOKit"
+      ],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3"]
+    },
+    "netbsd-aarch64" : {
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "netbsd-x64" : {
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "openbsd-x64" : {
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui", "SDL3", "GL"]
+    },
+    "wasm32" : {
+      // Emscripten provides SDL2 but NOT SDL3. Consumer must build SDL3 for
+      // wasm separately and add it to their emcc link line. The dcimgui
+      // archive only ships the imgui-side bindings.
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui"]
+    },
+    "wasm64" : {
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : ["dcimgui"]
+    },
+    "windows-aarch64" : {
+      // Mirror windows-x64 — same SDK libs, MinGW aarch64 toolchain required.
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : [
+        "dcimgui", "SDL3",
+        "opengl32", "user32", "gdi32", "shell32", "kernel32",
+        "dxgi", "d3d9", "d3d10", "d3d11", "d3d12",
+        "d3dcompiler", "dwmapi", "imm32"
+      ]
+    },
+    "windows-x64" : {
+      // Build with: bash c3imgui.c3l/scripts/build_windows_x64.sh (MinGW-w64).
+      // d3d9/10/11/12 all listed because the build script bundles every dx*
+      // backend; if you trim that down, remove the matching -l<dxN> entries.
+      "link-args" : [],
+      "dependencies" : [],
+      "linked-libraries" : [
+        "dcimgui", "SDL3",
+        "opengl32", "user32", "gdi32", "shell32", "kernel32",
+        "dxgi", "d3d9", "d3d10", "d3d11", "d3d12",
+        "d3dcompiler", "dwmapi", "imm32"
+      ]
+    },
+  }
+}

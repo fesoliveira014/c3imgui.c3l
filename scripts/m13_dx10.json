@@ -1,0 +1,34 @@
+{
+  "module": "imgui::backend::dx10",
+  "fn_prefix": "cImGui_ImplDX10_",
+  "type_prefixes": [
+    "ImGui_ImplDX10_",
+    "ImGui",
+    "Im"
+  ],
+  "header": "// Backend binding: imgui_impl_dx10.h. Generated from dear_bindings.",
+  "opaques": [
+    "ID3D10Buffer",
+    "ID3D10Device",
+    "ID3D10SamplerState",
+    "ImGui_ImplDX10_RenderState"
+  ],
+  "typedefs": [],
+  "callbacks": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData",
+    "ImDrawIdx": "imgui::DrawIdx",
+    "ImTextureData": "imgui::TextureData"
+  },
+  "enums": [],
+  "structs": [],
+  "functions": [
+    "cImGui_ImplDX10_CreateDeviceObjects",
+    "cImGui_ImplDX10_Init",
+    "cImGui_ImplDX10_InvalidateDeviceObjects",
+    "cImGui_ImplDX10_NewFrame",
+    "cImGui_ImplDX10_RenderDrawData",
+    "cImGui_ImplDX10_Shutdown",
+    "cImGui_ImplDX10_UpdateTexture"
+  ]
+}

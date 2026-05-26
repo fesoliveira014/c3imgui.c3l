@@ -1,0 +1,20 @@
+module imgui::backend::dx11;
+
+import imgui;
+
+// Backend binding: imgui_impl_dx11.h. Generated from dear_bindings.
+
+// opaque handles
+typedef ID3D11Buffer = inline void*;
+typedef ID3D11Device = inline void*;
+typedef ID3D11DeviceContext = inline void*;
+typedef RenderState = inline void*;
+
+// functions
+extern fn bool create_device_objects() @cname("cImGui_ImplDX11_CreateDeviceObjects");
+extern fn bool init(ID3D11Device device, ID3D11DeviceContext device_context) @cname("cImGui_ImplDX11_Init");
+extern fn void invalidate_device_objects() @cname("cImGui_ImplDX11_InvalidateDeviceObjects");
+extern fn void new_frame() @cname("cImGui_ImplDX11_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data) @cname("cImGui_ImplDX11_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplDX11_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplDX11_UpdateTexture");

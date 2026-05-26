@@ -1,0 +1,14 @@
+module imgui::backend::android;
+
+
+// Backend binding: imgui_impl_android.h. Generated from dear_bindings.
+
+// opaque handles
+typedef AInputEvent = inline void*;
+typedef ANativeWindow = inline void*;
+
+// functions
+extern fn int handle_input_event(AInputEvent input_event) @cname("cImGui_ImplAndroid_HandleInputEvent");
+extern fn bool init(ANativeWindow window) @cname("cImGui_ImplAndroid_Init");
+extern fn void new_frame() @cname("cImGui_ImplAndroid_NewFrame");
+extern fn void shutdown() @cname("cImGui_ImplAndroid_Shutdown");

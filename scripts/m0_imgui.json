@@ -1,0 +1,35 @@
+{
+  "module": "imgui",
+  "header": "// Milestone 0: minimal surface to bring up an ImGui context and draw a window.\n// Generated from vendor/imgui v1.92.8-docking via vendor/dear_bindings v0.21.\n// Re-run scripts/regen.sh after editing scripts/m0_imgui.json.",
+  "opaques": [
+    "ImGuiContext",
+    "ImFontAtlas",
+    "ImDrawData",
+    "ImGuiIO"
+  ],
+  "structs": [
+    "ImVec2",
+    "ImVec4"
+  ],
+  "typedefs": [
+    "ImGuiWindowFlags"
+  ],
+  "enums": [],
+  "functions": [
+    "ImGui_CreateContext",
+    "ImGui_DestroyContext",
+    "ImGui_GetCurrentContext",
+    "ImGui_SetCurrentContext",
+    "ImGui_GetIO",
+    "ImGui_NewFrame",
+    "ImGui_EndFrame",
+    "ImGui_Render",
+    "ImGui_GetDrawData",
+    "ImGui_Begin",
+    "ImGui_End",
+    "ImGui_Text",
+    "ImGui_TextUnformatted",
+    "ImGui_Button",
+    "ImGui_ShowDemoWindow"
+  ]
+}

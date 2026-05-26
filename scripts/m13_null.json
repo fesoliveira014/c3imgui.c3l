@@ -1,0 +1,35 @@
+{
+  "module": "imgui::backend::null_backend",
+  "fn_prefix": [
+    "cImGui_ImplNullPlatform_",
+    "cImGui_ImplNullRender_",
+    "cImGui_ImplNull_"
+  ],
+  "type_prefixes": [
+    "ImGui_ImplNull_",
+    "ImGui",
+    "Im"
+  ],
+  "header": "// Backend binding: imgui_impl_null.h. Generated from dear_bindings.",
+  "opaques": [],
+  "typedefs": [],
+  "callbacks": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData",
+    "ImDrawIdx": "imgui::DrawIdx"
+  },
+  "enums": [],
+  "structs": [],
+  "functions": [
+    "cImGui_ImplNullPlatform_Init",
+    "cImGui_ImplNullPlatform_NewFrame",
+    "cImGui_ImplNullPlatform_Shutdown",
+    "cImGui_ImplNullRender_Init",
+    "cImGui_ImplNullRender_NewFrame",
+    "cImGui_ImplNullRender_RenderDrawData",
+    "cImGui_ImplNullRender_Shutdown",
+    "cImGui_ImplNull_Init",
+    "cImGui_ImplNull_NewFrame",
+    "cImGui_ImplNull_Shutdown"
+  ]
+}

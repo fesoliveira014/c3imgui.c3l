@@ -1,0 +1,39 @@
+module imgui::backend::sdl2;
+
+
+// Backend binding: imgui_impl_sdl2.h. Generated from dear_bindings.
+
+// opaque handles
+typedef SDL_Event = inline void*;
+typedef SDL_Renderer = inline void*;
+typedef SDL_Window = inline void*;
+typedef SdlGameController = inline void*;
+
+// enums (flag enums → bitstructs; closed enums → const int)
+// from ImGui_ImplSDL2_GamepadMode
+alias GamepadMode = int;
+const int GAMEPAD_MODE_AUTO_FIRST = 0;
+const int GAMEPAD_MODE_AUTO_ALL = 1;
+const int GAMEPAD_MODE_MANUAL = 2;
+
+// from ImGui_ImplSDL2_MouseCaptureMode
+alias MouseCaptureMode = int;
+const int MOUSE_CAPTURE_MODE_ENABLED = 0;
+const int MOUSE_CAPTURE_MODE_ENABLED_AFTER_DRAG = 1;
+const int MOUSE_CAPTURE_MODE_DISABLED = 2;
+
+// functions
+extern fn float get_content_scale_for_display(int display_index) @cname("cImGui_ImplSDL2_GetContentScaleForDisplay");
+extern fn float get_content_scale_for_window(SDL_Window window) @cname("cImGui_ImplSDL2_GetContentScaleForWindow");
+extern fn bool init_for_d3_d(SDL_Window window) @cname("cImGui_ImplSDL2_InitForD3D");
+extern fn bool init_for_metal(SDL_Window window) @cname("cImGui_ImplSDL2_InitForMetal");
+extern fn bool init_for_open_gl(SDL_Window window, void* sdl_gl_context) @cname("cImGui_ImplSDL2_InitForOpenGL");
+extern fn bool init_for_other(SDL_Window window) @cname("cImGui_ImplSDL2_InitForOther");
+extern fn bool init_for_sdl_renderer(SDL_Window window, SDL_Renderer renderer) @cname("cImGui_ImplSDL2_InitForSDLRenderer");
+extern fn bool init_for_vulkan(SDL_Window window) @cname("cImGui_ImplSDL2_InitForVulkan");
+extern fn void new_frame() @cname("cImGui_ImplSDL2_NewFrame");
+extern fn bool process_event(SDL_Event event) @cname("cImGui_ImplSDL2_ProcessEvent");
+extern fn void set_gamepad_mode(GamepadMode mode) @cname("cImGui_ImplSDL2_SetGamepadMode");
+extern fn void set_gamepad_mode_ex(GamepadMode mode, SdlGameController* manual_gamepads_array, int manual_gamepads_count) @cname("cImGui_ImplSDL2_SetGamepadModeEx");
+extern fn void set_mouse_capture_mode(MouseCaptureMode mode) @cname("cImGui_ImplSDL2_SetMouseCaptureMode");
+extern fn void shutdown() @cname("cImGui_ImplSDL2_Shutdown");

@@ -1,0 +1,27 @@
+module imgui::backend::dx12;
+
+import imgui;
+
+// Backend binding: imgui_impl_dx12.h. Generated from dear_bindings.
+
+// opaque handles
+typedef D3d12CpuDescriptorHandle = inline void*;
+typedef D3d12GpuDescriptorHandle = inline void*;
+typedef DxgiFormat = inline void*;
+typedef ID3D12CommandQueue = inline void*;
+typedef ID3D12DescriptorHeap = inline void*;
+typedef ID3D12Device = inline void*;
+typedef ID3D12GraphicsCommandList = inline void*;
+typedef InitInfo = inline void*;
+typedef InitInfo_ImDrawData = inline void*;
+typedef RenderState = inline void*;
+
+// functions
+extern fn bool create_device_objects() @cname("cImGui_ImplDX12_CreateDeviceObjects");
+extern fn bool init(InitInfo info) @cname("cImGui_ImplDX12_Init");
+extern fn bool init_id3_d12_device_ptr(ID3D12Device device, int num_frames_in_flight, DxgiFormat rtv_format, ID3D12DescriptorHeap srv_descriptor_heap, D3d12CpuDescriptorHandle font_srv_cpu_desc_handle, D3d12GpuDescriptorHandle font_srv_gpu_desc_handle) @cname("cImGui_ImplDX12_InitID3D12DevicePtr");
+extern fn void invalidate_device_objects() @cname("cImGui_ImplDX12_InvalidateDeviceObjects");
+extern fn void new_frame() @cname("cImGui_ImplDX12_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data, ID3D12GraphicsCommandList graphics_command_list) @cname("cImGui_ImplDX12_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplDX12_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplDX12_UpdateTexture");

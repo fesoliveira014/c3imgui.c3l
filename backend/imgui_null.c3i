@@ -1,0 +1,17 @@
+module imgui::backend::null_backend;
+
+import imgui;
+
+// Backend binding: imgui_impl_null.h. Generated from dear_bindings.
+
+// functions
+extern fn bool init() @cname("cImGui_ImplNullPlatform_Init");
+extern fn void new_frame() @cname("cImGui_ImplNullPlatform_NewFrame");
+extern fn void shutdown() @cname("cImGui_ImplNullPlatform_Shutdown");
+extern fn bool init() @cname("cImGui_ImplNullRender_Init");
+extern fn void new_frame() @cname("cImGui_ImplNullRender_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data) @cname("cImGui_ImplNullRender_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplNullRender_Shutdown");
+extern fn bool init() @cname("cImGui_ImplNull_Init");
+extern fn void new_frame() @cname("cImGui_ImplNull_NewFrame");
+extern fn void shutdown() @cname("cImGui_ImplNull_Shutdown");

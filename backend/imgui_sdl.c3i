@@ -1,0 +1,17 @@
+module imgui::backend::sdl;
+
+
+// SDL3 platform backend for imgui (init, event pump, frame hook).
+
+// opaque handles
+typedef WindowHandle = inline void*;
+typedef RendererHandle = inline void*;
+typedef GamepadHandle = inline void*;
+typedef EventRef = inline void*;
+
+// functions
+extern fn bool init_for_open_gl(WindowHandle window, void* sdl_gl_context) @cname("cImGui_ImplSDL3_InitForOpenGL");
+extern fn bool init_for_other(WindowHandle window) @cname("cImGui_ImplSDL3_InitForOther");
+extern fn void shutdown() @cname("cImGui_ImplSDL3_Shutdown");
+extern fn void new_frame() @cname("cImGui_ImplSDL3_NewFrame");
+extern fn bool process_event(EventRef event) @cname("cImGui_ImplSDL3_ProcessEvent");

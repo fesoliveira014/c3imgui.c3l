@@ -1,0 +1,33 @@
+{
+  "module": "imgui::backend::glut",
+  "fn_prefix": "cImGui_ImplGLUT_",
+  "type_prefixes": [
+    "ImGui_ImplGLUT_",
+    "ImGui",
+    "Im"
+  ],
+  "header": "// Backend binding: imgui_impl_glut.h. Generated from dear_bindings.",
+  "opaques": [],
+  "typedefs": [],
+  "callbacks": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData",
+    "ImDrawIdx": "imgui::DrawIdx"
+  },
+  "enums": [],
+  "structs": [],
+  "functions": [
+    "cImGui_ImplGLUT_Init",
+    "cImGui_ImplGLUT_InstallFuncs",
+    "cImGui_ImplGLUT_KeyboardFunc",
+    "cImGui_ImplGLUT_KeyboardUpFunc",
+    "cImGui_ImplGLUT_MotionFunc",
+    "cImGui_ImplGLUT_MouseFunc",
+    "cImGui_ImplGLUT_MouseWheelFunc",
+    "cImGui_ImplGLUT_NewFrame",
+    "cImGui_ImplGLUT_ReshapeFunc",
+    "cImGui_ImplGLUT_Shutdown",
+    "cImGui_ImplGLUT_SpecialFunc",
+    "cImGui_ImplGLUT_SpecialUpFunc"
+  ]
+}

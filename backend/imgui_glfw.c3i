@@ -1,0 +1,30 @@
+module imgui::backend::glfw;
+
+
+// Backend binding: imgui_impl_glfw.h. Generated from dear_bindings.
+
+// opaque handles
+typedef GLFWmonitor = inline void*;
+typedef GLFWwindow = inline void*;
+
+// functions
+extern fn void char_callback(GLFWwindow window, uint c) @cname("cImGui_ImplGlfw_CharCallback");
+extern fn void cursor_enter_callback(GLFWwindow window, int entered) @cname("cImGui_ImplGlfw_CursorEnterCallback");
+extern fn void cursor_pos_callback(GLFWwindow window, double x, double y) @cname("cImGui_ImplGlfw_CursorPosCallback");
+extern fn float get_content_scale_for_monitor(GLFWmonitor monitor) @cname("cImGui_ImplGlfw_GetContentScaleForMonitor");
+extern fn float get_content_scale_for_window(GLFWwindow window) @cname("cImGui_ImplGlfw_GetContentScaleForWindow");
+extern fn bool init_for_open_gl(GLFWwindow window, bool install_callbacks) @cname("cImGui_ImplGlfw_InitForOpenGL");
+extern fn bool init_for_other(GLFWwindow window, bool install_callbacks) @cname("cImGui_ImplGlfw_InitForOther");
+extern fn bool init_for_vulkan(GLFWwindow window, bool install_callbacks) @cname("cImGui_ImplGlfw_InitForVulkan");
+extern fn void install_callbacks(GLFWwindow window) @cname("cImGui_ImplGlfw_InstallCallbacks");
+extern fn void install_emscripten_callbacks(GLFWwindow window, ZString canvas_selector) @cname("cImGui_ImplGlfw_InstallEmscriptenCallbacks");
+extern fn void key_callback(GLFWwindow window, int key, int scancode, int action, int mods) @cname("cImGui_ImplGlfw_KeyCallback");
+extern fn void monitor_callback(GLFWmonitor monitor, int event) @cname("cImGui_ImplGlfw_MonitorCallback");
+extern fn void mouse_button_callback(GLFWwindow window, int button, int action, int mods) @cname("cImGui_ImplGlfw_MouseButtonCallback");
+extern fn void new_frame() @cname("cImGui_ImplGlfw_NewFrame");
+extern fn void restore_callbacks(GLFWwindow window) @cname("cImGui_ImplGlfw_RestoreCallbacks");
+extern fn void scroll_callback(GLFWwindow window, double xoffset, double yoffset) @cname("cImGui_ImplGlfw_ScrollCallback");
+extern fn void set_callbacks_chain_for_all_windows(bool chain_for_all_windows) @cname("cImGui_ImplGlfw_SetCallbacksChainForAllWindows");
+extern fn void shutdown() @cname("cImGui_ImplGlfw_Shutdown");
+extern fn void sleep(int milliseconds) @cname("cImGui_ImplGlfw_Sleep");
+extern fn void window_focus_callback(GLFWwindow window, int focused) @cname("cImGui_ImplGlfw_WindowFocusCallback");

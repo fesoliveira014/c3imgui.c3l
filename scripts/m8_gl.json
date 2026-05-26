@@ -1,0 +1,17 @@
+{
+  "module": "imgui::gl",
+  "fn_prefix": "cImGui_ImplOpenGL3_",
+  "type_prefixes": ["ImGui_ImplOpenGL3_", "ImGui", "Im"],
+  "header": "// OpenGL3 render backend for imgui.",
+  "opaques": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData"
+  },
+  "functions": [
+    "cImGui_ImplOpenGL3_Init",
+    "cImGui_ImplOpenGL3_InitEx",
+    "cImGui_ImplOpenGL3_Shutdown",
+    "cImGui_ImplOpenGL3_NewFrame",
+    "cImGui_ImplOpenGL3_RenderDrawData"
+  ]
+}

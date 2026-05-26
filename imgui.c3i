@@ -1,0 +1,1881 @@
+module imgui;
+
+
+// surface + every remaining public ImGui_*/Im*_* fn (~200 binds).
+// Generated; do not hand-edit. Re-run scripts/regen.sh after changing this manifest.
+
+// opaque handles
+typedef Context = inline void*;
+typedef FontAtlas = inline void*;
+typedef DrawData = inline void*;
+typedef Io = inline void*;
+typedef Style = inline void*;
+typedef Storage = inline void*;
+typedef Font = inline void*;
+typedef DrawList = inline void*;
+typedef FontLoader = inline void*;
+typedef FontConfig = inline void*;
+typedef FontBaked = inline void*;
+typedef TextureData = inline void*;
+typedef MultiSelectIO = inline void*;
+typedef SelectionBasicStorage = inline void*;
+typedef TextBuffer = inline void*;
+typedef TextFilter = inline void*;
+typedef PlatformIO = inline void*;
+typedef DrawListSharedData = inline void*;
+typedef FontGlyphRangesBuilder = inline void*;
+typedef TextFilter_ImGuiTextRange = inline void*;
+typedef Str = inline void*;
+typedef DrawListSplitter = inline void*;
+typedef Vector_ImDrawChannel = inline void*;
+typedef Vector_ImGuiTextRange = inline void*;
+typedef Vector_ImWchar = inline void*;
+typedef ContextHook = inline void*;
+typedef FontGlyph = inline void*;
+typedef Vector_ImDrawListPtr = inline void*;
+typedef PlatformMonitor = inline void*;
+typedef KeyData = inline void*;
+typedef TextureRect = inline void*;
+typedef StoragePair = inline void*;
+
+// typedefs
+alias SelectableFlags = int;
+alias ComboFlags = int;
+alias TabBarFlags = int;
+alias TabItemFlags = int;
+alias FocusedFlags = int;
+alias HoveredFlags = int;
+alias ButtonFlags = int;
+alias TableBgTarget = int;
+alias Cond = int;
+alias Id = uint;
+alias TextureID = ulong;
+alias Col = int;
+alias StyleVar = int;
+alias KeyChord = int;
+alias MouseButton = int;
+alias MouseCursor = int;
+alias MouseSource = int;
+alias SelectionUserData = long;
+alias DataType = int;
+alias SortDirection = char;
+alias Dir = int;
+alias Key = int;
+alias InputTextCallback = fn int(InputTextCallbackData* data);
+alias SizeCallback = fn void(SizeCallbackData* data);
+alias MemAllocFunc = fn void*(usz sz_, void* user_data);
+alias MemFreeFunc = fn void(void* ptr, void* user_data);
+alias DrawIdx = ushort;
+alias DrawTextFlags = int;
+alias FontAtlasRectId = int;
+alias DrawCallback = fn void(DrawList parent_list, DrawCmd* cmd);
+
+// structs
+struct Viewport {
+    Id id;
+    ViewportFlags flags;
+    Vec2 pos;
+    Vec2 size;
+    Vec2 framebuffer_scale;
+    Vec2 work_pos;
+    Vec2 work_size;
+    float dpi_scale;
+    Id parent_viewport_id;
+    Viewport* parent_viewport;
+    DrawData draw_data;
+    void* renderer_user_data;
+    void* platform_user_data;
+    void* platform_icon_data;
+    void* platform_handle;
+    void* platform_handle_raw;
+    bool platform_window_created;
+    bool platform_request_move;
+    bool platform_request_resize;
+    bool platform_request_close;
+}
+$assert Viewport::size == 120;
+
+struct InputTextCallbackData {
+    Context ctx;
+    InputTextFlags event_flag;
+    InputTextFlags flags;
+    void* user_data;
+    Id id;
+    Key event_key;
+    uint event_char;
+    bool event_activated;
+    bool buf_dirty;
+    char* buf;
+    int buf_text_len;
+    int buf_size;
+    int cursor_pos;
+    int selection_start;
+    int selection_end;
+}
+$assert InputTextCallbackData::size == 72;
+
+struct SizeCallbackData {
+    void* user_data;
+    Vec2 pos;
+    Vec2 current_size;
+    Vec2 desired_size;
+}
+$assert SizeCallbackData::size == 32;
+
+struct Payload {
+    void* data;
+    int data_size;
+    Id source_id;
+    Id source_parent_id;
+    int data_frame_count;
+    char[32+1] data_type;
+    bool preview;
+    bool delivery;
+}
+$assert Payload::size == 64;
+
+struct ListClipper {
+    int display_start;
+    int display_end;
+    int user_index;
+    int items_count;
+    float items_height;
+    ListClipperFlags flags;
+    double start_pos_y;
+    double start_seek_offset_y;
+    Context ctx;
+    void* temp_data;
+}
+$assert ListClipper::size == 56;
+
+struct TextureRef {
+    TextureData _tex_data;
+    TextureID _tex_id;
+}
+$assert TextureRef::size == 16;
+
+struct TableSortSpecs {
+    TableColumnSortSpecs* specs;
+    int specs_count;
+    bool specs_dirty;
+}
+$assert TableSortSpecs::size == 16;
+
+struct TableColumnSortSpecs {
+    Id column_user_id;
+    short column_index;
+    short sort_order;
+    SortDirection sort_direction;
+}
+$assert TableColumnSortSpecs::size == 12;
+
+struct SelectionRequest {
+    SelectionRequestType type_;
+    bool selected;
+    ichar range_direction;
+    SelectionUserData range_first_item;
+    SelectionUserData range_last_item;
+}
+$assert SelectionRequest::size == 24;
+
+struct Color {
+    Vec4 value;
+}
+$assert Color::size == 16;
+
+struct DrawCmd {
+    Vec4 clip_rect;
+    TextureRef tex_ref;
+    uint vtx_offset;
+    uint idx_offset;
+    uint elem_count;
+    DrawCallback user_callback;
+    void* user_callback_data;
+    int user_callback_data_size;
+    int user_callback_data_offset;
+}
+$assert DrawCmd::size == 72;
+
+struct FontAtlasRect {
+    ushort x;
+    ushort y;
+    ushort w;
+    ushort h;
+    Vec2 uv0;
+    Vec2 uv1;
+}
+$assert FontAtlasRect::size == 24;
+
+struct WindowClass {
+    Id class_id;
+    Id parent_viewport_id;
+    Id focus_route_parent_window_id;
+    ViewportFlags viewport_flags_override_set;
+    ViewportFlags viewport_flags_override_clear;
+    TabItemFlags tab_item_flags_override_set;
+    DockNodeFlags dock_node_flags_override_set;
+    bool docking_always_tab_bar;
+    bool docking_allow_unclassed;
+    void* platform_icon_data;
+}
+$assert WindowClass::size == 40;
+
+struct SelectionExternalStorage {
+    void* user_data;
+    void* adapter_set_item_selected;
+}
+$assert SelectionExternalStorage::size == 16;
+
+// enums (flag enums → bitstructs; closed enums → const int)
+bitstruct WindowFlags : int {
+    bool no_title_bar : 0;
+    bool no_resize : 1;
+    bool no_move : 2;
+    bool no_scrollbar : 3;
+    bool no_scroll_with_mouse : 4;
+    bool no_collapse : 5;
+    bool always_auto_resize : 6;
+    bool no_background : 7;
+    bool no_saved_settings : 8;
+    bool no_mouse_inputs : 9;
+    bool menu_bar : 10;
+    bool horizontal_scrollbar : 11;
+    bool no_focus_on_appearing : 12;
+    bool no_bring_to_front_on_focus : 13;
+    bool always_vertical_scrollbar : 14;
+    bool always_horizontal_scrollbar : 15;
+    bool no_nav_inputs : 16;
+    bool no_nav_focus : 17;
+    bool unsaved_document : 18;
+    bool no_docking : 19;
+    bool dock_node_host : 23;
+    bool child_window : 24;
+    bool tooltip : 25;
+    bool popup : 26;
+    bool modal : 27;
+    bool child_menu : 28;
+}
+const WindowFlags WINDOW_FLAGS_NO_NAV = (WindowFlags)196608;
+const WindowFlags WINDOW_FLAGS_NO_DECORATION = (WindowFlags)43;
+const WindowFlags WINDOW_FLAGS_NO_INPUTS = (WindowFlags)197120;
+
+bitstruct ChildFlags : int {
+    bool borders : 0;
+    bool always_use_window_padding : 1;
+    bool resize_x : 2;
+    bool resize_y : 3;
+    bool auto_resize_x : 4;
+    bool auto_resize_y : 5;
+    bool always_auto_resize : 6;
+    bool frame_style : 7;
+    bool nav_flattened : 8;
+}
+
+// from ImGuiCond_
+const int COND_NONE = 0;
+const int COND_ALWAYS = 1;
+const int COND_ONCE = 2;
+const int COND_FIRST_USE_EVER = 4;
+const int COND_APPEARING = 8;
+
+bitstruct InputTextFlags : int {
+    bool chars_decimal : 0;
+    bool chars_hexadecimal : 1;
+    bool chars_scientific : 2;
+    bool chars_uppercase : 3;
+    bool chars_no_blank : 4;
+    bool allow_tab_input : 5;
+    bool enter_returns_true : 6;
+    bool escape_clears_all : 7;
+    bool ctrl_enter_for_new_line : 8;
+    bool read_only : 9;
+    bool password : 10;
+    bool always_overwrite : 11;
+    bool auto_select_all : 12;
+    bool parse_empty_ref_val : 13;
+    bool display_empty_ref_val : 14;
+    bool no_horizontal_scroll : 15;
+    bool no_undo_redo : 16;
+    bool elide_left : 17;
+    bool callback_completion : 18;
+    bool callback_history : 19;
+    bool callback_always : 20;
+    bool callback_char_filter : 21;
+    bool callback_resize : 22;
+    bool callback_edit : 23;
+    bool word_wrap : 24;
+}
+
+bitstruct TreeNodeFlags : int {
+    bool selected : 0;
+    bool framed : 1;
+    bool allow_overlap : 2;
+    bool no_tree_push_on_open : 3;
+    bool no_auto_open_on_log : 4;
+    bool default_open : 5;
+    bool open_on_double_click : 6;
+    bool open_on_arrow : 7;
+    bool leaf : 8;
+    bool bullet : 9;
+    bool frame_padding : 10;
+    bool span_avail_width : 11;
+    bool span_full_width : 12;
+    bool span_label_width : 13;
+    bool span_all_columns : 14;
+    bool label_span_all_columns : 15;
+    bool nav_left_jumps_back_here : 17;
+    bool draw_lines_none : 18;
+    bool draw_lines_full : 19;
+    bool draw_lines_to_nodes : 20;
+}
+const TreeNodeFlags TREE_NODE_FLAGS_COLLAPSING_HEADER = (TreeNodeFlags)26;
+
+bitstruct SliderFlags : int {
+    bool logarithmic : 5;
+    bool no_round_to_format : 6;
+    bool no_input : 7;
+    bool wrap_around : 8;
+    bool clamp_on_input : 9;
+    bool clamp_zero_range : 10;
+    bool no_speed_tweaks : 11;
+    bool color_markers : 12;
+}
+const SliderFlags SLIDER_FLAGS_ALWAYS_CLAMP = (SliderFlags)1536;
+const SliderFlags SLIDER_FLAGS_INVALID_MASK_ = (SliderFlags)1879048207;
+
+bitstruct ColorEditFlags : int {
+    bool no_alpha : 1;
+    bool no_picker : 2;
+    bool no_options : 3;
+    bool no_small_preview : 4;
+    bool no_inputs : 5;
+    bool no_tooltip : 6;
+    bool no_label : 7;
+    bool no_side_preview : 8;
+    bool no_drag_drop : 9;
+    bool no_border : 10;
+    bool no_color_markers : 11;
+    bool alpha_opaque : 12;
+    bool alpha_no_bg : 13;
+    bool alpha_preview_half : 14;
+    bool alpha_bar : 18;
+    bool hdr : 19;
+    bool display_rgb : 20;
+    bool display_hsv : 21;
+    bool display_hex : 22;
+    bool uint8 : 23;
+    bool float_ : 24;
+    bool picker_hue_bar : 25;
+    bool picker_hue_wheel : 26;
+    bool input_rgb : 27;
+    bool input_hsv : 28;
+}
+const ColorEditFlags COLOR_EDIT_FLAGS_DEFAULT_OPTIONS_ = (ColorEditFlags)177209344;
+const ColorEditFlags COLOR_EDIT_FLAGS_ALPHA_MASK_ = (ColorEditFlags)28674;
+const ColorEditFlags COLOR_EDIT_FLAGS_DISPLAY_MASK_ = (ColorEditFlags)7340032;
+const ColorEditFlags COLOR_EDIT_FLAGS_DATA_TYPE_MASK_ = (ColorEditFlags)25165824;
+const ColorEditFlags COLOR_EDIT_FLAGS_PICKER_MASK_ = (ColorEditFlags)100663296;
+const ColorEditFlags COLOR_EDIT_FLAGS_INPUT_MASK_ = (ColorEditFlags)402653184;
+const ColorEditFlags COLOR_EDIT_FLAGS_ALPHA_PREVIEW = (ColorEditFlags)0;
+
+bitstruct ConfigFlags : int {
+    bool nav_enable_keyboard : 0;
+    bool nav_enable_gamepad : 1;
+    bool nav_enable_set_mouse_pos : 2;
+    bool nav_no_capture_keyboard : 3;
+    bool no_mouse : 4;
+    bool no_mouse_cursor_change : 5;
+    bool no_keyboard : 6;
+    bool docking_enable : 7;
+    bool viewports_enable : 10;
+    bool dpi_enable_scale_fonts : 14;
+    bool dpi_enable_scale_viewports : 15;
+    bool is_srgb : 20;
+    bool is_touch_screen : 21;
+}
+
+bitstruct BackendFlags : int {
+    bool has_gamepad : 0;
+    bool has_mouse_cursors : 1;
+    bool has_set_mouse_pos : 2;
+    bool renderer_has_vtx_offset : 3;
+    bool renderer_has_textures : 4;
+    bool renderer_has_viewports : 10;
+    bool platform_has_viewports : 11;
+    bool has_mouse_hovered_viewport : 12;
+    bool has_parent_viewport : 13;
+}
+
+bitstruct DockNodeFlags : int {
+    bool keep_alive_only : 0;
+    bool no_docking_in_central_node : 2;
+    bool passthru_central_node : 3;
+    bool no_docking_split : 4;
+    bool no_resize : 5;
+    bool auto_hide_tab_bar : 6;
+    bool no_undocking : 7;
+}
+
+bitstruct ViewportFlags : int {
+    bool is_platform_window : 0;
+    bool is_platform_monitor : 1;
+    bool owned_by_app : 2;
+    bool no_decoration : 3;
+    bool no_task_bar_icon : 4;
+    bool no_focus_on_appearing : 5;
+    bool no_focus_on_click : 6;
+    bool no_inputs : 7;
+    bool no_renderer_clear : 8;
+    bool no_auto_merge : 9;
+    bool top_most : 10;
+    bool can_host_other_windows : 11;
+    bool is_minimized : 12;
+    bool is_focused : 13;
+}
+
+bitstruct FontFlags : int {
+    bool no_load_error : 1;
+    bool no_load_glyphs : 2;
+    bool lock_baked_sizes : 3;
+    bool implicit_ref_size : 4;
+}
+
+bitstruct DrawFlags : int {
+    bool round_corners_top_left : 4;
+    bool round_corners_top_right : 5;
+    bool round_corners_bottom_left : 6;
+    bool round_corners_bottom_right : 7;
+    bool round_corners_none : 8;
+    bool closed : 9;
+}
+const DrawFlags DRAW_FLAGS_ROUND_CORNERS_TOP = (DrawFlags)48;
+const DrawFlags DRAW_FLAGS_ROUND_CORNERS_BOTTOM = (DrawFlags)192;
+const DrawFlags DRAW_FLAGS_ROUND_CORNERS_LEFT = (DrawFlags)80;
+const DrawFlags DRAW_FLAGS_ROUND_CORNERS_RIGHT = (DrawFlags)160;
+const DrawFlags DRAW_FLAGS_ROUND_CORNERS_ALL = (DrawFlags)240;
+const DrawFlags DRAW_FLAGS_ROUND_CORNERS_DEFAULT_ = (DrawFlags)240;
+const DrawFlags DRAW_FLAGS_ROUND_CORNERS_MASK_ = (DrawFlags)496;
+
+bitstruct ListClipperFlags : int {
+    bool no_set_table_row_counters : 0;
+}
+
+// from ImGuiCol_
+const int COL_TEXT = 0;
+const int COL_TEXT_DISABLED = 1;
+const int COL_WINDOW_BG = 2;
+const int COL_CHILD_BG = 3;
+const int COL_POPUP_BG = 4;
+const int COL_BORDER = 5;
+const int COL_BORDER_SHADOW = 6;
+const int COL_FRAME_BG = 7;
+const int COL_FRAME_BG_HOVERED = 8;
+const int COL_FRAME_BG_ACTIVE = 9;
+const int COL_TITLE_BG = 10;
+const int COL_TITLE_BG_ACTIVE = 11;
+const int COL_TITLE_BG_COLLAPSED = 12;
+const int COL_MENU_BAR_BG = 13;
+const int COL_SCROLLBAR_BG = 14;
+const int COL_SCROLLBAR_GRAB = 15;
+const int COL_SCROLLBAR_GRAB_HOVERED = 16;
+const int COL_SCROLLBAR_GRAB_ACTIVE = 17;
+const int COL_CHECK_MARK = 18;
+const int COL_CHECKBOX_SELECTED_BG = 19;
+const int COL_SLIDER_GRAB = 20;
+const int COL_SLIDER_GRAB_ACTIVE = 21;
+const int COL_BUTTON = 22;
+const int COL_BUTTON_HOVERED = 23;
+const int COL_BUTTON_ACTIVE = 24;
+const int COL_HEADER = 25;
+const int COL_HEADER_HOVERED = 26;
+const int COL_HEADER_ACTIVE = 27;
+const int COL_SEPARATOR = 28;
+const int COL_SEPARATOR_HOVERED = 29;
+const int COL_SEPARATOR_ACTIVE = 30;
+const int COL_RESIZE_GRIP = 31;
+const int COL_RESIZE_GRIP_HOVERED = 32;
+const int COL_RESIZE_GRIP_ACTIVE = 33;
+const int COL_INPUT_TEXT_CURSOR = 34;
+const int COL_TAB_HOVERED = 35;
+const int COL_TAB = 36;
+const int COL_TAB_SELECTED = 37;
+const int COL_TAB_SELECTED_OVERLINE = 38;
+const int COL_TAB_DIMMED = 39;
+const int COL_TAB_DIMMED_SELECTED = 40;
+const int COL_TAB_DIMMED_SELECTED_OVERLINE = 41;
+const int COL_DOCKING_PREVIEW = 42;
+const int COL_DOCKING_EMPTY_BG = 43;
+const int COL_PLOT_LINES = 44;
+const int COL_PLOT_LINES_HOVERED = 45;
+const int COL_PLOT_HISTOGRAM = 46;
+const int COL_PLOT_HISTOGRAM_HOVERED = 47;
+const int COL_TABLE_HEADER_BG = 48;
+const int COL_TABLE_BORDER_STRONG = 49;
+const int COL_TABLE_BORDER_LIGHT = 50;
+const int COL_TABLE_ROW_BG = 51;
+const int COL_TABLE_ROW_BG_ALT = 52;
+const int COL_TEXT_LINK = 53;
+const int COL_TEXT_SELECTED_BG = 54;
+const int COL_TREE_LINES = 55;
+const int COL_DRAG_DROP_TARGET = 56;
+const int COL_DRAG_DROP_TARGET_BG = 57;
+const int COL_UNSAVED_MARKER = 58;
+const int COL_NAV_CURSOR = 59;
+const int COL_NAV_WINDOWING_HIGHLIGHT = 60;
+const int COL_NAV_WINDOWING_DIM_BG = 61;
+const int COL_MODAL_WINDOW_DIM_BG = 62;
+const int COL_TAB_ACTIVE = 37;
+const int COL_TAB_UNFOCUSED = 39;
+const int COL_TAB_UNFOCUSED_ACTIVE = 40;
+const int COL_NAV_HIGHLIGHT = 59;
+
+// from ImGuiStyleVar_
+const int STYLE_VAR_ALPHA = 0;
+const int STYLE_VAR_DISABLED_ALPHA = 1;
+const int STYLE_VAR_WINDOW_PADDING = 2;
+const int STYLE_VAR_WINDOW_ROUNDING = 3;
+const int STYLE_VAR_WINDOW_BORDER_SIZE = 4;
+const int STYLE_VAR_WINDOW_MIN_SIZE = 5;
+const int STYLE_VAR_WINDOW_TITLE_ALIGN = 6;
+const int STYLE_VAR_CHILD_ROUNDING = 7;
+const int STYLE_VAR_CHILD_BORDER_SIZE = 8;
+const int STYLE_VAR_POPUP_ROUNDING = 9;
+const int STYLE_VAR_POPUP_BORDER_SIZE = 10;
+const int STYLE_VAR_FRAME_PADDING = 11;
+const int STYLE_VAR_FRAME_ROUNDING = 12;
+const int STYLE_VAR_FRAME_BORDER_SIZE = 13;
+const int STYLE_VAR_ITEM_SPACING = 14;
+const int STYLE_VAR_ITEM_INNER_SPACING = 15;
+const int STYLE_VAR_INDENT_SPACING = 16;
+const int STYLE_VAR_CELL_PADDING = 17;
+const int STYLE_VAR_SCROLLBAR_SIZE = 18;
+const int STYLE_VAR_SCROLLBAR_ROUNDING = 19;
+const int STYLE_VAR_SCROLLBAR_PADDING = 20;
+const int STYLE_VAR_GRAB_MIN_SIZE = 21;
+const int STYLE_VAR_GRAB_ROUNDING = 22;
+const int STYLE_VAR_IMAGE_ROUNDING = 23;
+const int STYLE_VAR_IMAGE_BORDER_SIZE = 24;
+const int STYLE_VAR_TAB_ROUNDING = 25;
+const int STYLE_VAR_TAB_BORDER_SIZE = 26;
+const int STYLE_VAR_TAB_MIN_WIDTH_BASE = 27;
+const int STYLE_VAR_TAB_MIN_WIDTH_SHRINK = 28;
+const int STYLE_VAR_TAB_BAR_BORDER_SIZE = 29;
+const int STYLE_VAR_TAB_BAR_OVERLINE_SIZE = 30;
+const int STYLE_VAR_TABLE_ANGLED_HEADERS_ANGLE = 31;
+const int STYLE_VAR_TABLE_ANGLED_HEADERS_TEXT_ALIGN = 32;
+const int STYLE_VAR_TREE_LINES_SIZE = 33;
+const int STYLE_VAR_TREE_LINES_ROUNDING = 34;
+const int STYLE_VAR_DRAG_DROP_TARGET_ROUNDING = 35;
+const int STYLE_VAR_BUTTON_TEXT_ALIGN = 36;
+const int STYLE_VAR_SELECTABLE_TEXT_ALIGN = 37;
+const int STYLE_VAR_SEPARATOR_SIZE = 38;
+const int STYLE_VAR_SEPARATOR_TEXT_BORDER_SIZE = 39;
+const int STYLE_VAR_SEPARATOR_TEXT_ALIGN = 40;
+const int STYLE_VAR_SEPARATOR_TEXT_PADDING = 41;
+const int STYLE_VAR_DOCKING_SEPARATOR_SIZE = 42;
+
+// from ImGuiMouseCursor_
+const int MOUSE_CURSOR_NONE = -1;
+const int MOUSE_CURSOR_ARROW = 0;
+const int MOUSE_CURSOR_TEXT_INPUT = 1;
+const int MOUSE_CURSOR_RESIZE_ALL = 2;
+const int MOUSE_CURSOR_RESIZE_NS = 3;
+const int MOUSE_CURSOR_RESIZE_EW = 4;
+const int MOUSE_CURSOR_RESIZE_NESW = 5;
+const int MOUSE_CURSOR_RESIZE_NWSE = 6;
+const int MOUSE_CURSOR_HAND = 7;
+const int MOUSE_CURSOR_WAIT = 8;
+const int MOUSE_CURSOR_PROGRESS = 9;
+const int MOUSE_CURSOR_NOT_ALLOWED = 10;
+
+bitstruct PopupFlags : int {
+    bool mouse_button_shift_ : 1;
+    bool mouse_button_left : 2;
+    bool mouse_button_right : 3;
+    bool no_reopen : 5;
+    bool no_open_over_existing_popup : 7;
+    bool no_open_over_items : 8;
+    bool any_popup_id : 10;
+    bool any_popup_level : 11;
+}
+const PopupFlags POPUP_FLAGS_MOUSE_BUTTON_MIDDLE = (PopupFlags)12;
+const PopupFlags POPUP_FLAGS_ANY_POPUP = (PopupFlags)3072;
+const PopupFlags POPUP_FLAGS_MOUSE_BUTTON_MASK_ = (PopupFlags)12;
+const PopupFlags POPUP_FLAGS_INVALID_MASK_ = (PopupFlags)3;
+
+bitstruct ItemFlags : int {
+    bool no_tab_stop : 0;
+    bool no_nav : 1;
+    bool no_nav_default_focus : 2;
+    bool button_repeat : 3;
+    bool auto_close_popups : 4;
+    bool allow_duplicate_id : 5;
+    bool disabled : 6;
+}
+
+bitstruct InputFlags : int {
+    bool repeat : 0;
+    bool route_active : 10;
+    bool route_focused : 11;
+    bool route_global : 12;
+    bool route_always : 13;
+    bool route_over_focused : 14;
+    bool route_over_active : 15;
+    bool route_unless_bg_focused : 16;
+    bool route_from_root_window : 17;
+    bool tooltip : 18;
+}
+
+// from ImGuiDataType_
+const int DATA_TYPE_S8 = 0;
+const int DATA_TYPE_U8 = 1;
+const int DATA_TYPE_S16 = 2;
+const int DATA_TYPE_U16 = 3;
+const int DATA_TYPE_S32 = 4;
+const int DATA_TYPE_U32 = 5;
+const int DATA_TYPE_S64 = 6;
+const int DATA_TYPE_U64 = 7;
+const int DATA_TYPE_FLOAT = 8;
+const int DATA_TYPE_DOUBLE = 9;
+const int DATA_TYPE_BOOL = 10;
+const int DATA_TYPE_STRING = 11;
+
+bitstruct MultiSelectFlags : int {
+    bool single_select : 0;
+    bool no_select_all : 1;
+    bool no_range_select : 2;
+    bool no_auto_select : 3;
+    bool no_auto_clear : 4;
+    bool no_auto_clear_on_reselect : 5;
+    bool box_select1d : 6;
+    bool box_select2d : 7;
+    bool box_select_no_scroll : 8;
+    bool clear_on_escape : 9;
+    bool clear_on_click_void : 10;
+    bool scope_window : 11;
+    bool scope_rect : 12;
+    bool select_on_auto : 13;
+    bool select_on_click_always : 14;
+    bool select_on_click_release : 15;
+    bool nav_wrap_x : 16;
+    bool no_select_on_right_click : 17;
+}
+const MultiSelectFlags MULTI_SELECT_FLAGS_SELECT_ON_MASK_ = (MultiSelectFlags)57344;
+
+// from ImGuiSelectionRequestType
+alias SelectionRequestType = int;
+const int SELECTION_REQUEST_TYPE_NONE = 0;
+const int SELECTION_REQUEST_TYPE_SET_ALL = 1;
+const int SELECTION_REQUEST_TYPE_SET_RANGE = 2;
+
+// from ImGuiSortDirection
+const int SORT_DIRECTION_NONE = 0;
+const int SORT_DIRECTION_ASCENDING = 1;
+const int SORT_DIRECTION_DESCENDING = 2;
+
+bitstruct TableFlags : int {
+    bool resizable : 0;
+    bool reorderable : 1;
+    bool hideable : 2;
+    bool sortable : 3;
+    bool no_saved_settings : 4;
+    bool context_menu_in_body : 5;
+    bool row_bg : 6;
+    bool borders_inner_h : 7;
+    bool borders_outer_h : 8;
+    bool borders_inner_v : 9;
+    bool borders_outer_v : 10;
+    bool no_borders_in_body : 11;
+    bool no_borders_in_body_until_resize : 12;
+    bool sizing_fixed_fit : 13;
+    bool sizing_fixed_same : 14;
+    bool sizing_stretch_same : 15;
+    bool no_host_extend_x : 16;
+    bool no_host_extend_y : 17;
+    bool no_keep_columns_visible : 18;
+    bool precise_widths : 19;
+    bool no_clip : 20;
+    bool pad_outer_x : 21;
+    bool no_pad_outer_x : 22;
+    bool no_pad_inner_x : 23;
+    bool scroll_x : 24;
+    bool scroll_y : 25;
+    bool sort_multi : 26;
+    bool sort_tristate : 27;
+    bool highlight_hovered_column : 28;
+}
+const TableFlags TABLE_FLAGS_BORDERS_H = (TableFlags)384;
+const TableFlags TABLE_FLAGS_BORDERS_V = (TableFlags)1536;
+const TableFlags TABLE_FLAGS_BORDERS_INNER = (TableFlags)640;
+const TableFlags TABLE_FLAGS_BORDERS_OUTER = (TableFlags)1280;
+const TableFlags TABLE_FLAGS_BORDERS = (TableFlags)1920;
+const TableFlags TABLE_FLAGS_SIZING_STRETCH_PROP = (TableFlags)24576;
+const TableFlags TABLE_FLAGS_SIZING_MASK_ = (TableFlags)57344;
+
+bitstruct TableColumnFlags : int {
+    bool disabled : 0;
+    bool default_hide : 1;
+    bool default_sort : 2;
+    bool width_stretch : 3;
+    bool width_fixed : 4;
+    bool no_resize : 5;
+    bool no_reorder : 6;
+    bool no_hide : 7;
+    bool no_clip : 8;
+    bool no_sort : 9;
+    bool no_sort_ascending : 10;
+    bool no_sort_descending : 11;
+    bool no_header_label : 12;
+    bool no_header_width : 13;
+    bool prefer_sort_ascending : 14;
+    bool prefer_sort_descending : 15;
+    bool indent_enable : 16;
+    bool indent_disable : 17;
+    bool angled_header : 18;
+    bool is_enabled : 24;
+    bool is_visible : 25;
+    bool is_sorted : 26;
+    bool is_hovered : 27;
+    bool no_direct_resize_ : 30;
+}
+const TableColumnFlags TABLE_COLUMN_FLAGS_WIDTH_MASK_ = (TableColumnFlags)24;
+const TableColumnFlags TABLE_COLUMN_FLAGS_INDENT_MASK_ = (TableColumnFlags)196608;
+const TableColumnFlags TABLE_COLUMN_FLAGS_STATUS_MASK_ = (TableColumnFlags)251658240;
+
+bitstruct TableRowFlags : int {
+    bool headers : 0;
+}
+
+// from ImGuiTableBgTarget_
+const int TABLE_BG_TARGET_NONE = 0;
+const int TABLE_BG_TARGET_ROW_BG0 = 1;
+const int TABLE_BG_TARGET_ROW_BG1 = 2;
+const int TABLE_BG_TARGET_CELL_BG = 3;
+
+bitstruct DragDropFlags : int {
+    bool source_no_preview_tooltip : 0;
+    bool source_no_disable_hover : 1;
+    bool source_no_hold_to_open_others : 2;
+    bool source_allow_null_id : 3;
+    bool source_extern : 4;
+    bool payload_auto_expire : 5;
+    bool payload_no_cross_context : 6;
+    bool payload_no_cross_process : 7;
+    bool accept_before_delivery : 10;
+    bool accept_no_draw_default_rect : 11;
+    bool accept_no_preview_tooltip : 12;
+    bool accept_draw_as_hovered : 13;
+}
+const DragDropFlags DRAG_DROP_FLAGS_ACCEPT_PEEK_ONLY = (DragDropFlags)3072;
+
+// from ImGuiMouseButton_
+const int MOUSE_BUTTON_LEFT = 0;
+const int MOUSE_BUTTON_RIGHT = 1;
+const int MOUSE_BUTTON_MIDDLE = 2;
+
+// from ImGuiDir
+const int DIR_NONE = -1;
+const int DIR_LEFT = 0;
+const int DIR_RIGHT = 1;
+const int DIR_UP = 2;
+const int DIR_DOWN = 3;
+
+// from ImTextureFormat
+alias TextureFormat = int;
+const int TEXTURE_FORMAT_RGBA32 = 0;
+const int TEXTURE_FORMAT_ALPHA8 = 1;
+
+// from ImTextureStatus
+alias TextureStatus = int;
+const int TEXTURE_STATUS_OK = 0;
+const int TEXTURE_STATUS_DESTROYED = 1;
+const int TEXTURE_STATUS_WANT_CREATE = 2;
+const int TEXTURE_STATUS_WANT_UPDATES = 3;
+const int TEXTURE_STATUS_WANT_DESTROY = 4;
+
+// from ImGuiKey
+const int KEY_NONE = 0;
+const int KEY_NAMED_KEY_BEGIN = 512;
+const int KEY_TAB = 512;
+const int KEY_LEFT_ARROW = 513;
+const int KEY_RIGHT_ARROW = 514;
+const int KEY_UP_ARROW = 515;
+const int KEY_DOWN_ARROW = 516;
+const int KEY_PAGE_UP = 517;
+const int KEY_PAGE_DOWN = 518;
+const int KEY_HOME = 519;
+const int KEY_END = 520;
+const int KEY_INSERT = 521;
+const int KEY_DELETE = 522;
+const int KEY_BACKSPACE = 523;
+const int KEY_SPACE = 524;
+const int KEY_ENTER = 525;
+const int KEY_ESCAPE = 526;
+const int KEY_LEFT_CTRL = 527;
+const int KEY_LEFT_SHIFT = 528;
+const int KEY_LEFT_ALT = 529;
+const int KEY_LEFT_SUPER = 530;
+const int KEY_RIGHT_CTRL = 531;
+const int KEY_RIGHT_SHIFT = 532;
+const int KEY_RIGHT_ALT = 533;
+const int KEY_RIGHT_SUPER = 534;
+const int KEY_MENU = 535;
+const int KEY_0 = 536;
+const int KEY_1 = 537;
+const int KEY_2 = 538;
+const int KEY_3 = 539;
+const int KEY_4 = 540;
+const int KEY_5 = 541;
+const int KEY_6 = 542;
+const int KEY_7 = 543;
+const int KEY_8 = 544;
+const int KEY_9 = 545;
+const int KEY_A = 546;
+const int KEY_B = 547;
+const int KEY_C = 548;
+const int KEY_D = 549;
+const int KEY_E = 550;
+const int KEY_F = 551;
+const int KEY_G = 552;
+const int KEY_H = 553;
+const int KEY_I = 554;
+const int KEY_J = 555;
+const int KEY_K = 556;
+const int KEY_L = 557;
+const int KEY_M = 558;
+const int KEY_N = 559;
+const int KEY_O = 560;
+const int KEY_P = 561;
+const int KEY_Q = 562;
+const int KEY_R = 563;
+const int KEY_S = 564;
+const int KEY_T = 565;
+const int KEY_U = 566;
+const int KEY_V = 567;
+const int KEY_W = 568;
+const int KEY_X = 569;
+const int KEY_Y = 570;
+const int KEY_Z = 571;
+const int KEY_F1 = 572;
+const int KEY_F2 = 573;
+const int KEY_F3 = 574;
+const int KEY_F4 = 575;
+const int KEY_F5 = 576;
+const int KEY_F6 = 577;
+const int KEY_F7 = 578;
+const int KEY_F8 = 579;
+const int KEY_F9 = 580;
+const int KEY_F10 = 581;
+const int KEY_F11 = 582;
+const int KEY_F12 = 583;
+const int KEY_F13 = 584;
+const int KEY_F14 = 585;
+const int KEY_F15 = 586;
+const int KEY_F16 = 587;
+const int KEY_F17 = 588;
+const int KEY_F18 = 589;
+const int KEY_F19 = 590;
+const int KEY_F20 = 591;
+const int KEY_F21 = 592;
+const int KEY_F22 = 593;
+const int KEY_F23 = 594;
+const int KEY_F24 = 595;
+const int KEY_APOSTROPHE = 596;
+const int KEY_COMMA = 597;
+const int KEY_MINUS = 598;
+const int KEY_PERIOD = 599;
+const int KEY_SLASH = 600;
+const int KEY_SEMICOLON = 601;
+const int KEY_EQUAL = 602;
+const int KEY_LEFT_BRACKET = 603;
+const int KEY_BACKSLASH = 604;
+const int KEY_RIGHT_BRACKET = 605;
+const int KEY_GRAVE_ACCENT = 606;
+const int KEY_CAPS_LOCK = 607;
+const int KEY_SCROLL_LOCK = 608;
+const int KEY_NUM_LOCK = 609;
+const int KEY_PRINT_SCREEN = 610;
+const int KEY_PAUSE = 611;
+const int KEY_KEYPAD0 = 612;
+const int KEY_KEYPAD1 = 613;
+const int KEY_KEYPAD2 = 614;
+const int KEY_KEYPAD3 = 615;
+const int KEY_KEYPAD4 = 616;
+const int KEY_KEYPAD5 = 617;
+const int KEY_KEYPAD6 = 618;
+const int KEY_KEYPAD7 = 619;
+const int KEY_KEYPAD8 = 620;
+const int KEY_KEYPAD9 = 621;
+const int KEY_KEYPAD_DECIMAL = 622;
+const int KEY_KEYPAD_DIVIDE = 623;
+const int KEY_KEYPAD_MULTIPLY = 624;
+const int KEY_KEYPAD_SUBTRACT = 625;
+const int KEY_KEYPAD_ADD = 626;
+const int KEY_KEYPAD_ENTER = 627;
+const int KEY_KEYPAD_EQUAL = 628;
+const int KEY_APP_BACK = 629;
+const int KEY_APP_FORWARD = 630;
+const int KEY_OEM102 = 631;
+const int KEY_GAMEPAD_START = 632;
+const int KEY_GAMEPAD_BACK = 633;
+const int KEY_GAMEPAD_FACE_LEFT = 634;
+const int KEY_GAMEPAD_FACE_RIGHT = 635;
+const int KEY_GAMEPAD_FACE_UP = 636;
+const int KEY_GAMEPAD_FACE_DOWN = 637;
+const int KEY_GAMEPAD_DPAD_LEFT = 638;
+const int KEY_GAMEPAD_DPAD_RIGHT = 639;
+const int KEY_GAMEPAD_DPAD_UP = 640;
+const int KEY_GAMEPAD_DPAD_DOWN = 641;
+const int KEY_GAMEPAD_L1 = 642;
+const int KEY_GAMEPAD_R1 = 643;
+const int KEY_GAMEPAD_L2 = 644;
+const int KEY_GAMEPAD_R2 = 645;
+const int KEY_GAMEPAD_L3 = 646;
+const int KEY_GAMEPAD_R3 = 647;
+const int KEY_GAMEPAD_L_STICK_LEFT = 648;
+const int KEY_GAMEPAD_L_STICK_RIGHT = 649;
+const int KEY_GAMEPAD_L_STICK_UP = 650;
+const int KEY_GAMEPAD_L_STICK_DOWN = 651;
+const int KEY_GAMEPAD_R_STICK_LEFT = 652;
+const int KEY_GAMEPAD_R_STICK_RIGHT = 653;
+const int KEY_GAMEPAD_R_STICK_UP = 654;
+const int KEY_GAMEPAD_R_STICK_DOWN = 655;
+const int KEY_MOUSE_LEFT = 656;
+const int KEY_MOUSE_RIGHT = 657;
+const int KEY_MOUSE_MIDDLE = 658;
+const int KEY_MOUSE_X1 = 659;
+const int KEY_MOUSE_X2 = 660;
+const int KEY_MOUSE_WHEEL_X = 661;
+const int KEY_MOUSE_WHEEL_Y = 662;
+const int KEY_RESERVED_FOR_MOD_CTRL = 663;
+const int KEY_RESERVED_FOR_MOD_SHIFT = 664;
+const int KEY_RESERVED_FOR_MOD_ALT = 665;
+const int KEY_RESERVED_FOR_MOD_SUPER = 666;
+const int KEY_NAMED_KEY_END = 667;
+const int KEY_NAMED_KEY_COUNT = 155;
+const int KEY_IM_GUI_MOD_NONE = 0;
+const int KEY_IM_GUI_MOD_CTRL = 4096;
+const int KEY_IM_GUI_MOD_SHIFT = 8192;
+const int KEY_IM_GUI_MOD_ALT = 16384;
+const int KEY_IM_GUI_MOD_SUPER = 32768;
+const int KEY_IM_GUI_MOD_MASK_ = 61440;
+const int KEY_IM_GUI_MOD_SHORTCUT = 4096;
+
+// functions
+extern fn Context create_context(FontAtlas shared_font_atlas) @cname("ImGui_CreateContext");
+extern fn void destroy_context(Context ctx) @cname("ImGui_DestroyContext");
+extern fn Context get_current_context() @cname("ImGui_GetCurrentContext");
+extern fn void set_current_context(Context ctx) @cname("ImGui_SetCurrentContext");
+extern fn Io get_io() @cname("ImGui_GetIO");
+extern fn Style get_style() @cname("ImGui_GetStyle");
+extern fn void new_frame() @cname("ImGui_NewFrame");
+extern fn void end_frame() @cname("ImGui_EndFrame");
+extern fn void render() @cname("ImGui_Render");
+extern fn DrawData get_draw_data() @cname("ImGui_GetDrawData");
+extern fn void style_colors_dark(Style dst) @cname("ImGui_StyleColorsDark");
+extern fn void style_colors_light(Style dst) @cname("ImGui_StyleColorsLight");
+extern fn void style_colors_classic(Style dst) @cname("ImGui_StyleColorsClassic");
+extern fn void show_demo_window(bool* p_open) @cname("ImGui_ShowDemoWindow");
+extern fn void show_metrics_window(bool* p_open) @cname("ImGui_ShowMetricsWindow");
+extern fn void show_about_window(bool* p_open) @cname("ImGui_ShowAboutWindow");
+extern fn bool begin(ZString name, bool* p_open, WindowFlags flags) @cname("ImGui_Begin");
+extern fn void end() @cname("ImGui_End");
+extern fn bool begin_child(ZString str_id, Vec2 size, ChildFlags child_flags, WindowFlags window_flags) @cname("ImGui_BeginChild");
+extern fn void end_child() @cname("ImGui_EndChild");
+extern fn bool is_window_focused(FocusedFlags flags) @cname("ImGui_IsWindowFocused");
+extern fn bool is_window_hovered(HoveredFlags flags) @cname("ImGui_IsWindowHovered");
+extern fn Vec2 get_window_pos() @cname("ImGui_GetWindowPos");
+extern fn Vec2 get_window_size() @cname("ImGui_GetWindowSize");
+extern fn void set_next_window_pos(Vec2 pos, Cond cond) @cname("ImGui_SetNextWindowPos");
+extern fn void set_next_window_size(Vec2 size, Cond cond) @cname("ImGui_SetNextWindowSize");
+extern fn void set_next_window_focus() @cname("ImGui_SetNextWindowFocus");
+extern fn void set_window_font_scale(float scale) @cname("ImGui_SetWindowFontScale");
+extern fn void text(ZString fmt, ...) @cname("ImGui_Text");
+extern fn void text_unformatted(ZString text) @cname("ImGui_TextUnformatted");
+extern fn void text_colored(Vec4 col, ZString fmt, ...) @cname("ImGui_TextColored");
+extern fn void text_disabled(ZString fmt, ...) @cname("ImGui_TextDisabled");
+extern fn void text_wrapped(ZString fmt, ...) @cname("ImGui_TextWrapped");
+extern fn void label_text(ZString label, ZString fmt, ...) @cname("ImGui_LabelText");
+extern fn void bullet_text(ZString fmt, ...) @cname("ImGui_BulletText");
+extern fn bool button(ZString label) @cname("ImGui_Button");
+extern fn bool small_button(ZString label) @cname("ImGui_SmallButton");
+extern fn bool invisible_button(ZString str_id, Vec2 size, ButtonFlags flags) @cname("ImGui_InvisibleButton");
+extern fn bool arrow_button(ZString str_id, Dir dir) @cname("ImGui_ArrowButton");
+extern fn bool checkbox(ZString label, bool* v) @cname("ImGui_Checkbox");
+extern fn bool radio_button(ZString label, bool active) @cname("ImGui_RadioButton");
+extern fn void progress_bar(float fraction, Vec2 size_arg, ZString overlay) @cname("ImGui_ProgressBar");
+extern fn void bullet() @cname("ImGui_Bullet");
+extern fn bool text_link(ZString label) @cname("ImGui_TextLink");
+extern fn bool text_link_open_url(ZString label) @cname("ImGui_TextLinkOpenURL");
+extern fn bool slider_float(ZString label, float* v, float v_min, float v_max) @cname("ImGui_SliderFloat");
+extern fn bool slider_int(ZString label, int* v, int v_min, int v_max) @cname("ImGui_SliderInt");
+extern fn bool drag_float(ZString label, float* v) @cname("ImGui_DragFloat");
+extern fn bool drag_int(ZString label, int* v) @cname("ImGui_DragInt");
+extern fn bool input_text(ZString label, char* buf, usz buf_size, InputTextFlags flags) @cname("ImGui_InputText");
+extern fn bool input_text_ex(ZString label, char* buf, usz buf_size, InputTextFlags flags, InputTextCallback callback, void* user_data) @cname("ImGui_InputTextEx");
+extern fn bool input_float(ZString label, float* v) @cname("ImGui_InputFloat");
+extern fn bool input_int(ZString label, int* v) @cname("ImGui_InputInt");
+extern fn bool color_edit3(ZString label, float* col, ColorEditFlags flags) @cname("ImGui_ColorEdit3");
+extern fn bool color_edit4(ZString label, float* col, ColorEditFlags flags) @cname("ImGui_ColorEdit4");
+extern fn bool color_picker3(ZString label, float* col, ColorEditFlags flags) @cname("ImGui_ColorPicker3");
+extern fn bool color_picker4(ZString label, float* col, ColorEditFlags flags, float* ref_col) @cname("ImGui_ColorPicker4");
+extern fn bool begin_combo(ZString label, ZString preview_value, ComboFlags flags) @cname("ImGui_BeginCombo");
+extern fn void end_combo() @cname("ImGui_EndCombo");
+extern fn bool tree_node(ZString label) @cname("ImGui_TreeNode");
+extern fn bool tree_node_ex(ZString label, TreeNodeFlags flags) @cname("ImGui_TreeNodeEx");
+extern fn void tree_pop() @cname("ImGui_TreePop");
+extern fn bool collapsing_header(ZString label, TreeNodeFlags flags) @cname("ImGui_CollapsingHeader");
+extern fn bool selectable(ZString label) @cname("ImGui_Selectable");
+extern fn void separator() @cname("ImGui_Separator");
+extern fn void same_line() @cname("ImGui_SameLine");
+extern fn void same_line_ex(float offset_from_start_x, float spacing) @cname("ImGui_SameLineEx");
+extern fn void new_line() @cname("ImGui_NewLine");
+extern fn void spacing() @cname("ImGui_Spacing");
+extern fn void indent() @cname("ImGui_Indent");
+extern fn void unindent() @cname("ImGui_Unindent");
+extern fn Vec2 get_cursor_pos() @cname("ImGui_GetCursorPos");
+extern fn void set_cursor_pos(Vec2 local_pos) @cname("ImGui_SetCursorPos");
+extern fn Vec2 get_item_rect_min() @cname("ImGui_GetItemRectMin");
+extern fn Vec2 get_item_rect_max() @cname("ImGui_GetItemRectMax");
+extern fn Vec2 get_item_rect_size() @cname("ImGui_GetItemRectSize");
+extern fn bool is_item_hovered(HoveredFlags flags) @cname("ImGui_IsItemHovered");
+extern fn bool is_item_clicked() @cname("ImGui_IsItemClicked");
+extern fn bool is_item_active() @cname("ImGui_IsItemActive");
+extern fn bool begin_menu_bar() @cname("ImGui_BeginMenuBar");
+extern fn void end_menu_bar() @cname("ImGui_EndMenuBar");
+extern fn bool begin_main_menu_bar() @cname("ImGui_BeginMainMenuBar");
+extern fn void end_main_menu_bar() @cname("ImGui_EndMainMenuBar");
+extern fn bool begin_menu(ZString label) @cname("ImGui_BeginMenu");
+extern fn void end_menu() @cname("ImGui_EndMenu");
+extern fn bool menu_item(ZString label) @cname("ImGui_MenuItem");
+extern fn bool menu_item_ex(ZString label, ZString shortcut, bool selected, bool enabled) @cname("ImGui_MenuItemEx");
+extern fn Id dock_space(Id dockspace_id) @cname("ImGui_DockSpace");
+extern fn Id dock_space_ex(Id dockspace_id, Vec2 size, DockNodeFlags flags, WindowClass* window_class) @cname("ImGui_DockSpaceEx");
+extern fn Id dock_space_over_viewport() @cname("ImGui_DockSpaceOverViewport");
+extern fn Id dock_space_over_viewport_ex(Id dockspace_id, Viewport* viewport, DockNodeFlags flags, WindowClass* window_class) @cname("ImGui_DockSpaceOverViewportEx");
+extern fn void set_next_window_dock_id(Id dock_id, Cond cond) @cname("ImGui_SetNextWindowDockID");
+extern fn Id get_window_dock_id() @cname("ImGui_GetWindowDockID");
+extern fn bool is_window_docked() @cname("ImGui_IsWindowDocked");
+extern fn Viewport* get_main_viewport() @cname("ImGui_GetMainViewport");
+extern fn bool begin_table(ZString str_id, int columns, TableFlags flags) @cname("ImGui_BeginTable");
+extern fn bool begin_table_ex(ZString str_id, int columns, TableFlags flags, Vec2 outer_size, float inner_width) @cname("ImGui_BeginTableEx");
+extern fn void end_table() @cname("ImGui_EndTable");
+extern fn void table_next_row() @cname("ImGui_TableNextRow");
+extern fn void table_next_row_ex(TableRowFlags row_flags, float min_row_height) @cname("ImGui_TableNextRowEx");
+extern fn bool table_next_column() @cname("ImGui_TableNextColumn");
+extern fn bool table_set_column_index(int column_n) @cname("ImGui_TableSetColumnIndex");
+extern fn void table_setup_column(ZString label, TableColumnFlags flags) @cname("ImGui_TableSetupColumn");
+extern fn void table_setup_column_ex(ZString label, TableColumnFlags flags, float init_width_or_weight, Id user_id) @cname("ImGui_TableSetupColumnEx");
+extern fn void table_setup_scroll_freeze(int cols, int rows) @cname("ImGui_TableSetupScrollFreeze");
+extern fn void table_header(ZString label) @cname("ImGui_TableHeader");
+extern fn void table_headers_row() @cname("ImGui_TableHeadersRow");
+extern fn void table_set_column_enabled(int column_n, bool v) @cname("ImGui_TableSetColumnEnabled");
+extern fn void table_set_bg_color(TableBgTarget target, uint color, int column_n) @cname("ImGui_TableSetBgColor");
+extern fn bool begin_drag_drop_source(DragDropFlags flags) @cname("ImGui_BeginDragDropSource");
+extern fn bool set_drag_drop_payload(ZString type_, void* data, usz sz_, Cond cond) @cname("ImGui_SetDragDropPayload");
+extern fn void end_drag_drop_source() @cname("ImGui_EndDragDropSource");
+extern fn bool begin_drag_drop_target() @cname("ImGui_BeginDragDropTarget");
+extern fn Payload* accept_drag_drop_payload(ZString type_, DragDropFlags flags) @cname("ImGui_AcceptDragDropPayload");
+extern fn void end_drag_drop_target() @cname("ImGui_EndDragDropTarget");
+extern fn Payload* get_drag_drop_payload() @cname("ImGui_GetDragDropPayload");
+extern fn DrawList get_window_draw_list() @cname("ImGui_GetWindowDrawList");
+extern fn DrawList get_foreground_draw_list() @cname("ImGui_GetForegroundDrawList");
+extern fn DrawList get_background_draw_list() @cname("ImGui_GetBackgroundDrawList");
+extern fn void update_platform_windows() @cname("ImGui_UpdatePlatformWindows");
+extern fn void render_platform_windows_default() @cname("ImGui_RenderPlatformWindowsDefault");
+extern fn void render_platform_windows_default_ex(void* platform_render_arg, void* renderer_render_arg) @cname("ImGui_RenderPlatformWindowsDefaultEx");
+extern fn void destroy_platform_windows() @cname("ImGui_DestroyPlatformWindows");
+extern fn Viewport* find_viewport_by_id(Id viewport_id) @cname("ImGui_FindViewportByID");
+extern fn void push_style_color(Col idx, uint col) @cname("ImGui_PushStyleColor");
+extern fn void push_style_color_im_vec4(Col idx, Vec4 col) @cname("ImGui_PushStyleColorImVec4");
+extern fn void pop_style_color() @cname("ImGui_PopStyleColor");
+extern fn void pop_style_color_ex(int count) @cname("ImGui_PopStyleColorEx");
+extern fn void push_style_var(StyleVar idx, float val) @cname("ImGui_PushStyleVar");
+extern fn void push_style_var_im_vec2(StyleVar idx, Vec2 val) @cname("ImGui_PushStyleVarImVec2");
+extern fn void pop_style_var() @cname("ImGui_PopStyleVar");
+extern fn void pop_style_var_ex(int count) @cname("ImGui_PopStyleVarEx");
+extern fn uint get_color_u32(Col idx) @cname("ImGui_GetColorU32");
+extern fn uint get_color_u32_ex(Col idx, float alpha_mul) @cname("ImGui_GetColorU32Ex");
+extern fn uint get_color_u32_im_vec4(Vec4 col) @cname("ImGui_GetColorU32ImVec4");
+extern fn uint get_color_u32_im_u32(uint col) @cname("ImGui_GetColorU32ImU32");
+extern fn uint get_color_u32_im_u32_ex(uint col, float alpha_mul) @cname("ImGui_GetColorU32ImU32Ex");
+extern fn Vec4* get_style_color_vec4(Col idx) @cname("ImGui_GetStyleColorVec4");
+extern fn double get_time() @cname("ImGui_GetTime");
+extern fn int get_frame_count() @cname("ImGui_GetFrameCount");
+extern fn bool is_mouse_down(MouseButton button) @cname("ImGui_IsMouseDown");
+extern fn bool is_mouse_clicked(MouseButton button) @cname("ImGui_IsMouseClicked");
+extern fn bool is_mouse_clicked_ex(MouseButton button, bool repeat) @cname("ImGui_IsMouseClickedEx");
+extern fn bool is_mouse_released(MouseButton button) @cname("ImGui_IsMouseReleased");
+extern fn bool is_mouse_released_with_delay(MouseButton button, float delay) @cname("ImGui_IsMouseReleasedWithDelay");
+extern fn bool is_mouse_double_clicked(MouseButton button) @cname("ImGui_IsMouseDoubleClicked");
+extern fn int get_mouse_clicked_count(MouseButton button) @cname("ImGui_GetMouseClickedCount");
+extern fn bool is_mouse_hovering_rect(Vec2 r_min, Vec2 r_max) @cname("ImGui_IsMouseHoveringRect");
+extern fn bool is_mouse_hovering_rect_ex(Vec2 r_min, Vec2 r_max, bool clip) @cname("ImGui_IsMouseHoveringRectEx");
+extern fn bool is_mouse_pos_valid(Vec2* mouse_pos) @cname("ImGui_IsMousePosValid");
+extern fn bool is_any_mouse_down() @cname("ImGui_IsAnyMouseDown");
+extern fn Vec2 get_mouse_pos() @cname("ImGui_GetMousePos");
+extern fn Vec2 get_mouse_pos_on_opening_current_popup() @cname("ImGui_GetMousePosOnOpeningCurrentPopup");
+extern fn bool is_mouse_dragging(MouseButton button, float lock_threshold) @cname("ImGui_IsMouseDragging");
+extern fn Vec2 get_mouse_drag_delta(MouseButton button, float lock_threshold) @cname("ImGui_GetMouseDragDelta");
+extern fn MouseCursor get_mouse_cursor() @cname("ImGui_GetMouseCursor");
+extern fn bool is_any_item_hovered() @cname("ImGui_IsAnyItemHovered");
+extern fn bool is_any_item_active() @cname("ImGui_IsAnyItemActive");
+extern fn bool is_any_item_focused() @cname("ImGui_IsAnyItemFocused");
+extern fn bool is_key_down(Key key) @cname("ImGui_IsKeyDown");
+extern fn bool is_key_pressed(Key key) @cname("ImGui_IsKeyPressed");
+extern fn bool is_key_pressed_ex(Key key, bool repeat) @cname("ImGui_IsKeyPressedEx");
+extern fn bool is_key_released(Key key) @cname("ImGui_IsKeyReleased");
+extern fn bool is_key_chord_pressed(KeyChord key_chord) @cname("ImGui_IsKeyChordPressed");
+extern fn int get_key_pressed_amount(Key key, float repeat_delay, float rate) @cname("ImGui_GetKeyPressedAmount");
+extern fn ZString get_key_name(Key key) @cname("ImGui_GetKeyName");
+extern fn void set_keyboard_focus_here() @cname("ImGui_SetKeyboardFocusHere");
+extern fn void set_keyboard_focus_here_ex(int offset) @cname("ImGui_SetKeyboardFocusHereEx");
+extern fn void set_next_frame_want_capture_keyboard(bool want_capture_keyboard) @cname("ImGui_SetNextFrameWantCaptureKeyboard");
+extern fn void set_next_frame_want_capture_mouse(bool want_capture_mouse) @cname("ImGui_SetNextFrameWantCaptureMouse");
+extern fn bool begin_popup(ZString str_id, WindowFlags flags) @cname("ImGui_BeginPopup");
+extern fn bool begin_popup_modal(ZString name, bool* p_open, WindowFlags flags) @cname("ImGui_BeginPopupModal");
+extern fn void end_popup() @cname("ImGui_EndPopup");
+extern fn void open_popup(ZString str_id, PopupFlags popup_flags) @cname("ImGui_OpenPopup");
+extern fn void open_popup_id(Id id, PopupFlags popup_flags) @cname("ImGui_OpenPopupID");
+extern fn void open_popup_on_item_click(ZString str_id, PopupFlags popup_flags) @cname("ImGui_OpenPopupOnItemClick");
+extern fn void close_current_popup() @cname("ImGui_CloseCurrentPopup");
+extern fn bool begin_popup_context_item() @cname("ImGui_BeginPopupContextItem");
+extern fn bool begin_popup_context_item_ex(ZString str_id, PopupFlags popup_flags) @cname("ImGui_BeginPopupContextItemEx");
+extern fn bool begin_popup_context_window() @cname("ImGui_BeginPopupContextWindow");
+extern fn bool begin_popup_context_window_ex(ZString str_id, PopupFlags popup_flags) @cname("ImGui_BeginPopupContextWindowEx");
+extern fn bool begin_popup_context_void() @cname("ImGui_BeginPopupContextVoid");
+extern fn bool begin_popup_context_void_ex(ZString str_id, PopupFlags popup_flags) @cname("ImGui_BeginPopupContextVoidEx");
+extern fn bool is_popup_open(ZString str_id, PopupFlags flags) @cname("ImGui_IsPopupOpen");
+extern fn bool begin_tab_bar(ZString str_id, TabBarFlags flags) @cname("ImGui_BeginTabBar");
+extern fn void end_tab_bar() @cname("ImGui_EndTabBar");
+extern fn bool begin_tab_item(ZString label, bool* p_open, TabItemFlags flags) @cname("ImGui_BeginTabItem");
+extern fn void end_tab_item() @cname("ImGui_EndTabItem");
+extern fn bool tab_item_button(ZString label, TabItemFlags flags) @cname("ImGui_TabItemButton");
+extern fn void set_tab_item_closed(ZString tab_or_docked_window_label) @cname("ImGui_SetTabItemClosed");
+extern fn bool begin_tooltip() @cname("ImGui_BeginTooltip");
+extern fn void end_tooltip() @cname("ImGui_EndTooltip");
+extern fn void set_tooltip(ZString fmt, ...) @cname("ImGui_SetTooltip");
+extern fn bool begin_item_tooltip() @cname("ImGui_BeginItemTooltip");
+extern fn void set_item_tooltip(ZString fmt, ...) @cname("ImGui_SetItemTooltip");
+extern fn void push_font(Font font) @cname("ImGui_PushFont");
+extern fn void push_font_float(Font font, float font_size_base_unscaled) @cname("ImGui_PushFontFloat");
+extern fn void pop_font() @cname("ImGui_PopFont");
+extern fn Font get_font() @cname("ImGui_GetFont");
+extern fn FontBaked get_font_baked() @cname("ImGui_GetFontBaked");
+extern fn float get_font_size() @cname("ImGui_GetFontSize");
+extern fn Vec2 get_font_tex_uv_white_pixel() @cname("ImGui_GetFontTexUvWhitePixel");
+extern fn void push_id(ZString str_id) @cname("ImGui_PushID");
+extern fn void push_id_str(ZString str_id_begin, ZString str_id_end) @cname("ImGui_PushIDStr");
+extern fn void push_id_ptr(void* ptr_id) @cname("ImGui_PushIDPtr");
+extern fn void push_id_int(int int_id) @cname("ImGui_PushIDInt");
+extern fn void pop_id() @cname("ImGui_PopID");
+extern fn Id get_id(ZString str_id) @cname("ImGui_GetID");
+extern fn Id get_id_str(ZString str_id_begin, ZString str_id_end) @cname("ImGui_GetIDStr");
+extern fn Id get_id_ptr(void* ptr_id) @cname("ImGui_GetIDPtr");
+extern fn Id get_id_int(int int_id) @cname("ImGui_GetIDInt");
+extern fn void push_item_flag(ItemFlags option, bool enabled) @cname("ImGui_PushItemFlag");
+extern fn void pop_item_flag() @cname("ImGui_PopItemFlag");
+extern fn void push_item_width(float item_width) @cname("ImGui_PushItemWidth");
+extern fn void pop_item_width() @cname("ImGui_PopItemWidth");
+extern fn void push_text_wrap_pos(float wrap_local_pos_x) @cname("ImGui_PushTextWrapPos");
+extern fn void pop_text_wrap_pos() @cname("ImGui_PopTextWrapPos");
+extern fn void push_clip_rect(Vec2 clip_rect_min, Vec2 clip_rect_max, bool intersect_with_current_clip_rect) @cname("ImGui_PushClipRect");
+extern fn void pop_clip_rect() @cname("ImGui_PopClipRect");
+extern fn void begin_disabled(bool disabled) @cname("ImGui_BeginDisabled");
+extern fn void end_disabled() @cname("ImGui_EndDisabled");
+extern fn void begin_group() @cname("ImGui_BeginGroup");
+extern fn void end_group() @cname("ImGui_EndGroup");
+extern fn void set_next_window_pos_ex(Vec2 pos, Cond cond, Vec2 pivot) @cname("ImGui_SetNextWindowPosEx");
+extern fn void set_next_window_size_constraints(Vec2 size_min, Vec2 size_max, SizeCallback custom_callback, void* custom_callback_data) @cname("ImGui_SetNextWindowSizeConstraints");
+extern fn void set_next_window_content_size(Vec2 size) @cname("ImGui_SetNextWindowContentSize");
+extern fn void set_next_window_collapsed(bool collapsed, Cond cond) @cname("ImGui_SetNextWindowCollapsed");
+extern fn void set_next_window_bg_alpha(float alpha) @cname("ImGui_SetNextWindowBgAlpha");
+extern fn void set_next_window_scroll(Vec2 scroll) @cname("ImGui_SetNextWindowScroll");
+extern fn void set_next_window_viewport(Id viewport_id) @cname("ImGui_SetNextWindowViewport");
+extern fn void set_next_window_class(WindowClass* window_class) @cname("ImGui_SetNextWindowClass");
+extern fn void set_window_pos(Vec2 pos, Cond cond) @cname("ImGui_SetWindowPos");
+extern fn void set_window_size(Vec2 size, Cond cond) @cname("ImGui_SetWindowSize");
+extern fn void set_window_collapsed(bool collapsed, Cond cond) @cname("ImGui_SetWindowCollapsed");
+extern fn void set_window_focus() @cname("ImGui_SetWindowFocus");
+extern fn void set_window_pos_str(ZString name, Vec2 pos, Cond cond) @cname("ImGui_SetWindowPosStr");
+extern fn void set_window_size_str(ZString name, Vec2 size, Cond cond) @cname("ImGui_SetWindowSizeStr");
+extern fn void set_window_collapsed_str(ZString name, bool collapsed, Cond cond) @cname("ImGui_SetWindowCollapsedStr");
+extern fn void set_window_focus_str(ZString name) @cname("ImGui_SetWindowFocusStr");
+extern fn float get_window_width() @cname("ImGui_GetWindowWidth");
+extern fn float get_window_height() @cname("ImGui_GetWindowHeight");
+extern fn float get_window_dpi_scale() @cname("ImGui_GetWindowDpiScale");
+extern fn Viewport* get_window_viewport() @cname("ImGui_GetWindowViewport");
+extern fn Vec2 get_window_content_region_min() @cname("ImGui_GetWindowContentRegionMin");
+extern fn Vec2 get_window_content_region_max() @cname("ImGui_GetWindowContentRegionMax");
+extern fn bool is_window_appearing() @cname("ImGui_IsWindowAppearing");
+extern fn bool is_window_collapsed() @cname("ImGui_IsWindowCollapsed");
+extern fn float get_scroll_x() @cname("ImGui_GetScrollX");
+extern fn float get_scroll_y() @cname("ImGui_GetScrollY");
+extern fn float get_scroll_max_x() @cname("ImGui_GetScrollMaxX");
+extern fn float get_scroll_max_y() @cname("ImGui_GetScrollMaxY");
+extern fn void set_scroll_x(float scroll_x) @cname("ImGui_SetScrollX");
+extern fn void set_scroll_y(float scroll_y) @cname("ImGui_SetScrollY");
+extern fn void set_scroll_here_x(float center_x_ratio) @cname("ImGui_SetScrollHereX");
+extern fn void set_scroll_here_y(float center_y_ratio) @cname("ImGui_SetScrollHereY");
+extern fn void set_scroll_from_pos_x(float local_x, float center_x_ratio) @cname("ImGui_SetScrollFromPosX");
+extern fn void set_scroll_from_pos_y(float local_y, float center_y_ratio) @cname("ImGui_SetScrollFromPosY");
+extern fn float get_cursor_pos_x() @cname("ImGui_GetCursorPosX");
+extern fn float get_cursor_pos_y() @cname("ImGui_GetCursorPosY");
+extern fn void set_cursor_pos_x(float local_x) @cname("ImGui_SetCursorPosX");
+extern fn void set_cursor_pos_y(float local_y) @cname("ImGui_SetCursorPosY");
+extern fn Vec2 get_cursor_screen_pos() @cname("ImGui_GetCursorScreenPos");
+extern fn void set_cursor_screen_pos(Vec2 pos) @cname("ImGui_SetCursorScreenPos");
+extern fn Vec2 get_cursor_start_pos() @cname("ImGui_GetCursorStartPos");
+extern fn Vec2 get_content_region_avail() @cname("ImGui_GetContentRegionAvail");
+extern fn float get_frame_height() @cname("ImGui_GetFrameHeight");
+extern fn float get_frame_height_with_spacing() @cname("ImGui_GetFrameHeightWithSpacing");
+extern fn float get_text_line_height() @cname("ImGui_GetTextLineHeight");
+extern fn float get_text_line_height_with_spacing() @cname("ImGui_GetTextLineHeightWithSpacing");
+extern fn Vec2 calc_text_size(ZString text) @cname("ImGui_CalcTextSize");
+extern fn Vec2 calc_text_size_ex(ZString text, ZString text_end, bool hide_text_after_double_hash, float wrap_width) @cname("ImGui_CalcTextSizeEx");
+extern fn float calc_item_width() @cname("ImGui_CalcItemWidth");
+extern fn void align_text_to_frame_padding() @cname("ImGui_AlignTextToFramePadding");
+extern fn Id get_item_id() @cname("ImGui_GetItemID");
+extern fn void set_next_item_width(float item_width) @cname("ImGui_SetNextItemWidth");
+extern fn void set_next_item_open(bool is_open, Cond cond) @cname("ImGui_SetNextItemOpen");
+extern fn void set_next_item_storage_id(Id storage_id) @cname("ImGui_SetNextItemStorageID");
+extern fn void set_next_item_selection_user_data(SelectionUserData selection_user_data) @cname("ImGui_SetNextItemSelectionUserData");
+extern fn void set_next_item_allow_overlap() @cname("ImGui_SetNextItemAllowOverlap");
+extern fn void set_next_item_shortcut(KeyChord key_chord, InputFlags flags) @cname("ImGui_SetNextItemShortcut");
+extern fn void dummy(Vec2 size) @cname("ImGui_Dummy");
+extern fn bool is_rect_visible(Vec2 rect_min, Vec2 rect_max) @cname("ImGui_IsRectVisible");
+extern fn bool is_rect_visible_by_size(Vec2 size) @cname("ImGui_IsRectVisibleBySize");
+extern fn bool tree_node_ex_str(ZString str_id, TreeNodeFlags flags, ZString fmt, ...) @cname("ImGui_TreeNodeExStr");
+extern fn bool tree_node_ex_ptr(void* ptr_id, TreeNodeFlags flags, ZString fmt, ...) @cname("ImGui_TreeNodeExPtr");
+extern fn void tree_push(ZString str_id) @cname("ImGui_TreePush");
+extern fn void tree_push_ptr(void* ptr_id) @cname("ImGui_TreePushPtr");
+extern fn float get_tree_node_to_label_spacing() @cname("ImGui_GetTreeNodeToLabelSpacing");
+extern fn bool drag_float2(ZString label, float* v) @cname("ImGui_DragFloat2");
+extern fn bool drag_float2_ex(ZString label, float* v, float v_speed, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_DragFloat2Ex");
+extern fn bool drag_float3(ZString label, float* v) @cname("ImGui_DragFloat3");
+extern fn bool drag_float3_ex(ZString label, float* v, float v_speed, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_DragFloat3Ex");
+extern fn bool drag_float4(ZString label, float* v) @cname("ImGui_DragFloat4");
+extern fn bool drag_float4_ex(ZString label, float* v, float v_speed, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_DragFloat4Ex");
+extern fn bool drag_int2(ZString label, int* v) @cname("ImGui_DragInt2");
+extern fn bool drag_int2_ex(ZString label, int* v, float v_speed, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_DragInt2Ex");
+extern fn bool drag_int3(ZString label, int* v) @cname("ImGui_DragInt3");
+extern fn bool drag_int3_ex(ZString label, int* v, float v_speed, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_DragInt3Ex");
+extern fn bool drag_int4(ZString label, int* v) @cname("ImGui_DragInt4");
+extern fn bool drag_int4_ex(ZString label, int* v, float v_speed, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_DragInt4Ex");
+extern fn bool slider_float2(ZString label, float* v, float v_min, float v_max) @cname("ImGui_SliderFloat2");
+extern fn bool slider_float2_ex(ZString label, float* v, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderFloat2Ex");
+extern fn bool slider_float3(ZString label, float* v, float v_min, float v_max) @cname("ImGui_SliderFloat3");
+extern fn bool slider_float3_ex(ZString label, float* v, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderFloat3Ex");
+extern fn bool slider_float4(ZString label, float* v, float v_min, float v_max) @cname("ImGui_SliderFloat4");
+extern fn bool slider_float4_ex(ZString label, float* v, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderFloat4Ex");
+extern fn bool slider_int2(ZString label, int* v, int v_min, int v_max) @cname("ImGui_SliderInt2");
+extern fn bool slider_int2_ex(ZString label, int* v, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderInt2Ex");
+extern fn bool slider_int3(ZString label, int* v, int v_min, int v_max) @cname("ImGui_SliderInt3");
+extern fn bool slider_int3_ex(ZString label, int* v, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderInt3Ex");
+extern fn bool slider_int4(ZString label, int* v, int v_min, int v_max) @cname("ImGui_SliderInt4");
+extern fn bool slider_int4_ex(ZString label, int* v, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderInt4Ex");
+extern fn bool input_float2(ZString label, float* v) @cname("ImGui_InputFloat2");
+extern fn bool input_float2_ex(ZString label, float* v, ZString format, InputTextFlags flags) @cname("ImGui_InputFloat2Ex");
+extern fn bool input_float3(ZString label, float* v) @cname("ImGui_InputFloat3");
+extern fn bool input_float3_ex(ZString label, float* v, ZString format, InputTextFlags flags) @cname("ImGui_InputFloat3Ex");
+extern fn bool input_float4(ZString label, float* v) @cname("ImGui_InputFloat4");
+extern fn bool input_float4_ex(ZString label, float* v, ZString format, InputTextFlags flags) @cname("ImGui_InputFloat4Ex");
+extern fn bool input_int2(ZString label, int* v, InputTextFlags flags) @cname("ImGui_InputInt2");
+extern fn bool input_int3(ZString label, int* v, InputTextFlags flags) @cname("ImGui_InputInt3");
+extern fn bool input_int4(ZString label, int* v, InputTextFlags flags) @cname("ImGui_InputInt4");
+extern fn bool drag_scalar(ZString label, DataType data_type, void* p_data) @cname("ImGui_DragScalar");
+extern fn bool drag_scalar_ex(ZString label, DataType data_type, void* p_data, float v_speed, void* p_min, void* p_max, ZString format, SliderFlags flags) @cname("ImGui_DragScalarEx");
+extern fn bool drag_scalar_n(ZString label, DataType data_type, void* p_data, int components) @cname("ImGui_DragScalarN");
+extern fn bool drag_scalar_n_ex(ZString label, DataType data_type, void* p_data, int components, float v_speed, void* p_min, void* p_max, ZString format, SliderFlags flags) @cname("ImGui_DragScalarNEx");
+extern fn bool input_scalar(ZString label, DataType data_type, void* p_data) @cname("ImGui_InputScalar");
+extern fn bool input_scalar_ex(ZString label, DataType data_type, void* p_data, void* p_step, void* p_step_fast, ZString format, InputTextFlags flags) @cname("ImGui_InputScalarEx");
+extern fn bool input_scalar_n(ZString label, DataType data_type, void* p_data, int components) @cname("ImGui_InputScalarN");
+extern fn bool input_scalar_n_ex(ZString label, DataType data_type, void* p_data, int components, void* p_step, void* p_step_fast, ZString format, InputTextFlags flags) @cname("ImGui_InputScalarNEx");
+extern fn bool slider_scalar(ZString label, DataType data_type, void* p_data, void* p_min, void* p_max) @cname("ImGui_SliderScalar");
+extern fn bool slider_scalar_ex(ZString label, DataType data_type, void* p_data, void* p_min, void* p_max, ZString format, SliderFlags flags) @cname("ImGui_SliderScalarEx");
+extern fn bool slider_scalar_n(ZString label, DataType data_type, void* p_data, int components, void* p_min, void* p_max) @cname("ImGui_SliderScalarN");
+extern fn bool slider_scalar_n_ex(ZString label, DataType data_type, void* p_data, int components, void* p_min, void* p_max, ZString format, SliderFlags flags) @cname("ImGui_SliderScalarNEx");
+extern fn bool v_slider_scalar(ZString label, Vec2 size, DataType data_type, void* p_data, void* p_min, void* p_max) @cname("ImGui_VSliderScalar");
+extern fn bool v_slider_scalar_ex(ZString label, Vec2 size, DataType data_type, void* p_data, void* p_min, void* p_max, ZString format, SliderFlags flags) @cname("ImGui_VSliderScalarEx");
+extern fn void table_angled_headers_row() @cname("ImGui_TableAngledHeadersRow");
+extern fn int table_get_column_count() @cname("ImGui_TableGetColumnCount");
+extern fn TableColumnFlags table_get_column_flags(int column_n) @cname("ImGui_TableGetColumnFlags");
+extern fn int table_get_column_index() @cname("ImGui_TableGetColumnIndex");
+extern fn ZString table_get_column_name(int column_n) @cname("ImGui_TableGetColumnName");
+extern fn int table_get_hovered_column() @cname("ImGui_TableGetHoveredColumn");
+extern fn int table_get_row_index() @cname("ImGui_TableGetRowIndex");
+extern fn TableSortSpecs* table_get_sort_specs() @cname("ImGui_TableGetSortSpecs");
+extern fn MultiSelectIO begin_multi_select(MultiSelectFlags flags) @cname("ImGui_BeginMultiSelect");
+extern fn MultiSelectIO begin_multi_select_ex(MultiSelectFlags flags, int selection_size, int items_count) @cname("ImGui_BeginMultiSelectEx");
+extern fn MultiSelectIO end_multi_select() @cname("ImGui_EndMultiSelect");
+extern fn void log_to_tty(int auto_open_depth) @cname("ImGui_LogToTTY");
+extern fn void log_to_file(int auto_open_depth, ZString filename) @cname("ImGui_LogToFile");
+extern fn void log_to_clipboard(int auto_open_depth) @cname("ImGui_LogToClipboard");
+extern fn void log_finish() @cname("ImGui_LogFinish");
+extern fn void log_text(ZString fmt, ...) @cname("ImGui_LogText");
+extern fn void log_buttons() @cname("ImGui_LogButtons");
+extern fn void load_ini_settings_from_disk(ZString ini_filename) @cname("ImGui_LoadIniSettingsFromDisk");
+extern fn void load_ini_settings_from_memory(ZString ini_data, usz ini_size) @cname("ImGui_LoadIniSettingsFromMemory");
+extern fn void save_ini_settings_to_disk(ZString ini_filename) @cname("ImGui_SaveIniSettingsToDisk");
+extern fn ZString save_ini_settings_to_memory(usz* out_ini_size) @cname("ImGui_SaveIniSettingsToMemory");
+extern fn void debug_log(ZString fmt, ...) @cname("ImGui_DebugLog");
+extern fn ZString get_version() @cname("ImGui_GetVersion");
+extern fn bool debug_check_version_and_data_layout(ZString version_str, usz sz_io, usz sz_style, usz sz_vec2, usz sz_vec4, usz sz_drawvert, usz sz_drawidx) @cname("ImGui_DebugCheckVersionAndDataLayout");
+extern fn void debug_text_encoding(ZString text) @cname("ImGui_DebugTextEncoding");
+extern fn ZString get_clipboard_text() @cname("ImGui_GetClipboardText");
+extern fn void set_clipboard_text(ZString text) @cname("ImGui_SetClipboardText");
+extern fn void* mem_alloc(usz size) @cname("ImGui_MemAlloc");
+extern fn void mem_free(void* ptr) @cname("ImGui_MemFree");
+extern fn PlatformIO get_platform_io() @cname("ImGui_GetPlatformIO");
+extern fn DrawListSharedData get_draw_list_shared_data() @cname("ImGui_GetDrawListSharedData");
+extern fn void show_debug_log_window(bool* p_open) @cname("ImGui_ShowDebugLogWindow");
+extern fn void show_id_stack_tool_window() @cname("ImGui_ShowIDStackToolWindow");
+extern fn void show_id_stack_tool_window_ex(bool* p_open) @cname("ImGui_ShowIDStackToolWindowEx");
+extern fn void show_style_editor(Style ref) @cname("ImGui_ShowStyleEditor");
+extern fn bool show_style_selector(ZString label) @cname("ImGui_ShowStyleSelector");
+extern fn void show_font_selector(ZString label) @cname("ImGui_ShowFontSelector");
+extern fn void show_user_guide() @cname("ImGui_ShowUserGuide");
+extern fn bool begin_child_id(Id id, Vec2 size, ChildFlags child_flags, WindowFlags window_flags) @cname("ImGui_BeginChildID");
+extern fn void push_style_var_x(StyleVar idx, float val_x) @cname("ImGui_PushStyleVarX");
+extern fn void push_style_var_y(StyleVar idx, float val_y) @cname("ImGui_PushStyleVarY");
+extern fn void indent_ex(float indent_w) @cname("ImGui_IndentEx");
+extern fn void unindent_ex(float indent_w) @cname("ImGui_UnindentEx");
+extern fn void text_unformatted_ex(ZString text, ZString text_end) @cname("ImGui_TextUnformattedEx");
+extern fn void separator_text(ZString label) @cname("ImGui_SeparatorText");
+extern fn bool button_ex(ZString label, Vec2 size) @cname("ImGui_ButtonEx");
+extern fn bool checkbox_flags_int_ptr(ZString label, int* flags, int flags_value) @cname("ImGui_CheckboxFlagsIntPtr");
+extern fn bool checkbox_flags_uint_ptr(ZString label, uint* flags, uint flags_value) @cname("ImGui_CheckboxFlagsUintPtr");
+extern fn bool radio_button_int_ptr(ZString label, int* v, int v_button) @cname("ImGui_RadioButtonIntPtr");
+extern fn bool text_link_open_url_ex(ZString label, ZString url) @cname("ImGui_TextLinkOpenURLEx");
+extern fn void image(TextureRef tex_ref, Vec2 image_size) @cname("ImGui_Image");
+extern fn void image_ex(TextureRef tex_ref, Vec2 image_size, Vec2 uv0, Vec2 uv1) @cname("ImGui_ImageEx");
+extern fn void image_with_bg(TextureRef tex_ref, Vec2 image_size) @cname("ImGui_ImageWithBg");
+extern fn void image_with_bg_ex(TextureRef tex_ref, Vec2 image_size, Vec2 uv0, Vec2 uv1, Vec4 bg_col, Vec4 tint_col) @cname("ImGui_ImageWithBgEx");
+extern fn bool image_button(ZString str_id, TextureRef tex_ref, Vec2 image_size) @cname("ImGui_ImageButton");
+extern fn bool image_button_ex(ZString str_id, TextureRef tex_ref, Vec2 image_size, Vec2 uv0, Vec2 uv1, Vec4 bg_col, Vec4 tint_col) @cname("ImGui_ImageButtonEx");
+extern fn bool combo_char(ZString label, int* current_item, ZString* items, int items_count) @cname("ImGui_ComboChar");
+extern fn bool combo_char_ex(ZString label, int* current_item, ZString* items, int items_count, int popup_max_height_in_items) @cname("ImGui_ComboCharEx");
+extern fn bool combo(ZString label, int* current_item, ZString items_separated_by_zeros) @cname("ImGui_Combo");
+extern fn bool combo_ex(ZString label, int* current_item, ZString items_separated_by_zeros, int popup_max_height_in_items) @cname("ImGui_ComboEx");
+extern fn bool combo_callback(ZString label, int* current_item, void* getter, void* user_data, int items_count) @cname("ImGui_ComboCallback");
+extern fn bool combo_callback_ex(ZString label, int* current_item, void* getter, void* user_data, int items_count, int popup_max_height_in_items) @cname("ImGui_ComboCallbackEx");
+extern fn bool drag_float_ex(ZString label, float* v, float v_speed, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_DragFloatEx");
+extern fn bool drag_float_range2(ZString label, float* v_current_min, float* v_current_max) @cname("ImGui_DragFloatRange2");
+extern fn bool drag_float_range2_ex(ZString label, float* v_current_min, float* v_current_max, float v_speed, float v_min, float v_max, ZString format, ZString format_max, SliderFlags flags) @cname("ImGui_DragFloatRange2Ex");
+extern fn bool drag_int_ex(ZString label, int* v, float v_speed, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_DragIntEx");
+extern fn bool drag_int_range2(ZString label, int* v_current_min, int* v_current_max) @cname("ImGui_DragIntRange2");
+extern fn bool drag_int_range2_ex(ZString label, int* v_current_min, int* v_current_max, float v_speed, int v_min, int v_max, ZString format, ZString format_max, SliderFlags flags) @cname("ImGui_DragIntRange2Ex");
+extern fn bool slider_float_ex(ZString label, float* v, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderFloatEx");
+extern fn bool slider_angle(ZString label, float* v_rad) @cname("ImGui_SliderAngle");
+extern fn bool slider_angle_ex(ZString label, float* v_rad, float v_degrees_min, float v_degrees_max, ZString format, SliderFlags flags) @cname("ImGui_SliderAngleEx");
+extern fn bool slider_int_ex(ZString label, int* v, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_SliderIntEx");
+extern fn bool v_slider_float(ZString label, Vec2 size, float* v, float v_min, float v_max) @cname("ImGui_VSliderFloat");
+extern fn bool v_slider_float_ex(ZString label, Vec2 size, float* v, float v_min, float v_max, ZString format, SliderFlags flags) @cname("ImGui_VSliderFloatEx");
+extern fn bool v_slider_int(ZString label, Vec2 size, int* v, int v_min, int v_max) @cname("ImGui_VSliderInt");
+extern fn bool v_slider_int_ex(ZString label, Vec2 size, int* v, int v_min, int v_max, ZString format, SliderFlags flags) @cname("ImGui_VSliderIntEx");
+extern fn bool input_text_multiline(ZString label, char* buf, usz buf_size) @cname("ImGui_InputTextMultiline");
+extern fn bool input_text_multiline_ex(ZString label, char* buf, usz buf_size, Vec2 size, InputTextFlags flags, InputTextCallback callback, void* user_data) @cname("ImGui_InputTextMultilineEx");
+extern fn bool input_text_with_hint(ZString label, ZString hint, char* buf, usz buf_size, InputTextFlags flags) @cname("ImGui_InputTextWithHint");
+extern fn bool input_text_with_hint_ex(ZString label, ZString hint, char* buf, usz buf_size, InputTextFlags flags, InputTextCallback callback, void* user_data) @cname("ImGui_InputTextWithHintEx");
+extern fn bool input_float_ex(ZString label, float* v, float step, float step_fast, ZString format, InputTextFlags flags) @cname("ImGui_InputFloatEx");
+extern fn bool input_int_ex(ZString label, int* v, int step, int step_fast, InputTextFlags flags) @cname("ImGui_InputIntEx");
+extern fn bool input_double(ZString label, double* v) @cname("ImGui_InputDouble");
+extern fn bool input_double_ex(ZString label, double* v, double step, double step_fast, ZString format, InputTextFlags flags) @cname("ImGui_InputDoubleEx");
+extern fn bool color_button(ZString desc_id, Vec4 col, ColorEditFlags flags) @cname("ImGui_ColorButton");
+extern fn bool color_button_ex(ZString desc_id, Vec4 col, ColorEditFlags flags, Vec2 size) @cname("ImGui_ColorButtonEx");
+extern fn void set_color_edit_options(ColorEditFlags flags) @cname("ImGui_SetColorEditOptions");
+extern fn bool tree_node_str(ZString str_id, ZString fmt, ...) @cname("ImGui_TreeNodeStr");
+extern fn bool tree_node_ptr(void* ptr_id, ZString fmt, ...) @cname("ImGui_TreeNodePtr");
+extern fn bool collapsing_header_bool_ptr(ZString label, bool* p_visible, TreeNodeFlags flags) @cname("ImGui_CollapsingHeaderBoolPtr");
+extern fn bool tree_node_get_open(Id storage_id) @cname("ImGui_TreeNodeGetOpen");
+extern fn bool selectable_ex(ZString label, bool selected, SelectableFlags flags, Vec2 size) @cname("ImGui_SelectableEx");
+extern fn bool selectable_bool_ptr(ZString label, bool* p_selected, SelectableFlags flags) @cname("ImGui_SelectableBoolPtr");
+extern fn bool selectable_bool_ptr_ex(ZString label, bool* p_selected, SelectableFlags flags, Vec2 size) @cname("ImGui_SelectableBoolPtrEx");
+extern fn bool is_item_toggled_selection() @cname("ImGui_IsItemToggledSelection");
+extern fn bool begin_list_box(ZString label, Vec2 size) @cname("ImGui_BeginListBox");
+extern fn void end_list_box() @cname("ImGui_EndListBox");
+extern fn bool list_box(ZString label, int* current_item, ZString* items, int items_count, int height_in_items) @cname("ImGui_ListBox");
+extern fn bool list_box_callback(ZString label, int* current_item, void* getter, void* user_data, int items_count) @cname("ImGui_ListBoxCallback");
+extern fn bool list_box_callback_ex(ZString label, int* current_item, void* getter, void* user_data, int items_count, int height_in_items) @cname("ImGui_ListBoxCallbackEx");
+extern fn void plot_lines(ZString label, float* values, int values_count) @cname("ImGui_PlotLines");
+extern fn void plot_lines_ex(ZString label, float* values, int values_count, int values_offset, ZString overlay_text, float scale_min, float scale_max, Vec2 graph_size, int stride) @cname("ImGui_PlotLinesEx");
+extern fn void plot_lines_callback(ZString label, void* values_getter, void* data, int values_count) @cname("ImGui_PlotLinesCallback");
+extern fn void plot_lines_callback_ex(ZString label, void* values_getter, void* data, int values_count, int values_offset, ZString overlay_text, float scale_min, float scale_max, Vec2 graph_size) @cname("ImGui_PlotLinesCallbackEx");
+extern fn void plot_histogram(ZString label, float* values, int values_count) @cname("ImGui_PlotHistogram");
+extern fn void plot_histogram_ex(ZString label, float* values, int values_count, int values_offset, ZString overlay_text, float scale_min, float scale_max, Vec2 graph_size, int stride) @cname("ImGui_PlotHistogramEx");
+extern fn void plot_histogram_callback(ZString label, void* values_getter, void* data, int values_count) @cname("ImGui_PlotHistogramCallback");
+extern fn void plot_histogram_callback_ex(ZString label, void* values_getter, void* data, int values_count, int values_offset, ZString overlay_text, float scale_min, float scale_max, Vec2 graph_size) @cname("ImGui_PlotHistogramCallbackEx");
+extern fn bool begin_menu_ex(ZString label, bool enabled) @cname("ImGui_BeginMenuEx");
+extern fn bool menu_item_bool_ptr(ZString label, ZString shortcut, bool* p_selected, bool enabled) @cname("ImGui_MenuItemBoolPtr");
+extern fn void columns() @cname("ImGui_Columns");
+extern fn void columns_ex(int count, ZString id, bool borders) @cname("ImGui_ColumnsEx");
+extern fn void next_column() @cname("ImGui_NextColumn");
+extern fn int get_column_index() @cname("ImGui_GetColumnIndex");
+extern fn float get_column_width(int column_index) @cname("ImGui_GetColumnWidth");
+extern fn void set_column_width(int column_index, float width) @cname("ImGui_SetColumnWidth");
+extern fn float get_column_offset(int column_index) @cname("ImGui_GetColumnOffset");
+extern fn void set_column_offset(int column_index, float offset_x) @cname("ImGui_SetColumnOffset");
+extern fn int get_columns_count() @cname("ImGui_GetColumnsCount");
+extern fn void set_item_default_focus() @cname("ImGui_SetItemDefaultFocus");
+extern fn void set_nav_cursor_visible(bool visible) @cname("ImGui_SetNavCursorVisible");
+extern fn bool is_item_focused() @cname("ImGui_IsItemFocused");
+extern fn bool is_item_clicked_ex(MouseButton mouse_button) @cname("ImGui_IsItemClickedEx");
+extern fn bool is_item_visible() @cname("ImGui_IsItemVisible");
+extern fn bool is_item_edited() @cname("ImGui_IsItemEdited");
+extern fn bool is_item_activated() @cname("ImGui_IsItemActivated");
+extern fn bool is_item_deactivated() @cname("ImGui_IsItemDeactivated");
+extern fn bool is_item_deactivated_after_edit() @cname("ImGui_IsItemDeactivatedAfterEdit");
+extern fn bool is_item_toggled_open() @cname("ImGui_IsItemToggledOpen");
+extern fn ItemFlags get_item_flags() @cname("ImGui_GetItemFlags");
+extern fn DrawList get_background_draw_list_ex(Viewport* viewport) @cname("ImGui_GetBackgroundDrawListEx");
+extern fn DrawList get_foreground_draw_list_ex(Viewport* viewport) @cname("ImGui_GetForegroundDrawListEx");
+extern fn ZString get_style_color_name(Col idx) @cname("ImGui_GetStyleColorName");
+extern fn void set_state_storage(Storage storage) @cname("ImGui_SetStateStorage");
+extern fn Storage get_state_storage() @cname("ImGui_GetStateStorage");
+extern fn Vec4 color_convert_u32_to_float4(uint in) @cname("ImGui_ColorConvertU32ToFloat4");
+extern fn uint color_convert_float4_to_u32(Vec4 in) @cname("ImGui_ColorConvertFloat4ToU32");
+extern fn void color_convert_rg_bto_hsv(float r, float g, float b, float* out_h, float* out_s, float* out_v) @cname("ImGui_ColorConvertRGBtoHSV");
+extern fn void color_convert_hs_vto_rgb(float h, float s, float v, float* out_r, float* out_g, float* out_b) @cname("ImGui_ColorConvertHSVtoRGB");
+extern fn bool shortcut(KeyChord key_chord, InputFlags flags) @cname("ImGui_Shortcut");
+extern fn bool set_item_key_owner(Key key) @cname("ImGui_SetItemKeyOwner");
+extern fn void reset_mouse_drag_delta() @cname("ImGui_ResetMouseDragDelta");
+extern fn void reset_mouse_drag_delta_ex(MouseButton button) @cname("ImGui_ResetMouseDragDeltaEx");
+extern fn void set_mouse_cursor(MouseCursor cursor_type) @cname("ImGui_SetMouseCursor");
+extern fn void debug_flash_style_color(Col idx) @cname("ImGui_DebugFlashStyleColor");
+extern fn void debug_start_item_picker() @cname("ImGui_DebugStartItemPicker");
+extern fn void set_allocator_functions(MemAllocFunc alloc_func, MemFreeFunc free_func, void* user_data) @cname("ImGui_SetAllocatorFunctions");
+extern fn void get_allocator_functions(MemAllocFunc* p_alloc_func, MemFreeFunc* p_free_func, void** p_user_data) @cname("ImGui_GetAllocatorFunctions");
+extern fn Viewport* find_viewport_by_platform_handle(void* platform_handle) @cname("ImGui_FindViewportByPlatformHandle");
+extern fn void vector_construct(void* vector) @cname("ImVector_Construct");
+extern fn void vector_destruct(void* vector) @cname("ImVector_Destruct");
+extern fn void image_im_vec4(TextureRef tex_ref, Vec2 image_size, Vec2 uv0, Vec2 uv1, Vec4 tint_col, Vec4 border_col) @cname("ImGui_ImageImVec4");
+extern fn void push_button_repeat(bool repeat) @cname("ImGui_PushButtonRepeat");
+extern fn void pop_button_repeat() @cname("ImGui_PopButtonRepeat");
+extern fn void push_tab_stop(bool tab_stop) @cname("ImGui_PushTabStop");
+extern fn void pop_tab_stop() @cname("ImGui_PopTabStop");
+extern fn Vec2 get_content_region_max() @cname("ImGui_GetContentRegionMax");
+
+// --- hand-written shims ---
+// ---- ImVec2/ImVec4 → C3 short-vector aliases ----
+// C3's `float[<2>]` and `float[<4>]` are ABI-compatible with ImVec2 and ImVec4
+// (8 and 16 bytes, passed by value, fields .x .y .z .w via swizzle). Using the
+// short-vector form gives callers SIMD math operators (+, -, *, dot, length)
+// for free instead of having to spell out per-field arithmetic.
+alias Vec2 = float[<2>];
+alias Vec4 = float[<4>];
+
+// helpers from c3imgui.c3l/scripts/c3imgui_helpers.cpp
+// (exposes a handful of ImGuiIO fields without binding the full 116-field struct)
+extern fn void io_set_display_size(float w, float h) @cname("c3imgui_io_set_display_size");
+extern fn void io_set_delta_time(float dt) @cname("c3imgui_io_set_delta_time");
+extern fn void io_set_config_flags(ConfigFlags flags) @cname("c3imgui_io_set_config_flags");
+extern fn ConfigFlags io_get_config_flags() @cname("c3imgui_io_get_config_flags");
+extern fn void io_set_backend_flags(BackendFlags flags) @cname("c3imgui_io_set_backend_flags");
+extern fn BackendFlags io_get_backend_flags() @cname("c3imgui_io_get_backend_flags");
+extern fn FontAtlas io_get_fonts() @cname("c3imgui_io_get_fonts");
+extern fn bool fonts_build(FontAtlas atlas) @cname("c3imgui_fonts_build");
+extern fn int draw_data_cmd_list_count(DrawData draw_data) @cname("c3imgui_draw_data_cmd_list_count");
+extern fn int draw_data_total_vtx_count(DrawData draw_data) @cname("c3imgui_draw_data_total_vtx_count");
+extern fn int draw_data_total_idx_count(DrawData draw_data) @cname("c3imgui_draw_data_total_idx_count");
+extern fn bool draw_data_valid(DrawData draw_data) @cname("c3imgui_draw_data_valid");
+extern fn uint col32(char r, char g, char b, char a) @cname("c3imgui_col32");
+extern fn TextureRef texture_ref_from_id(ulong id) @cname("c3imgui_texture_ref_from_id");
+
+// ---- ctor/dtor shims for ImVector-bearing opaques ----
+module imgui::text_filter;
+extern fn TextFilter new_() @cname("c3imgui_text_filter_new");
+extern fn TextFilter new_with_default(ZString default_filter) @cname("c3imgui_text_filter_new_with_default");
+extern fn void destroy(TextFilter f) @cname("c3imgui_text_filter_destroy");
+
+module imgui::text_buffer;
+extern fn TextBuffer new_() @cname("c3imgui_text_buffer_new");
+extern fn void destroy(TextBuffer b) @cname("c3imgui_text_buffer_destroy");
+
+module imgui::selection_basic_storage;
+extern fn SelectionBasicStorage new_() @cname("c3imgui_selection_basic_storage_new");
+extern fn void destroy(SelectionBasicStorage s) @cname("c3imgui_selection_basic_storage_destroy");
+
+module imgui::draw_list_splitter;
+extern fn DrawListSplitter new_() @cname("c3imgui_draw_list_splitter_new");
+extern fn void destroy(DrawListSplitter s) @cname("c3imgui_draw_list_splitter_destroy");
+
+module imgui::font_glyph_ranges_builder;
+extern fn FontGlyphRangesBuilder new_() @cname("c3imgui_font_glyph_ranges_builder_new");
+extern fn void destroy(FontGlyphRangesBuilder b) @cname("c3imgui_font_glyph_ranges_builder_destroy");
+
+module imgui::font_config;
+extern fn FontConfig new_() @cname("c3imgui_font_config_new");
+extern fn void destroy(FontConfig c) @cname("c3imgui_font_config_destroy");
+extern fn void set_merge_mode(FontConfig c, bool v) @cname("c3imgui_font_config_set_merge_mode");
+extern fn void set_pixel_snap_h(FontConfig c, bool v) @cname("c3imgui_font_config_set_pixel_snap_h");
+extern fn void set_oversample(FontConfig c, int h, int v) @cname("c3imgui_font_config_set_oversample");
+extern fn void set_size_pixels(FontConfig c, float px) @cname("c3imgui_font_config_set_size_pixels");
+extern fn void set_glyph_offset(FontConfig c, float x, float y) @cname("c3imgui_font_config_set_glyph_offset");
+extern fn void set_glyph_min_advance_x(FontConfig c, float v) @cname("c3imgui_font_config_set_glyph_min_advance_x");
+extern fn void set_glyph_max_advance_x(FontConfig c, float v) @cname("c3imgui_font_config_set_glyph_max_advance_x");
+extern fn void set_rasterizer_multiply(FontConfig c, float v) @cname("c3imgui_font_config_set_rasterizer_multiply");
+extern fn void set_name(FontConfig c, ZString name) @cname("c3imgui_font_config_set_name");
+
+// ──── imgui::color ────  (ImColor_* methods)
+module imgui::color;
+
+extern fn Color hsv(float h, float s, float v, float a) @cname("ImColor_HSV");
+extern fn void set_hsv(Color* self_, float h, float s, float v, float a) @cname("ImColor_SetHSV");
+
+// ──── imgui::draw_cmd ────  (ImDrawCmd_* methods)
+module imgui::draw_cmd;
+
+extern fn TextureID get_tex_id(DrawCmd* self_) @cname("ImDrawCmd_GetTexID");
+
+// ──── imgui::draw_data ────  (ImDrawData_* methods)
+module imgui::draw_data;
+
+extern fn void clear(DrawData self_) @cname("ImDrawData_Clear");
+extern fn void add_draw_list(DrawData self_, DrawList draw_list) @cname("ImDrawData_AddDrawList");
+extern fn void de_index_all_buffers(DrawData self_) @cname("ImDrawData_DeIndexAllBuffers");
+extern fn void scale_clip_rects(DrawData self_, Vec2 fb_scale) @cname("ImDrawData_ScaleClipRects");
+
+// ──── imgui::draw_list ────  (ImDrawList_* methods)
+module imgui::draw_list;
+
+extern fn void push_clip_rect(DrawList self_, Vec2 clip_rect_min, Vec2 clip_rect_max, bool intersect_with_current_clip_rect) @cname("ImDrawList_PushClipRect");
+extern fn void push_clip_rect_full_screen(DrawList self_) @cname("ImDrawList_PushClipRectFullScreen");
+extern fn void pop_clip_rect(DrawList self_) @cname("ImDrawList_PopClipRect");
+extern fn Vec2 get_clip_rect_min(DrawList self_) @cname("ImDrawList_GetClipRectMin");
+extern fn Vec2 get_clip_rect_max(DrawList self_) @cname("ImDrawList_GetClipRectMax");
+extern fn void add_line(DrawList self_, Vec2 p1, Vec2 p2, uint col) @cname("ImDrawList_AddLine");
+extern fn void add_line_ex(DrawList self_, Vec2 p1, Vec2 p2, uint col, float thickness) @cname("ImDrawList_AddLineEx");
+extern fn void add_rect(DrawList self_, Vec2 p_min, Vec2 p_max, uint col) @cname("ImDrawList_AddRect");
+extern fn void add_rect_ex(DrawList self_, Vec2 p_min, Vec2 p_max, uint col, float rounding, float thickness, DrawFlags flags) @cname("ImDrawList_AddRectEx");
+extern fn void add_rect_filled(DrawList self_, Vec2 p_min, Vec2 p_max, uint col) @cname("ImDrawList_AddRectFilled");
+extern fn void add_rect_filled_ex(DrawList self_, Vec2 p_min, Vec2 p_max, uint col, float rounding, DrawFlags flags) @cname("ImDrawList_AddRectFilledEx");
+extern fn void add_rect_filled_multi_color(DrawList self_, Vec2 p_min, Vec2 p_max, uint col_upr_left, uint col_upr_right, uint col_bot_right, uint col_bot_left) @cname("ImDrawList_AddRectFilledMultiColor");
+extern fn void add_quad(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, uint col) @cname("ImDrawList_AddQuad");
+extern fn void add_quad_filled(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, uint col) @cname("ImDrawList_AddQuadFilled");
+extern fn void add_triangle(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, uint col) @cname("ImDrawList_AddTriangle");
+extern fn void add_triangle_filled(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, uint col) @cname("ImDrawList_AddTriangleFilled");
+extern fn void add_circle(DrawList self_, Vec2 center, float radius, uint col) @cname("ImDrawList_AddCircle");
+extern fn void add_circle_ex(DrawList self_, Vec2 center, float radius, uint col, int num_segments, float thickness) @cname("ImDrawList_AddCircleEx");
+extern fn void add_circle_filled(DrawList self_, Vec2 center, float radius, uint col, int num_segments) @cname("ImDrawList_AddCircleFilled");
+extern fn void add_ngon(DrawList self_, Vec2 center, float radius, uint col, int num_segments) @cname("ImDrawList_AddNgon");
+extern fn void add_ngon_filled(DrawList self_, Vec2 center, float radius, uint col, int num_segments) @cname("ImDrawList_AddNgonFilled");
+extern fn void add_text(DrawList self_, Vec2 pos, uint col, ZString text_begin) @cname("ImDrawList_AddText");
+extern fn void add_text_ex(DrawList self_, Vec2 pos, uint col, ZString text_begin, ZString text_end) @cname("ImDrawList_AddTextEx");
+extern fn void add_bezier_cubic(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, uint col, float thickness, int num_segments) @cname("ImDrawList_AddBezierCubic");
+extern fn void add_bezier_quadratic(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, uint col, float thickness, int num_segments) @cname("ImDrawList_AddBezierQuadratic");
+extern fn void add_polyline(DrawList self_, Vec2* points, int num_points, uint col, float thickness, DrawFlags flags) @cname("ImDrawList_AddPolyline");
+extern fn void add_convex_poly_filled(DrawList self_, Vec2* points, int num_points, uint col) @cname("ImDrawList_AddConvexPolyFilled");
+extern fn void add_image(DrawList self_, TextureRef tex_ref, Vec2 p_min, Vec2 p_max) @cname("ImDrawList_AddImage");
+extern fn void add_image_ex(DrawList self_, TextureRef tex_ref, Vec2 p_min, Vec2 p_max, Vec2 uv_min, Vec2 uv_max, uint col) @cname("ImDrawList_AddImageEx");
+extern fn void add_image_quad(DrawList self_, TextureRef tex_ref, Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4) @cname("ImDrawList_AddImageQuad");
+extern fn void add_image_quad_ex(DrawList self_, TextureRef tex_ref, Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, Vec2 uv1, Vec2 uv2, Vec2 uv3, Vec2 uv4, uint col) @cname("ImDrawList_AddImageQuadEx");
+extern fn void add_image_rounded(DrawList self_, TextureRef tex_ref, Vec2 p_min, Vec2 p_max, Vec2 uv_min, Vec2 uv_max, uint col, float rounding, DrawFlags flags) @cname("ImDrawList_AddImageRounded");
+extern fn void path_clear(DrawList self_) @cname("ImDrawList_PathClear");
+extern fn void path_line_to(DrawList self_, Vec2 pos) @cname("ImDrawList_PathLineTo");
+extern fn void path_line_to_merge_duplicate(DrawList self_, Vec2 pos) @cname("ImDrawList_PathLineToMergeDuplicate");
+extern fn void path_fill_convex(DrawList self_, uint col) @cname("ImDrawList_PathFillConvex");
+extern fn void path_fill_concave(DrawList self_, uint col) @cname("ImDrawList_PathFillConcave");
+extern fn void path_stroke(DrawList self_, uint col, float thickness, DrawFlags flags) @cname("ImDrawList_PathStroke");
+extern fn void path_arc_to(DrawList self_, Vec2 center, float radius, float a_min, float a_max, int num_segments) @cname("ImDrawList_PathArcTo");
+extern fn void path_arc_to_fast(DrawList self_, Vec2 center, float radius, int a_min_of_12, int a_max_of_12) @cname("ImDrawList_PathArcToFast");
+extern fn void path_elliptical_arc_to(DrawList self_, Vec2 center, Vec2 radius, float rot, float a_min, float a_max) @cname("ImDrawList_PathEllipticalArcTo");
+extern fn void path_elliptical_arc_to_ex(DrawList self_, Vec2 center, Vec2 radius, float rot, float a_min, float a_max, int num_segments) @cname("ImDrawList_PathEllipticalArcToEx");
+extern fn void path_bezier_cubic_curve_to(DrawList self_, Vec2 p2, Vec2 p3, Vec2 p4, int num_segments) @cname("ImDrawList_PathBezierCubicCurveTo");
+extern fn void path_bezier_quadratic_curve_to(DrawList self_, Vec2 p2, Vec2 p3, int num_segments) @cname("ImDrawList_PathBezierQuadraticCurveTo");
+extern fn void path_rect(DrawList self_, Vec2 rect_min, Vec2 rect_max, float rounding, DrawFlags flags) @cname("ImDrawList_PathRect");
+extern fn void push_texture(DrawList self_, TextureRef tex_ref) @cname("ImDrawList_PushTexture");
+extern fn void pop_texture(DrawList self_) @cname("ImDrawList_PopTexture");
+extern fn void add_line_h(DrawList self_, float min_x, float max_x, float y, uint col) @cname("ImDrawList_AddLineH");
+extern fn void add_line_h_ex(DrawList self_, float min_x, float max_x, float y, uint col, float thickness) @cname("ImDrawList_AddLineHEx");
+extern fn void add_line_v(DrawList self_, float x, float min_y, float max_y, uint col) @cname("ImDrawList_AddLineV");
+extern fn void add_line_v_ex(DrawList self_, float x, float min_y, float max_y, uint col, float thickness) @cname("ImDrawList_AddLineVEx");
+extern fn void add_quad_ex(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, uint col, float thickness) @cname("ImDrawList_AddQuadEx");
+extern fn void add_triangle_ex(DrawList self_, Vec2 p1, Vec2 p2, Vec2 p3, uint col, float thickness) @cname("ImDrawList_AddTriangleEx");
+extern fn void add_ngon_ex(DrawList self_, Vec2 center, float radius, uint col, int num_segments, float thickness) @cname("ImDrawList_AddNgonEx");
+extern fn void add_ellipse(DrawList self_, Vec2 center, Vec2 radius, uint col) @cname("ImDrawList_AddEllipse");
+extern fn void add_ellipse_ex(DrawList self_, Vec2 center, Vec2 radius, uint col, float rot, int num_segments, float thickness) @cname("ImDrawList_AddEllipseEx");
+extern fn void add_ellipse_filled(DrawList self_, Vec2 center, Vec2 radius, uint col) @cname("ImDrawList_AddEllipseFilled");
+extern fn void add_ellipse_filled_ex(DrawList self_, Vec2 center, Vec2 radius, uint col, float rot, int num_segments) @cname("ImDrawList_AddEllipseFilledEx");
+extern fn void add_text_im_font_ptr(DrawList self_, Font font, float font_size, Vec2 pos, uint col, ZString text_begin) @cname("ImDrawList_AddTextImFontPtr");
+extern fn void add_text_im_font_ptr_ex(DrawList self_, Font font, float font_size, Vec2 pos, uint col, ZString text_begin, ZString text_end, float wrap_width, Vec4* cpu_fine_clip_rect) @cname("ImDrawList_AddTextImFontPtrEx");
+extern fn void add_concave_poly_filled(DrawList self_, Vec2* points, int num_points, uint col) @cname("ImDrawList_AddConcavePolyFilled");
+extern fn void add_callback(DrawList self_, DrawCallback callback) @cname("ImDrawList_AddCallback");
+extern fn void add_callback_ex(DrawList self_, DrawCallback callback, void* userdata, usz userdata_size) @cname("ImDrawList_AddCallbackEx");
+extern fn void add_draw_cmd(DrawList self_) @cname("ImDrawList_AddDrawCmd");
+extern fn DrawList clone_output(DrawList self_) @cname("ImDrawList_CloneOutput");
+extern fn void channels_split(DrawList self_, int count) @cname("ImDrawList_ChannelsSplit");
+extern fn void channels_merge(DrawList self_) @cname("ImDrawList_ChannelsMerge");
+extern fn void channels_set_current(DrawList self_, int n) @cname("ImDrawList_ChannelsSetCurrent");
+extern fn void prim_reserve(DrawList self_, int idx_count, int vtx_count) @cname("ImDrawList_PrimReserve");
+extern fn void prim_unreserve(DrawList self_, int idx_count, int vtx_count) @cname("ImDrawList_PrimUnreserve");
+extern fn void prim_rect(DrawList self_, Vec2 a, Vec2 b, uint col) @cname("ImDrawList_PrimRect");
+extern fn void prim_rect_uv(DrawList self_, Vec2 a, Vec2 b, Vec2 uv_a, Vec2 uv_b, uint col) @cname("ImDrawList_PrimRectUV");
+extern fn void prim_quad_uv(DrawList self_, Vec2 a, Vec2 b, Vec2 c, Vec2 d, Vec2 uv_a, Vec2 uv_b, Vec2 uv_c, Vec2 uv_d, uint col) @cname("ImDrawList_PrimQuadUV");
+extern fn void prim_write_vtx(DrawList self_, Vec2 pos, Vec2 uv, uint col) @cname("ImDrawList_PrimWriteVtx");
+extern fn void prim_write_idx(DrawList self_, DrawIdx idx) @cname("ImDrawList_PrimWriteIdx");
+extern fn void prim_vtx(DrawList self_, Vec2 pos, Vec2 uv, uint col) @cname("ImDrawList_PrimVtx");
+extern fn void add_rect_im_draw_flags(DrawList self_, Vec2 p_min, Vec2 p_max, uint col, float rounding, DrawFlags flags, float thickness) @cname("ImDrawList_AddRectImDrawFlags");
+extern fn void add_polyline_im_draw_flags(DrawList self_, Vec2* points, int num_points, uint col, DrawFlags flags, float thickness) @cname("ImDrawList_AddPolylineImDrawFlags");
+extern fn void path_stroke_im_draw_flags(DrawList self_, uint col, DrawFlags flags, float thickness) @cname("ImDrawList_PathStrokeImDrawFlags");
+extern fn void push_texture_id(DrawList self_, TextureRef tex_ref) @cname("ImDrawList_PushTextureID");
+extern fn void pop_texture_id(DrawList self_) @cname("ImDrawList_PopTextureID");
+extern fn void set_draw_list_shared_data(DrawList self_, DrawListSharedData data) @cname("ImDrawList__SetDrawListSharedData");
+extern fn void reset_for_new_frame(DrawList self_) @cname("ImDrawList__ResetForNewFrame");
+extern fn void clear_free_memory(DrawList self_) @cname("ImDrawList__ClearFreeMemory");
+extern fn void pop_unused_draw_cmd(DrawList self_) @cname("ImDrawList__PopUnusedDrawCmd");
+extern fn void try_merge_draw_cmds(DrawList self_) @cname("ImDrawList__TryMergeDrawCmds");
+extern fn void on_changed_clip_rect(DrawList self_) @cname("ImDrawList__OnChangedClipRect");
+extern fn void on_changed_texture(DrawList self_) @cname("ImDrawList__OnChangedTexture");
+extern fn void on_changed_vtx_offset(DrawList self_) @cname("ImDrawList__OnChangedVtxOffset");
+extern fn void set_texture(DrawList self_, TextureRef tex_ref) @cname("ImDrawList__SetTexture");
+extern fn int calc_circle_auto_segment_count(DrawList self_, float radius) @cname("ImDrawList__CalcCircleAutoSegmentCount");
+extern fn void path_arc_to_fast_ex(DrawList self_, Vec2 center, float radius, int a_min_sample, int a_max_sample, int a_step) @cname("ImDrawList__PathArcToFastEx");
+extern fn void path_arc_to_n(DrawList self_, Vec2 center, float radius, float a_min, float a_max, int num_segments) @cname("ImDrawList__PathArcToN");
+
+// ──── imgui::draw_list_splitter ────  (ImDrawListSplitter_* methods)
+module imgui::draw_list_splitter;
+
+extern fn void clear(DrawListSplitter self_) @cname("ImDrawListSplitter_Clear");
+extern fn void clear_free_memory(DrawListSplitter self_) @cname("ImDrawListSplitter_ClearFreeMemory");
+extern fn void split(DrawListSplitter self_, DrawList draw_list, int count) @cname("ImDrawListSplitter_Split");
+extern fn void merge(DrawListSplitter self_, DrawList draw_list) @cname("ImDrawListSplitter_Merge");
+extern fn void set_current_channel(DrawListSplitter self_, DrawList draw_list, int channel_idx) @cname("ImDrawListSplitter_SetCurrentChannel");
+
+// ──── imgui::font ────  (ImFont_* methods)
+module imgui::font;
+
+extern fn bool is_glyph_in_font(Font self_, uint c) @cname("ImFont_IsGlyphInFont");
+extern fn bool is_loaded(Font self_) @cname("ImFont_IsLoaded");
+extern fn ZString get_debug_name(Font self_) @cname("ImFont_GetDebugName");
+extern fn FontBaked get_font_baked(Font self_, float font_size) @cname("ImFont_GetFontBaked");
+extern fn FontBaked get_font_baked_ex(Font self_, float font_size, float density) @cname("ImFont_GetFontBakedEx");
+extern fn Vec2 calc_text_size_a(Font self_, float size, float max_width, float wrap_width, ZString text_begin) @cname("ImFont_CalcTextSizeA");
+extern fn Vec2 calc_text_size_a_ex(Font self_, float size, float max_width, float wrap_width, ZString text_begin, ZString text_end, ZString* out_remaining) @cname("ImFont_CalcTextSizeAEx");
+extern fn ZString calc_word_wrap_position(Font self_, float size, ZString text, ZString text_end, float wrap_width) @cname("ImFont_CalcWordWrapPosition");
+extern fn void render_char(Font self_, DrawList draw_list, float size, Vec2 pos, uint col, uint c) @cname("ImFont_RenderChar");
+extern fn void render_char_ex(Font self_, DrawList draw_list, float size, Vec2 pos, uint col, uint c, Vec4* cpu_fine_clip) @cname("ImFont_RenderCharEx");
+extern fn void render_text(Font self_, DrawList draw_list, float size, Vec2 pos, uint col, Vec4 clip_rect, ZString text_begin, ZString text_end, float wrap_width, DrawTextFlags flags) @cname("ImFont_RenderText");
+extern fn ZString calc_word_wrap_position_a(Font self_, float scale, ZString text, ZString text_end, float wrap_width) @cname("ImFont_CalcWordWrapPositionA");
+extern fn void clear_output_data(Font self_) @cname("ImFont_ClearOutputData");
+extern fn void add_remap_char(Font self_, uint from_codepoint, uint to_codepoint) @cname("ImFont_AddRemapChar");
+extern fn bool is_glyph_range_unused(Font self_, uint c_begin, uint c_last) @cname("ImFont_IsGlyphRangeUnused");
+
+// ──── imgui::font_atlas ────  (ImFontAtlas_* methods)
+module imgui::font_atlas;
+
+extern fn Font add_font_default(FontAtlas self_, FontConfig font_cfg) @cname("ImFontAtlas_AddFontDefault");
+extern fn Font add_font_from_file_ttf(FontAtlas self_, ZString filename, float size_pixels, FontConfig font_cfg, uint* glyph_ranges) @cname("ImFontAtlas_AddFontFromFileTTF");
+extern fn Font add_font_from_memory_ttf(FontAtlas self_, void* font_data, int font_data_size, float size_pixels, FontConfig font_cfg, uint* glyph_ranges) @cname("ImFontAtlas_AddFontFromMemoryTTF");
+extern fn void clear(FontAtlas self_) @cname("ImFontAtlas_Clear");
+extern fn void clear_fonts(FontAtlas self_) @cname("ImFontAtlas_ClearFonts");
+extern fn uint* get_glyph_ranges_default(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesDefault");
+extern fn Font add_font(FontAtlas self_, FontConfig font_cfg) @cname("ImFontAtlas_AddFont");
+extern fn Font add_font_default_vector(FontAtlas self_, FontConfig font_cfg) @cname("ImFontAtlas_AddFontDefaultVector");
+extern fn Font add_font_default_bitmap(FontAtlas self_, FontConfig font_cfg) @cname("ImFontAtlas_AddFontDefaultBitmap");
+extern fn Font add_font_from_memory_compressed_ttf(FontAtlas self_, void* compressed_font_data, int compressed_font_data_size, float size_pixels, FontConfig font_cfg, uint* glyph_ranges) @cname("ImFontAtlas_AddFontFromMemoryCompressedTTF");
+extern fn Font add_font_from_memory_compressed_base85_ttf(FontAtlas self_, ZString compressed_font_data_base85, float size_pixels, FontConfig font_cfg, uint* glyph_ranges) @cname("ImFontAtlas_AddFontFromMemoryCompressedBase85TTF");
+extern fn void remove_font(FontAtlas self_, Font font) @cname("ImFontAtlas_RemoveFont");
+extern fn void compact_cache(FontAtlas self_) @cname("ImFontAtlas_CompactCache");
+extern fn void set_font_loader(FontAtlas self_, FontLoader font_loader) @cname("ImFontAtlas_SetFontLoader");
+extern fn void clear_input_data(FontAtlas self_) @cname("ImFontAtlas_ClearInputData");
+extern fn void clear_tex_data(FontAtlas self_) @cname("ImFontAtlas_ClearTexData");
+extern fn bool build(FontAtlas self_) @cname("ImFontAtlas_Build");
+extern fn void get_tex_data_as_alpha8(FontAtlas self_, char** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel) @cname("ImFontAtlas_GetTexDataAsAlpha8");
+extern fn void get_tex_data_as_rgba32(FontAtlas self_, char** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel) @cname("ImFontAtlas_GetTexDataAsRGBA32");
+extern fn void set_tex_id(FontAtlas self_, TextureID id) @cname("ImFontAtlas_SetTexID");
+extern fn void set_tex_id_im_texture_ref(FontAtlas self_, TextureRef id) @cname("ImFontAtlas_SetTexIDImTextureRef");
+extern fn bool is_built(FontAtlas self_) @cname("ImFontAtlas_IsBuilt");
+extern fn uint* get_glyph_ranges_greek(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesGreek");
+extern fn uint* get_glyph_ranges_korean(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesKorean");
+extern fn uint* get_glyph_ranges_japanese(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesJapanese");
+extern fn uint* get_glyph_ranges_chinese_full(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesChineseFull");
+extern fn uint* get_glyph_ranges_chinese_simplified_common(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon");
+extern fn uint* get_glyph_ranges_cyrillic(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesCyrillic");
+extern fn uint* get_glyph_ranges_thai(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesThai");
+extern fn uint* get_glyph_ranges_vietnamese(FontAtlas self_) @cname("ImFontAtlas_GetGlyphRangesVietnamese");
+extern fn FontAtlasRectId add_custom_rect(FontAtlas self_, int width, int height, FontAtlasRect* out_r) @cname("ImFontAtlas_AddCustomRect");
+extern fn void remove_custom_rect(FontAtlas self_, FontAtlasRectId id) @cname("ImFontAtlas_RemoveCustomRect");
+extern fn bool get_custom_rect(FontAtlas self_, FontAtlasRectId id, FontAtlasRect* out_r) @cname("ImFontAtlas_GetCustomRect");
+extern fn FontAtlasRectId add_custom_rect_regular(FontAtlas self_, int w, int h) @cname("ImFontAtlas_AddCustomRectRegular");
+extern fn FontAtlasRect* get_custom_rect_by_index(FontAtlas self_, FontAtlasRectId id) @cname("ImFontAtlas_GetCustomRectByIndex");
+extern fn void calc_custom_rect_uv(FontAtlas self_, FontAtlasRect* r, Vec2* out_uv_min, Vec2* out_uv_max) @cname("ImFontAtlas_CalcCustomRectUV");
+extern fn FontAtlasRectId add_custom_rect_font_glyph(FontAtlas self_, Font font, uint codepoint, int w, int h, float advance_x, Vec2 offset) @cname("ImFontAtlas_AddCustomRectFontGlyph");
+extern fn FontAtlasRectId add_custom_rect_font_glyph_for_size(FontAtlas self_, Font font, float font_size, uint codepoint, int w, int h, float advance_x, Vec2 offset) @cname("ImFontAtlas_AddCustomRectFontGlyphForSize");
+
+// ──── imgui::font_baked ────  (ImFontBaked_* methods)
+module imgui::font_baked;
+
+extern fn void clear_output_data(FontBaked self_) @cname("ImFontBaked_ClearOutputData");
+extern fn FontGlyph find_glyph(FontBaked self_, uint c) @cname("ImFontBaked_FindGlyph");
+extern fn FontGlyph find_glyph_no_fallback(FontBaked self_, uint c) @cname("ImFontBaked_FindGlyphNoFallback");
+extern fn float get_char_advance(FontBaked self_, uint c) @cname("ImFontBaked_GetCharAdvance");
+extern fn bool is_glyph_loaded(FontBaked self_, uint c) @cname("ImFontBaked_IsGlyphLoaded");
+
+// ──── imgui::font_glyph_ranges_builder ────  (ImFontGlyphRangesBuilder_* methods)
+module imgui::font_glyph_ranges_builder;
+
+extern fn void clear(FontGlyphRangesBuilder self_) @cname("ImFontGlyphRangesBuilder_Clear");
+extern fn bool get_bit(FontGlyphRangesBuilder self_, usz n) @cname("ImFontGlyphRangesBuilder_GetBit");
+extern fn void set_bit(FontGlyphRangesBuilder self_, usz n) @cname("ImFontGlyphRangesBuilder_SetBit");
+extern fn void add_char(FontGlyphRangesBuilder self_, uint c) @cname("ImFontGlyphRangesBuilder_AddChar");
+extern fn void add_text(FontGlyphRangesBuilder self_, ZString text, ZString text_end) @cname("ImFontGlyphRangesBuilder_AddText");
+extern fn void add_ranges(FontGlyphRangesBuilder self_, uint* ranges) @cname("ImFontGlyphRangesBuilder_AddRanges");
+extern fn void build_ranges(FontGlyphRangesBuilder self_, Vector_ImWchar out_ranges) @cname("ImFontGlyphRangesBuilder_BuildRanges");
+
+// ──── imgui::io ────  (ImGuiIO_* methods)
+module imgui::io;
+
+extern fn void add_key_event(Io self_, Key key, bool down) @cname("ImGuiIO_AddKeyEvent");
+extern fn void add_key_analog_event(Io self_, Key key, bool down, float v) @cname("ImGuiIO_AddKeyAnalogEvent");
+extern fn void add_mouse_pos_event(Io self_, float x, float y) @cname("ImGuiIO_AddMousePosEvent");
+extern fn void add_mouse_button_event(Io self_, int button, bool down) @cname("ImGuiIO_AddMouseButtonEvent");
+extern fn void add_mouse_wheel_event(Io self_, float wheel_x, float wheel_y) @cname("ImGuiIO_AddMouseWheelEvent");
+extern fn void add_mouse_source_event(Io self_, MouseSource source) @cname("ImGuiIO_AddMouseSourceEvent");
+extern fn void add_mouse_viewport_event(Io self_, Id id) @cname("ImGuiIO_AddMouseViewportEvent");
+extern fn void add_focus_event(Io self_, bool focused) @cname("ImGuiIO_AddFocusEvent");
+extern fn void add_input_character(Io self_, uint c) @cname("ImGuiIO_AddInputCharacter");
+extern fn void add_input_character_utf16(Io self_, ushort c) @cname("ImGuiIO_AddInputCharacterUTF16");
+extern fn void add_input_characters_utf8(Io self_, ZString str) @cname("ImGuiIO_AddInputCharactersUTF8");
+extern fn void clear_events_queue(Io self_) @cname("ImGuiIO_ClearEventsQueue");
+extern fn void clear_input_keys(Io self_) @cname("ImGuiIO_ClearInputKeys");
+extern fn void set_app_accepting_events(Io self_, bool accepting_events) @cname("ImGuiIO_SetAppAcceptingEvents");
+extern fn void set_key_event_native_data(Io self_, Key key, int native_keycode, int native_scancode) @cname("ImGuiIO_SetKeyEventNativeData");
+extern fn void set_key_event_native_data_ex(Io self_, Key key, int native_keycode, int native_scancode, int native_legacy_index) @cname("ImGuiIO_SetKeyEventNativeDataEx");
+extern fn void clear_input_mouse(Io self_) @cname("ImGuiIO_ClearInputMouse");
+
+// ──── imgui::input_text_callback_data ────  (ImGuiInputTextCallbackData_* methods)
+module imgui::input_text_callback_data;
+
+extern fn void delete_chars(InputTextCallbackData* self_, int pos, int bytes_count) @cname("ImGuiInputTextCallbackData_DeleteChars");
+extern fn void insert_chars(InputTextCallbackData* self_, int pos, ZString text, ZString text_end) @cname("ImGuiInputTextCallbackData_InsertChars");
+extern fn void select_all(InputTextCallbackData* self_) @cname("ImGuiInputTextCallbackData_SelectAll");
+extern fn void set_selection(InputTextCallbackData* self_, int s, int e) @cname("ImGuiInputTextCallbackData_SetSelection");
+extern fn void clear_selection(InputTextCallbackData* self_) @cname("ImGuiInputTextCallbackData_ClearSelection");
+extern fn bool has_selection(InputTextCallbackData* self_) @cname("ImGuiInputTextCallbackData_HasSelection");
+
+// ──── imgui::list_clipper ────  (ImGuiListClipper_* methods)
+module imgui::list_clipper;
+
+extern fn void begin(ListClipper* self_, int items_count, float items_height) @cname("ImGuiListClipper_Begin");
+extern fn void end(ListClipper* self_) @cname("ImGuiListClipper_End");
+extern fn bool step(ListClipper* self_) @cname("ImGuiListClipper_Step");
+extern fn void include_item_by_index(ListClipper* self_, int item_index) @cname("ImGuiListClipper_IncludeItemByIndex");
+extern fn void include_items_by_index(ListClipper* self_, int item_begin, int item_end) @cname("ImGuiListClipper_IncludeItemsByIndex");
+extern fn void seek_cursor_for_item(ListClipper* self_, int item_index) @cname("ImGuiListClipper_SeekCursorForItem");
+
+// ──── imgui::payload ────  (ImGuiPayload_* methods)
+module imgui::payload;
+
+extern fn void clear(Payload* self_) @cname("ImGuiPayload_Clear");
+extern fn bool is_data_type(Payload* self_, ZString type_) @cname("ImGuiPayload_IsDataType");
+extern fn bool is_preview(Payload* self_) @cname("ImGuiPayload_IsPreview");
+extern fn bool is_delivery(Payload* self_) @cname("ImGuiPayload_IsDelivery");
+
+// ──── imgui::platform_io ────  (ImGuiPlatformIO_* methods)
+module imgui::platform_io;
+
+extern fn void clear_platform_handlers(PlatformIO self_) @cname("ImGuiPlatformIO_ClearPlatformHandlers");
+extern fn void clear_renderer_handlers(PlatformIO self_) @cname("ImGuiPlatformIO_ClearRendererHandlers");
+
+// ──── imgui::selection_basic_storage ────  (ImGuiSelectionBasicStorage_* methods)
+module imgui::selection_basic_storage;
+
+extern fn void apply_requests(SelectionBasicStorage self_, MultiSelectIO ms_io) @cname("ImGuiSelectionBasicStorage_ApplyRequests");
+extern fn bool contains(SelectionBasicStorage self_, Id id) @cname("ImGuiSelectionBasicStorage_Contains");
+extern fn void clear(SelectionBasicStorage self_) @cname("ImGuiSelectionBasicStorage_Clear");
+extern fn void swap(SelectionBasicStorage self_, SelectionBasicStorage r) @cname("ImGuiSelectionBasicStorage_Swap");
+extern fn void set_item_selected(SelectionBasicStorage self_, Id id, bool selected) @cname("ImGuiSelectionBasicStorage_SetItemSelected");
+extern fn bool get_next_selected_item(SelectionBasicStorage self_, void** opaque_it, Id* out_id) @cname("ImGuiSelectionBasicStorage_GetNextSelectedItem");
+extern fn Id get_storage_id_from_index(SelectionBasicStorage self_, int idx) @cname("ImGuiSelectionBasicStorage_GetStorageIdFromIndex");
+
+// ──── imgui::selection_external_storage ────  (ImGuiSelectionExternalStorage_* methods)
+module imgui::selection_external_storage;
+
+extern fn void apply_requests(SelectionExternalStorage* self_, MultiSelectIO ms_io) @cname("ImGuiSelectionExternalStorage_ApplyRequests");
+
+// ──── imgui::storage ────  (ImGuiStorage_* methods)
+module imgui::storage;
+
+extern fn void clear(Storage self_) @cname("ImGuiStorage_Clear");
+extern fn void build_sort_by_key(Storage self_) @cname("ImGuiStorage_BuildSortByKey");
+extern fn int get_int(Storage self_, Id key, int default_val) @cname("ImGuiStorage_GetInt");
+extern fn void set_int(Storage self_, Id key, int val) @cname("ImGuiStorage_SetInt");
+extern fn bool get_bool(Storage self_, Id key, bool default_val) @cname("ImGuiStorage_GetBool");
+extern fn void set_bool(Storage self_, Id key, bool val) @cname("ImGuiStorage_SetBool");
+extern fn float get_float(Storage self_, Id key, float default_val) @cname("ImGuiStorage_GetFloat");
+extern fn void set_float(Storage self_, Id key, float val) @cname("ImGuiStorage_SetFloat");
+extern fn void* get_void_ptr(Storage self_, Id key) @cname("ImGuiStorage_GetVoidPtr");
+extern fn void set_void_ptr(Storage self_, Id key, void* val) @cname("ImGuiStorage_SetVoidPtr");
+extern fn int* get_int_ref(Storage self_, Id key, int default_val) @cname("ImGuiStorage_GetIntRef");
+extern fn bool* get_bool_ref(Storage self_, Id key, bool default_val) @cname("ImGuiStorage_GetBoolRef");
+extern fn float* get_float_ref(Storage self_, Id key, float default_val) @cname("ImGuiStorage_GetFloatRef");
+extern fn void** get_void_ptr_ref(Storage self_, Id key, void* default_val) @cname("ImGuiStorage_GetVoidPtrRef");
+extern fn void set_all_int(Storage self_, int val) @cname("ImGuiStorage_SetAllInt");
+
+// ──── imgui::style ────  (ImGuiStyle_* methods)
+module imgui::style;
+
+extern fn void scale_all_sizes(Style self_, float scale_factor) @cname("ImGuiStyle_ScaleAllSizes");
+
+// ──── imgui::text_buffer ────  (ImGuiTextBuffer_* methods)
+module imgui::text_buffer;
+
+extern fn void append(TextBuffer self_, ZString str, ZString str_end) @cname("ImGuiTextBuffer_append");
+extern fn ZString c_str(TextBuffer self_) @cname("ImGuiTextBuffer_c_str");
+extern fn void clear(TextBuffer self_) @cname("ImGuiTextBuffer_clear");
+extern fn bool empty(TextBuffer self_) @cname("ImGuiTextBuffer_empty");
+extern fn void reserve(TextBuffer self_, int capacity) @cname("ImGuiTextBuffer_reserve");
+extern fn int size(TextBuffer self_) @cname("ImGuiTextBuffer_size");
+extern fn ZString begin(TextBuffer self_) @cname("ImGuiTextBuffer_begin");
+extern fn ZString end(TextBuffer self_) @cname("ImGuiTextBuffer_end");
+extern fn void resize(TextBuffer self_, int size) @cname("ImGuiTextBuffer_resize");
+extern fn void appendf(TextBuffer self_, ZString fmt, ...) @cname("ImGuiTextBuffer_appendf");
+
+// ──── imgui::text_filter ────  (ImGuiTextFilter_* methods)
+module imgui::text_filter;
+
+extern fn bool draw(TextFilter self_, ZString label, float width) @cname("ImGuiTextFilter_Draw");
+extern fn bool pass_filter(TextFilter self_, ZString text, ZString text_end) @cname("ImGuiTextFilter_PassFilter");
+extern fn void build(TextFilter self_) @cname("ImGuiTextFilter_Build");
+extern fn void clear(TextFilter self_) @cname("ImGuiTextFilter_Clear");
+extern fn bool is_active(TextFilter self_) @cname("ImGuiTextFilter_IsActive");
+
+// ──── imgui::text_filter::text_range ────  (ImGuiTextFilter_ImGuiTextRange_* methods)
+module imgui::text_filter::text_range;
+
+extern fn bool empty(TextFilter_ImGuiTextRange self_) @cname("ImGuiTextFilter_ImGuiTextRange_empty");
+extern fn void split(TextFilter_ImGuiTextRange self_, char separator, Vector_ImGuiTextRange out) @cname("ImGuiTextFilter_ImGuiTextRange_split");
+
+// ──── imgui::viewport ────  (ImGuiViewport_* methods)
+module imgui::viewport;
+
+extern fn Vec2 get_center(Viewport* self_) @cname("ImGuiViewport_GetCenter");
+extern fn Vec2 get_work_center(Viewport* self_) @cname("ImGuiViewport_GetWorkCenter");
+extern fn ZString get_debug_name(Viewport* self_) @cname("ImGuiViewport_GetDebugName");
+
+// ──── imgui::texture_data ────  (ImTextureData_* methods)
+module imgui::texture_data;
+
+extern fn void create(TextureData self_, TextureFormat format, int w, int h) @cname("ImTextureData_Create");
+extern fn void destroy_pixels(TextureData self_) @cname("ImTextureData_DestroyPixels");
+extern fn void* get_pixels(TextureData self_) @cname("ImTextureData_GetPixels");
+extern fn void* get_pixels_at(TextureData self_, int x, int y) @cname("ImTextureData_GetPixelsAt");
+extern fn int get_size_in_bytes(TextureData self_) @cname("ImTextureData_GetSizeInBytes");
+extern fn int get_pitch(TextureData self_) @cname("ImTextureData_GetPitch");
+extern fn TextureRef get_tex_ref(TextureData self_) @cname("ImTextureData_GetTexRef");
+extern fn TextureID get_tex_id(TextureData self_) @cname("ImTextureData_GetTexID");
+extern fn void set_tex_id(TextureData self_, TextureID tex_id) @cname("ImTextureData_SetTexID");
+extern fn void set_status(TextureData self_, TextureStatus status) @cname("ImTextureData_SetStatus");
+
+// ──── imgui::texture_ref ────  (ImTextureRef_* methods)
+module imgui::texture_ref;
+
+extern fn TextureID get_tex_id(TextureRef* self_) @cname("ImTextureRef_GetTexID");
+
+// ──── imgui::platform_io::set_platform ────
+module imgui::platform_io::set_platform;
+
+extern fn void get_window_work_area_insets(void* getWindowWorkAreaInsetsFunc) @cname("ImGuiPlatformIO_SetPlatform_GetWindowWorkAreaInsets");
+extern fn void get_window_framebuffer_scale(void* getWindowFramebufferScaleFunc) @cname("ImGuiPlatformIO_SetPlatform_GetWindowFramebufferScale");
+extern fn void get_window_pos(void* getWindowPosFunc) @cname("ImGuiPlatformIO_SetPlatform_GetWindowPos");
+extern fn void get_window_size(void* getWindowSizeFunc) @cname("ImGuiPlatformIO_SetPlatform_GetWindowSize");

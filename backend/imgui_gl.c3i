@@ -1,0 +1,12 @@
+module imgui::backend::gl;
+
+import imgui;
+
+// OpenGL3 render backend for imgui.
+
+// functions
+extern fn bool init() @cname("cImGui_ImplOpenGL3_Init");
+extern fn bool init_ex(ZString glsl_version) @cname("cImGui_ImplOpenGL3_InitEx");
+extern fn void shutdown() @cname("cImGui_ImplOpenGL3_Shutdown");
+extern fn void new_frame() @cname("cImGui_ImplOpenGL3_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data) @cname("cImGui_ImplOpenGL3_RenderDrawData");

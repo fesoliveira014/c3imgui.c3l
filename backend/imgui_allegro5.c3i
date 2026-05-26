@@ -1,0 +1,20 @@
+module imgui::backend::allegro5;
+
+import imgui;
+
+// Backend binding: imgui_impl_allegro5.h. Generated from dear_bindings.
+
+// opaque handles
+typedef AllegroDisplay = inline void*;
+typedef AllegroEvent = inline void*;
+
+// functions
+extern fn bool create_device_objects() @cname("cImGui_ImplAllegro5_CreateDeviceObjects");
+extern fn bool init(AllegroDisplay display) @cname("cImGui_ImplAllegro5_Init");
+extern fn void invalidate_device_objects() @cname("cImGui_ImplAllegro5_InvalidateDeviceObjects");
+extern fn void new_frame() @cname("cImGui_ImplAllegro5_NewFrame");
+extern fn bool process_event(AllegroEvent event) @cname("cImGui_ImplAllegro5_ProcessEvent");
+extern fn void render_draw_data(imgui::DrawData draw_data) @cname("cImGui_ImplAllegro5_RenderDrawData");
+extern fn void set_display(AllegroDisplay display) @cname("cImGui_ImplAllegro5_SetDisplay");
+extern fn void shutdown() @cname("cImGui_ImplAllegro5_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplAllegro5_UpdateTexture");

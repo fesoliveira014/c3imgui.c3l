@@ -1,0 +1,22 @@
+module imgui::backend::win32;
+
+
+// Backend binding: imgui_impl_win32.h. Generated from dear_bindings.
+
+// opaque handles
+typedef Hwnd = inline void*;
+typedef Lparam = inline void*;
+typedef Lresult = inline void*;
+typedef Uint = inline void*;
+typedef Wparam = inline void*;
+
+// functions
+extern fn void enable_alpha_compositing(void* hwnd) @cname("cImGui_ImplWin32_EnableAlphaCompositing");
+extern fn void enable_dpi_awareness() @cname("cImGui_ImplWin32_EnableDpiAwareness");
+extern fn float get_dpi_scale_for_hwnd(void* hwnd) @cname("cImGui_ImplWin32_GetDpiScaleForHwnd");
+extern fn float get_dpi_scale_for_monitor(void* monitor) @cname("cImGui_ImplWin32_GetDpiScaleForMonitor");
+extern fn bool init(void* hwnd) @cname("cImGui_ImplWin32_Init");
+extern fn bool init_for_open_gl(void* hwnd) @cname("cImGui_ImplWin32_InitForOpenGL");
+extern fn void new_frame() @cname("cImGui_ImplWin32_NewFrame");
+extern fn void shutdown() @cname("cImGui_ImplWin32_Shutdown");
+extern fn Lresult wnd_proc_handler(Hwnd hWnd, Uint msg, Wparam wParam, Lparam lParam) @cname("cImGui_ImplWin32_WndProcHandler");

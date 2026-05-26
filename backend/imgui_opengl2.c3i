@@ -1,0 +1,14 @@
+module imgui::backend::opengl2;
+
+import imgui;
+
+// Backend binding: imgui_impl_opengl2.h. Generated from dear_bindings.
+
+// functions
+extern fn bool create_device_objects() @cname("cImGui_ImplOpenGL2_CreateDeviceObjects");
+extern fn void destroy_device_objects() @cname("cImGui_ImplOpenGL2_DestroyDeviceObjects");
+extern fn bool init() @cname("cImGui_ImplOpenGL2_Init");
+extern fn void new_frame() @cname("cImGui_ImplOpenGL2_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data) @cname("cImGui_ImplOpenGL2_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplOpenGL2_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplOpenGL2_UpdateTexture");

@@ -1,0 +1,42 @@
+module imgui::backend::wgpu;
+
+import imgui;
+
+// Backend binding: imgui_impl_wgpu.h. Generated from dear_bindings.
+
+// opaque handles
+typedef CreateSurfaceInfo = inline void*;
+typedef InitInfo = inline void*;
+typedef InitInfo_ImDrawData = inline void*;
+typedef RenderState = inline void*;
+typedef WGPUAdapter = inline void*;
+typedef WGPUAdapterType = inline void*;
+typedef WGPUBackendType = inline void*;
+typedef WGPUDevice = inline void*;
+typedef WGPUDeviceLostReason = inline void*;
+typedef WGPUErrorType = inline void*;
+typedef WGPUInstance = inline void*;
+typedef WGPULogLevel = inline void*;
+typedef WGPUMultisampleState = inline void*;
+typedef WGPURenderPassEncoder = inline void*;
+typedef WGPUSurface = inline void*;
+typedef WGPUSurfaceGetCurrentTextureStatus = inline void*;
+typedef WGPUTextureFormat = inline void*;
+
+// functions
+extern fn bool create_device_objects() @cname("cImGui_ImplWGPU_CreateDeviceObjects");
+extern fn WGPUSurface create_wgpu_surface_helper(CreateSurfaceInfo info) @cname("cImGui_ImplWGPU_CreateWGPUSurfaceHelper");
+extern fn void debug_print_adapter_info(WGPUAdapter adapter) @cname("cImGui_ImplWGPU_DebugPrintAdapterInfo");
+extern fn ZString get_adapter_type_name(WGPUAdapterType type_) @cname("cImGui_ImplWGPU_GetAdapterTypeName");
+extern fn ZString get_backend_type_name(WGPUBackendType type_) @cname("cImGui_ImplWGPU_GetBackendTypeName");
+extern fn ZString get_device_lost_reason_name(WGPUDeviceLostReason type_) @cname("cImGui_ImplWGPU_GetDeviceLostReasonName");
+extern fn ZString get_error_type_name(WGPUErrorType type_) @cname("cImGui_ImplWGPU_GetErrorTypeName");
+extern fn ZString get_log_level_name(WGPULogLevel level) @cname("cImGui_ImplWGPU_GetLogLevelName");
+extern fn bool init(InitInfo init_info) @cname("cImGui_ImplWGPU_Init");
+extern fn void invalidate_device_objects() @cname("cImGui_ImplWGPU_InvalidateDeviceObjects");
+extern fn bool is_surface_status_error(WGPUSurfaceGetCurrentTextureStatus status) @cname("cImGui_ImplWGPU_IsSurfaceStatusError");
+extern fn bool is_surface_status_sub_optimal(WGPUSurfaceGetCurrentTextureStatus status) @cname("cImGui_ImplWGPU_IsSurfaceStatusSubOptimal");
+extern fn void new_frame() @cname("cImGui_ImplWGPU_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data, WGPURenderPassEncoder pass_encoder) @cname("cImGui_ImplWGPU_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplWGPU_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplWGPU_UpdateTexture");

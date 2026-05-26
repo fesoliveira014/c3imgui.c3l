@@ -1,0 +1,34 @@
+{
+  "module": "imgui::backend::allegro5",
+  "fn_prefix": "cImGui_ImplAllegro5_",
+  "type_prefixes": [
+    "ImGui_ImplAllegro5_",
+    "ImGui",
+    "Im"
+  ],
+  "header": "// Backend binding: imgui_impl_allegro5.h. Generated from dear_bindings.",
+  "opaques": [
+    "ALLEGRO_DISPLAY",
+    "ALLEGRO_EVENT"
+  ],
+  "typedefs": [],
+  "callbacks": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData",
+    "ImDrawIdx": "imgui::DrawIdx",
+    "ImTextureData": "imgui::TextureData"
+  },
+  "enums": [],
+  "structs": [],
+  "functions": [
+    "cImGui_ImplAllegro5_CreateDeviceObjects",
+    "cImGui_ImplAllegro5_Init",
+    "cImGui_ImplAllegro5_InvalidateDeviceObjects",
+    "cImGui_ImplAllegro5_NewFrame",
+    "cImGui_ImplAllegro5_ProcessEvent",
+    "cImGui_ImplAllegro5_RenderDrawData",
+    "cImGui_ImplAllegro5_SetDisplay",
+    "cImGui_ImplAllegro5_Shutdown",
+    "cImGui_ImplAllegro5_UpdateTexture"
+  ]
+}

@@ -1,0 +1,17 @@
+module imgui::backend::dx9;
+
+import imgui;
+
+// Backend binding: imgui_impl_dx9.h. Generated from dear_bindings.
+
+// opaque handles
+typedef IDirect3DDevice9 = inline void*;
+
+// functions
+extern fn bool create_device_objects() @cname("cImGui_ImplDX9_CreateDeviceObjects");
+extern fn bool init(IDirect3DDevice9 device) @cname("cImGui_ImplDX9_Init");
+extern fn void invalidate_device_objects() @cname("cImGui_ImplDX9_InvalidateDeviceObjects");
+extern fn void new_frame() @cname("cImGui_ImplDX9_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data) @cname("cImGui_ImplDX9_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplDX9_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplDX9_UpdateTexture");

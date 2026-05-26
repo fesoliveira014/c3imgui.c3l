@@ -1,0 +1,18 @@
+module imgui::backend::sdlrenderer2;
+
+import imgui;
+
+// Backend binding: imgui_impl_sdlrenderer2.h. Generated from dear_bindings.
+
+// opaque handles
+typedef RenderState = inline void*;
+typedef SDL_Renderer = inline void*;
+
+// functions
+extern fn void create_device_objects() @cname("cImGui_ImplSDLRenderer2_CreateDeviceObjects");
+extern fn void destroy_device_objects() @cname("cImGui_ImplSDLRenderer2_DestroyDeviceObjects");
+extern fn bool init(SDL_Renderer renderer) @cname("cImGui_ImplSDLRenderer2_Init");
+extern fn void new_frame() @cname("cImGui_ImplSDLRenderer2_NewFrame");
+extern fn void render_draw_data(imgui::DrawData draw_data, SDL_Renderer renderer) @cname("cImGui_ImplSDLRenderer2_RenderDrawData");
+extern fn void shutdown() @cname("cImGui_ImplSDLRenderer2_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplSDLRenderer2_UpdateTexture");

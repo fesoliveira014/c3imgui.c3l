@@ -1,0 +1,73 @@
+module imgui::backend::vulkan;
+
+import imgui;
+
+// Backend binding: imgui_impl_vulkan.h. Generated from dear_bindings.
+
+// opaque handles
+typedef Frame = inline void*;
+typedef FrameSemaphores = inline void*;
+typedef Window = inline void*;
+typedef InitInfo = inline void*;
+typedef PipelineInfo = inline void*;
+typedef RenderState = inline void*;
+typedef Vector_ImGui_ImplVulkanH_Frame = inline void*;
+typedef Vector_ImGui_ImplVulkanH_FrameSemaphores = inline void*;
+typedef Vector_VkDynamicState = inline void*;
+typedef VkAllocationCallbacks = inline void*;
+typedef VkAttachmentDescription = inline void*;
+typedef VkClearValue = inline void*;
+typedef VkColorSpaceKHR = inline void*;
+typedef VkCommandBuffer = inline void*;
+typedef VkCommandPool = inline void*;
+typedef VkDescriptorPool = inline void*;
+typedef VkDescriptorSet = inline void*;
+typedef VkDevice = inline void*;
+typedef VkDeviceSize = inline void*;
+typedef VkDynamicState = inline void*;
+typedef VkFence = inline void*;
+typedef VkFormat = inline void*;
+typedef VkFramebuffer = inline void*;
+typedef VkImage = inline void*;
+typedef VkImageLayout = inline void*;
+typedef VkImageUsageFlags = inline void*;
+typedef VkImageView = inline void*;
+typedef VkInstance = inline void*;
+typedef VkPhysicalDevice = inline void*;
+typedef VkPipeline = inline void*;
+typedef VkPipelineCache = inline void*;
+typedef VkPipelineLayout = inline void*;
+typedef VkPipelineRenderingCreateInfoKHR = inline void*;
+typedef VkPresentModeKHR = inline void*;
+typedef VkQueue = inline void*;
+typedef VkRenderPass = inline void*;
+typedef VkSampleCountFlagBits = inline void*;
+typedef VkSampler = inline void*;
+typedef VkSemaphore = inline void*;
+typedef VkShaderModuleCreateInfo = inline void*;
+typedef VkSurfaceFormatKHR = inline void*;
+typedef VkSurfaceKHR = inline void*;
+typedef VkSwapchainKHR = inline void*;
+
+// functions
+extern fn void create_or_resize_window(VkInstance instance, VkPhysicalDevice physical_device, VkDevice device, Window wd, uint queue_family, VkAllocationCallbacks allocator, int w, int h, uint min_image_count, VkImageUsageFlags image_usage) @cname("cImGui_ImplVulkanH_CreateOrResizeWindow");
+extern fn void destroy_window(VkInstance instance, VkDevice device, Window wd, VkAllocationCallbacks allocator) @cname("cImGui_ImplVulkanH_DestroyWindow");
+extern fn int get_min_image_count_from_present_mode(VkPresentModeKHR present_mode) @cname("cImGui_ImplVulkanH_GetMinImageCountFromPresentMode");
+extern fn Window get_window_data_from_viewport(imgui::Viewport viewport) @cname("cImGui_ImplVulkanH_GetWindowDataFromViewport");
+extern fn VkPhysicalDevice select_physical_device(VkInstance instance) @cname("cImGui_ImplVulkanH_SelectPhysicalDevice");
+extern fn VkPresentModeKHR select_present_mode(VkPhysicalDevice physical_device, VkSurfaceKHR surface, VkPresentModeKHR request_modes, int request_modes_count) @cname("cImGui_ImplVulkanH_SelectPresentMode");
+extern fn uint select_queue_family_index(VkPhysicalDevice physical_device) @cname("cImGui_ImplVulkanH_SelectQueueFamilyIndex");
+extern fn VkSurfaceFormatKHR select_surface_format(VkPhysicalDevice physical_device, VkSurfaceKHR surface, VkFormat request_formats, int request_formats_count, VkColorSpaceKHR request_color_space) @cname("cImGui_ImplVulkanH_SelectSurfaceFormat");
+extern fn VkDescriptorSet add_texture(VkImageView image_view, VkImageLayout image_layout) @cname("cImGui_ImplVulkan_AddTexture");
+extern fn VkDescriptorSet add_texture_vk_sampler(VkSampler sampler, VkImageView image_view, VkImageLayout image_layout) @cname("cImGui_ImplVulkan_AddTextureVkSampler");
+extern fn void create_main_pipeline(PipelineInfo info) @cname("cImGui_ImplVulkan_CreateMainPipeline");
+extern fn bool init(InitInfo info) @cname("cImGui_ImplVulkan_Init");
+extern fn bool load_functions(uint api_version, void* loader_func) @cname("cImGui_ImplVulkan_LoadFunctions");
+extern fn bool load_functions_ex(uint api_version, void* loader_func, void* user_data) @cname("cImGui_ImplVulkan_LoadFunctionsEx");
+extern fn void new_frame() @cname("cImGui_ImplVulkan_NewFrame");
+extern fn void remove_texture(VkDescriptorSet descriptor_set) @cname("cImGui_ImplVulkan_RemoveTexture");
+extern fn void render_draw_data(imgui::DrawData draw_data, VkCommandBuffer command_buffer) @cname("cImGui_ImplVulkan_RenderDrawData");
+extern fn void render_draw_data_ex(imgui::DrawData draw_data, VkCommandBuffer command_buffer, VkPipeline pipeline) @cname("cImGui_ImplVulkan_RenderDrawDataEx");
+extern fn void set_min_image_count(uint min_image_count) @cname("cImGui_ImplVulkan_SetMinImageCount");
+extern fn void shutdown() @cname("cImGui_ImplVulkan_Shutdown");
+extern fn void update_texture(imgui::TextureData tex) @cname("cImGui_ImplVulkan_UpdateTexture");

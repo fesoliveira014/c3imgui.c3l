@@ -1,0 +1,18 @@
+module imgui::backend::glut;
+
+
+// Backend binding: imgui_impl_glut.h. Generated from dear_bindings.
+
+// functions
+extern fn bool init() @cname("cImGui_ImplGLUT_Init");
+extern fn void install_funcs() @cname("cImGui_ImplGLUT_InstallFuncs");
+extern fn void keyboard_func(char c, int x, int y) @cname("cImGui_ImplGLUT_KeyboardFunc");
+extern fn void keyboard_up_func(char c, int x, int y) @cname("cImGui_ImplGLUT_KeyboardUpFunc");
+extern fn void motion_func(int x, int y) @cname("cImGui_ImplGLUT_MotionFunc");
+extern fn void mouse_func(int button, int state, int x, int y) @cname("cImGui_ImplGLUT_MouseFunc");
+extern fn void mouse_wheel_func(int button, int dir, int x, int y) @cname("cImGui_ImplGLUT_MouseWheelFunc");
+extern fn void new_frame() @cname("cImGui_ImplGLUT_NewFrame");
+extern fn void reshape_func(int w, int h) @cname("cImGui_ImplGLUT_ReshapeFunc");
+extern fn void shutdown() @cname("cImGui_ImplGLUT_Shutdown");
+extern fn void special_func(int key, int x, int y) @cname("cImGui_ImplGLUT_SpecialFunc");
+extern fn void special_up_func(int key, int x, int y) @cname("cImGui_ImplGLUT_SpecialUpFunc");

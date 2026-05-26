@@ -1,0 +1,56 @@
+{
+  "module": "imgui::backend::wgpu",
+  "fn_prefix": "cImGui_ImplWGPU_",
+  "type_prefixes": [
+    "ImGui_ImplWGPU_",
+    "ImGui",
+    "Im"
+  ],
+  "header": "// Backend binding: imgui_impl_wgpu.h. Generated from dear_bindings.",
+  "opaques": [
+    "ImGui_ImplWGPU_CreateSurfaceInfo",
+    "ImGui_ImplWGPU_InitInfo",
+    "ImGui_ImplWGPU_InitInfo_ImDrawData",
+    "ImGui_ImplWGPU_RenderState",
+    "WGPUAdapter",
+    "WGPUAdapterType",
+    "WGPUBackendType",
+    "WGPUDevice",
+    "WGPUDeviceLostReason",
+    "WGPUErrorType",
+    "WGPUInstance",
+    "WGPULogLevel",
+    "WGPUMultisampleState",
+    "WGPURenderPassEncoder",
+    "WGPUSurface",
+    "WGPUSurfaceGetCurrentTextureStatus",
+    "WGPUTextureFormat"
+  ],
+  "typedefs": [],
+  "callbacks": [],
+  "external_types": {
+    "ImDrawData": "imgui::DrawData",
+    "ImDrawIdx": "imgui::DrawIdx",
+    "ImTextureData": "imgui::TextureData"
+  },
+  "enums": [],
+  "structs": [],
+  "functions": [
+    "cImGui_ImplWGPU_CreateDeviceObjects",
+    "cImGui_ImplWGPU_CreateWGPUSurfaceHelper",
+    "cImGui_ImplWGPU_DebugPrintAdapterInfo",
+    "cImGui_ImplWGPU_GetAdapterTypeName",
+    "cImGui_ImplWGPU_GetBackendTypeName",
+    "cImGui_ImplWGPU_GetDeviceLostReasonName",
+    "cImGui_ImplWGPU_GetErrorTypeName",
+    "cImGui_ImplWGPU_GetLogLevelName",
+    "cImGui_ImplWGPU_Init",
+    "cImGui_ImplWGPU_InvalidateDeviceObjects",
+    "cImGui_ImplWGPU_IsSurfaceStatusError",
+    "cImGui_ImplWGPU_IsSurfaceStatusSubOptimal",
+    "cImGui_ImplWGPU_NewFrame",
+    "cImGui_ImplWGPU_RenderDrawData",
+    "cImGui_ImplWGPU_Shutdown",
+    "cImGui_ImplWGPU_UpdateTexture"
+  ]
+}
