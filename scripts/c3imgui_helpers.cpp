@@ -44,6 +44,18 @@ void* c3imgui_io_get_fonts(void) {
     return ImGui::GetIO().Fonts;
 }
 
+bool c3imgui_io_get_want_capture_mouse(void) {
+    return ImGui::GetIO().WantCaptureMouse;
+}
+
+bool c3imgui_io_get_want_capture_keyboard(void) {
+    return ImGui::GetIO().WantCaptureKeyboard;
+}
+
+void c3imgui_io_set_ini_filename(const char* p) {
+    ImGui::GetIO().IniFilename = p;
+}
+
 // Build the default font atlas using the embedded ProggyClean font. Required
 // before NewFrame in headless setups where no platform backend has done it.
 bool c3imgui_fonts_build(void* atlas_ptr) {
