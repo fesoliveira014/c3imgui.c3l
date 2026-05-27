@@ -108,6 +108,12 @@ BAT_PATH="$BUILD/build_dcimgui.bat"
         printf 'cl %%CFLAGS%% %%INCS%% /Fo"%s.obj" "%s"\r\n' "$base" "$src_win"
         printf 'if errorlevel 1 (echo CL failed on %s & exit /b 1)\r\n' "$base"
     done
+    # gs_stub.c must build with /GS- so it does not itself reference the
+    # symbols it provides. See gs_stub.c comment block for the full rationale.
+    gs_stub_win="$(to_win "$REPO/c3imgui.c3l/scripts/gs_stub.c")"
+    printf 'echo   CL  gs_stub.c  (/GS-)\r\n'
+    printf 'cl %%CFLAGS%% /GS- %%INCS%% /Fo"gs_stub.obj" "%s"\r\n' "$gs_stub_win"
+    printf 'if errorlevel 1 (echo CL failed on gs_stub & exit /b 1)\r\n'
     printf 'echo   LIB dcimgui.lib\r\n'
     printf 'lib /nologo /OUT:"%s" *.obj\r\n' "$OUT_LIB_WIN"
     printf 'if errorlevel 1 (echo LIB failed & exit /b 1)\r\n'

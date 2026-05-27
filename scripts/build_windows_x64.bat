@@ -109,6 +109,21 @@ call :cl_one "%GEN%\backends\dcimgui_impl_sdlrenderer3.cpp"
 call :cl_one "%GEN%\backends\dcimgui_impl_sdlgpu3.cpp"
 call :cl_one "%HELPERS%"
 
+rem gs_stub.c MUST compile with /GS- so its own prologue does not emit a
+rem __security_cookie reference and pull msvcrt.lib(gs_cookie.obj) back in --
+rem that is the chain we are trying to break. The stub provides
+rem __report_rangecheckfailure and __report_gsfailure so msvcrt.lib(gs_report.obj)
+rem is never queried, which prevents the COMDAT body of __report_gsfailure
+rem from clashing with vcruntime.lib's DLL-import thunk.
+set "GS_STUB=%REPO%\c3imgui.c3l\scripts\gs_stub.c"
+for %%F in ("%GS_STUB%") do set "BASE=%%~nF"
+echo   CL  %BASE%.c  ^(/GS-^)
+cl %CFLAGS% /GS- %INCS% /Fo"%BUILD%\%BASE%.obj" "%GS_STUB%"
+if errorlevel 1 (
+    echo CL FAILED on %BASE%
+    set /a FAILED+=1
+)
+
 for %%B in (dx9 dx10 dx11 dx12 win32) do (
     call :cl_one "%IMGUI%\backends\imgui_impl_%%B.cpp"
     call :cl_one "%GEN%\backends\dcimgui_impl_%%B.cpp"
