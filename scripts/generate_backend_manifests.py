@@ -225,7 +225,7 @@ def gen_manifest(backend: str):
         "structs": [],
         "functions": sorted(fns),
     }
-    out = SCRIPTS / f"m13_{backend}.json"
+    out = SCRIPTS / f"imgui_{backend}.json"
     out.write_text(json.dumps(manifest, indent=2))
     print(f"  wrote {out.name}: {len(fns)} fns, {len(backend_only_opaques)} opaques")
 

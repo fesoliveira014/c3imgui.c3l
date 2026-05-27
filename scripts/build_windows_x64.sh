@@ -5,11 +5,14 @@
 # Backends bundled here in ADDITION to the cross-platform core: dx9, dx10, dx11,
 # dx12, win32. glfw can be enabled by uncommenting the optional probe below if
 # a Windows GLFW build is present.
+#
+# NOTE: c3c on Windows defaults to lld-link MSVC, which CANNOT consume the
+# MinGW `.a` produced here (Itanium vs MSVC C++ ABI mismatch + MinGW libstdc++
+# symbols). Use build_windows_x64_msvc.sh / build_windows_x64.bat for c3c
+# Windows builds. This script remains for MinGW-link consumers and CI sanity.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-IMGUI="$REPO/vendor/imgui"
-GEN="$REPO/c3imgui.c3l/generated"
 OUT_DIR="$REPO/c3imgui.c3l/linked-libs/windows-x64"
 BUILD="$REPO/build/windows-x64"
 PLATFORM="windows-x64"
@@ -26,10 +29,21 @@ if ! command -v "$CXX" >/dev/null 2>&1; then
     exit 1
 fi
 
+source "$REPO/c3imgui.c3l/scripts/common/imgui_src_discovery.sh"
+imgui_find_src || { imgui_print_src_help; exit 2; }
+echo "found imgui sources:     $IMGUI"
+echo "found dear_bindings out: $GEN"
+
+source "$REPO/c3imgui.c3l/scripts/common/sdl3_discovery.sh"
+SDL3_INCLUDE_DIR="$(sdl3_find_include)" || { sdl3_print_help; exit 2; }
+echo "found SDL3 headers:      $SDL3_INCLUDE_DIR"
+
+# -fpermissive is required for the DX12 backend's enum-flag OR-int conversions
+# under recent g++; MSVC accepts them silently.
 CXXFLAGS=(
-    -O2 -fno-exceptions -fno-rtti -fno-threadsafe-statics
+    -O2 -fno-exceptions -fno-rtti -fno-threadsafe-statics -fpermissive
     -DUNICODE -D_UNICODE
-    -I"$IMGUI" -I"$IMGUI/backends" -I"$GEN"
+    -I"$IMGUI" -I"$IMGUI/backends" -I"$GEN" -I"$SDL3_INCLUDE_DIR"
 )
 
 source "$REPO/c3imgui.c3l/scripts/common/build_common.sh"

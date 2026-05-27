@@ -13,25 +13,34 @@
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-IMGUI="$REPO/vendor/imgui"
-GEN="$REPO/c3imgui.c3l/generated"
 OUT_DIR="$REPO/c3imgui.c3l/linked-libs/windows-x64"
 BUILD="$REPO/build/windows-x64-msvc"
-SDL_DIR="${SDL_DIR:-$REPO/vendor/sdl3-windows/SDL3-3.4.8}"
 
 mkdir -p "$OUT_DIR" "$BUILD"
 
 case "$REPO" in
     /mnt/?/*) ;;
     *) echo "error: REPO ($REPO) must live under /mnt/<drive>/ so cmd.exe can chdir into it." >&2
+       echo "       Move the checkout to /mnt/c/... or use build_windows_x64.bat" >&2
+       echo "       directly from a native Windows shell instead." >&2
        exit 2 ;;
 esac
 
-if [[ ! -d "$SDL_DIR/include" ]]; then
-    echo "error: SDL3 headers not found at $SDL_DIR/include" >&2
-    echo "       Download SDL3-devel-<ver>-VC.zip from libsdl-org/SDL releases and" >&2
-    echo "       unzip to vendor/sdl3-windows/ (or set SDL_DIR=...)." >&2
-    exit 2
+source "$REPO/c3imgui.c3l/scripts/common/imgui_src_discovery.sh"
+imgui_find_src || { imgui_print_src_help; exit 2; }
+echo "found imgui sources:     $IMGUI"
+echo "found dear_bindings out: $GEN"
+
+source "$REPO/c3imgui.c3l/scripts/common/sdl3_discovery.sh"
+SDL3_INCLUDE_DIR="$(sdl3_find_include)" || { sdl3_print_help; exit 2; }
+echo "found SDL3 headers:      $SDL3_INCLUDE_DIR"
+
+SDL3_STATIC_LIB="$(sdl3_find_static_lib SDL3-static.lib || true)"
+if [[ -n "$SDL3_STATIC_LIB" ]]; then
+    echo "found SDL3 static archive: $SDL3_STATIC_LIB"
+else
+    echo "warn: SDL3-static.lib not found via discovery; will not refresh" >&2
+    echo "      $OUT_DIR/SDL3.lib." >&2
 fi
 
 VCVARS="${VCVARS:-C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat}"
@@ -71,7 +80,7 @@ to_win() { wslpath -w "$1"; }
 INC_IMGUI="$(to_win "$IMGUI")"
 INC_BACKENDS="$(to_win "$IMGUI/backends")"
 INC_GEN="$(to_win "$GEN")"
-INC_SDL="$(to_win "$SDL_DIR/include")"
+INC_SDL="$(to_win "$SDL3_INCLUDE_DIR")"
 BUILD_WIN="$(to_win "$BUILD")"
 OUT_LIB_WIN="$(to_win "$OUT_DIR/dcimgui.lib")"
 BAT_PATH="$BUILD/build_dcimgui.bat"
@@ -114,11 +123,17 @@ cmd.exe /c "$BAT_WIN"
 
 echo
 echo "done: $OUT_DIR/dcimgui.lib ($(du -h "$OUT_DIR/dcimgui.lib" | cut -f1))"
+
+if [[ -n "$SDL3_STATIC_LIB" ]]; then
+    cp "$SDL3_STATIC_LIB" "$OUT_DIR/SDL3.lib"
+    echo "done: $OUT_DIR/SDL3.lib (copied from $SDL3_STATIC_LIB; $(du -h "$OUT_DIR/SDL3.lib" | cut -f1))"
+fi
+
 echo
 echo "consumers must link these Windows SDK libs (already in manifest.json"
 echo "for the windows-x64 target):"
 echo "  SDL3 opengl32 user32 gdi32 shell32 kernel32"
+echo "  winmm ole32 oleaut32 version uuid advapi32 setupapi dinput8"
 echo "  dxgi d3d9 d3d10 d3d11 d3d12 d3dcompiler dwmapi imm32"
 echo
-echo "SDL3.dll must be copied next to the demo executable at runtime; it lives"
-echo "in $SDL_DIR/lib/x64/SDL3.dll."
+echo "SDL3 is linked statically — no SDL3.dll needed at runtime."

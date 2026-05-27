@@ -112,24 +112,42 @@
     },
     "windows-aarch64" : {
       // Mirror windows-x64 — same SDK libs, MinGW aarch64 toolchain required.
+      // SDL3 is linked statically (linked-libs/windows-aarch64/SDL3.lib is the
+      // SDL3-static archive from vcpkg or an equivalent build); the extra
+      // winmm/ole32/oleaut32/version/uuid/advapi32/setupapi/dinput8 entries
+      // are SDL3-static's transitive Win32 deps. If you switch back to the
+      // SDL3.dll import lib, those extras can be removed.
       "link-args" : [],
       "dependencies" : [],
       "linked-libraries" : [
         "dcimgui", "SDL3",
         "opengl32", "user32", "gdi32", "shell32", "kernel32",
+        "winmm", "ole32", "oleaut32", "version", "uuid",
+        "advapi32", "setupapi", "dinput8",
         "dxgi", "d3d9", "d3d10", "d3d11", "d3d12",
         "d3dcompiler", "dwmapi", "imm32"
       ]
     },
     "windows-x64" : {
-      // Build with: bash c3imgui.c3l/scripts/build_windows_x64.sh (MinGW-w64).
-      // d3d9/10/11/12 all listed because the build script bundles every dx*
-      // backend; if you trim that down, remove the matching -l<dxN> entries.
+      // Build with: bash c3imgui.c3l/scripts/build_windows_x64_msvc.sh (WSL +
+      // cl.exe via cmd.exe interop) or build_windows_x64.bat (native).
+      // The MinGW cross script (build_windows_x64.sh) produces a .a that
+      // lld-link MSVC — c3c's default Windows linker — cannot consume; only
+      // use it when targeting a MinGW/clang toolchain you control end-to-end.
+      // d3d9/10/11/12 are all listed because the build bundles every dx*
+      // backend; if you trim that down, remove the matching d3d<N> entries.
+      // SDL3 is linked statically (linked-libs/windows-x64/SDL3.lib is the
+      // SDL3-static archive from vcpkg or an equivalent build); the extra
+      // winmm/ole32/oleaut32/version/uuid/advapi32/setupapi/dinput8 entries
+      // are SDL3-static's transitive Win32 deps. If you switch back to the
+      // SDL3.dll import lib, those extras can be removed.
       "link-args" : [],
       "dependencies" : [],
       "linked-libraries" : [
         "dcimgui", "SDL3",
         "opengl32", "user32", "gdi32", "shell32", "kernel32",
+        "winmm", "ole32", "oleaut32", "version", "uuid",
+        "advapi32", "setupapi", "dinput8",
         "dxgi", "d3d9", "d3d10", "d3d11", "d3d12",
         "d3dcompiler", "dwmapi", "imm32"
       ]
