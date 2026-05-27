@@ -50,7 +50,7 @@ sdl3_find_include() {
 
     local root flavor base hit
     for root in "${roots[@]}"; do
-        for flavor in x64-windows-static x64-windows-static-md x64-windows; do
+        for flavor in x64-windows-static-md x64-windows-static x64-windows; do
             for base in installed/$flavor packages/sdl3_$flavor; do
                 hit=$(_first_glob "$root/$base/include/SDL3/SDL.h") || continue
                 [[ -n "$hit" ]] && { dirname "$(dirname "$hit")"; return 0; }
@@ -98,7 +98,7 @@ sdl3_find_static_lib() {
 
     local root flavor base hit
     for root in "${roots[@]}"; do
-        for flavor in x64-windows-static x64-windows-static-md; do
+        for flavor in x64-windows-static-md x64-windows-static; do
             for base in installed/$flavor packages/sdl3_$flavor; do
                 hit=$(_first_glob "$root/$base/lib/$want") || continue
                 [[ -n "$hit" ]] && { echo "$hit"; return 0; }

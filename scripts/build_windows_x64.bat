@@ -244,7 +244,7 @@ exit /b 1
 
 :probe_vcpkg_include
 if "%~1"=="" exit /b 0
-for %%T in (x64-windows-static x64-windows-static-md x64-windows) do (
+for %%T in (x64-windows-static-md x64-windows-static x64-windows) do (
     if exist "%~1\installed\%%T\include\SDL3\SDL.h" (
         set "SDL3_INCLUDE_DIR=%~1\installed\%%T\include"
         exit /b 0
@@ -288,7 +288,7 @@ exit /b 1
 
 :probe_vcpkg_static
 if "%~1"=="" exit /b 0
-for %%T in (x64-windows-static x64-windows-static-md) do (
+for %%T in (x64-windows-static-md x64-windows-static) do (
     if exist "%~1\installed\%%T\lib\SDL3-static.lib" (
         set "SDL3_STATIC_LIB=%~1\installed\%%T\lib\SDL3-static.lib"
         exit /b 0
