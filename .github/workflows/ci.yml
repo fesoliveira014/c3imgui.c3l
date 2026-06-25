@@ -1,0 +1,32 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: c3imgui.c3l
+      - name: install c3c 0.8.0
+        run: |
+          curl -L -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.0/c3-linux.tar.gz
+          tar xf c3c.tar.gz
+          echo "$PWD/c3" >> "$GITHUB_PATH"
+      - name: smoke compile (static-lib, no dcimgui/SDL3/GL link needed)
+        run: |
+          mkdir smoke && cd smoke
+          cat > project.json <<'JSON'
+          {
+            "langrev": "1",
+            "dependency-search-paths": [ ".." ],
+            "dependencies": [ "c3imgui" ],
+            "sources": [ "main.c3" ],
+            "targets": { "smoke": { "type": "static-lib" } }
+          }
+          JSON
+          cat > main.c3 <<'C3'
+          module smoke;
+          import imgui;
+          fn void use() { int k = imgui::KEY_NAMED_KEY_BEGIN; }
+          C3
+          c3c build smoke
