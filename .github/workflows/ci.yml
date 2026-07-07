@@ -14,6 +14,9 @@ jobs:
         with:
           repository: fesoliveira014/vk.c3l
           path: vk.c3l
+          # vk.c3l is private; the default GITHUB_TOKEN is scoped to this repo
+          # only. CI_PAT is a fine-grained PAT with Contents:read on vk.c3l.
+          token: ${{ secrets.CI_PAT }}
       - name: install c3c 0.8.0
         run: |
           curl -L -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.0/c3-linux.tar.gz
