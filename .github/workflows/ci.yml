@@ -7,6 +7,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: c3imgui.c3l
+      # The imgui vulkan backend (backend/imgui_vulkan.c3i) imports `vk`, so any
+      # consumer of the c3imgui module tree needs vk.c3l on the search path —
+      # even a GL-only one, since c3c parses the whole library module tree.
+      - uses: actions/checkout@v4
+        with:
+          repository: fesoliveira014/vk.c3l
+          path: vk.c3l
+          # vk.c3l is private; the default GITHUB_TOKEN is scoped to this repo
+          # only. CI_PAT is a fine-grained PAT with Contents:read on vk.c3l.
+          token: ${{ secrets.CI_PAT }}
       - name: install c3c 0.8.0
         run: |
           curl -L -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.0/c3-linux.tar.gz
@@ -19,7 +29,7 @@ jobs:
           {
             "langrev": "1",
             "dependency-search-paths": [ ".." ],
-            "dependencies": [ "c3imgui" ],
+            "dependencies": [ "c3imgui", "vk" ],
             "sources": [ "main.c3" ],
             "targets": { "smoke": { "type": "static-lib" } }
           }
