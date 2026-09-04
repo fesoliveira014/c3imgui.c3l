@@ -1471,7 +1471,7 @@ extern fn Vec2 get_content_region_max() @cname("ImGui_GetContentRegionMax");
 alias Vec2 = float[<2>];
 alias Vec4 = float[<4>];
 
-// helpers from c3imgui.c3l/scripts/c3imgui_helpers.cpp
+// helpers from scripts/c3imgui_helpers.cpp
 // (exposes a handful of ImGuiIO fields without binding the full 116-field struct)
 extern fn void io_set_display_size(float w, float h) @cname("c3imgui_io_set_display_size");
 extern fn void io_set_delta_time(float dt) @cname("c3imgui_io_set_delta_time");
