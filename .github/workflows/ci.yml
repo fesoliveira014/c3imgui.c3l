@@ -40,7 +40,13 @@ jobs:
           fn void use() { int k = imgui::KEY_NAMED_KEY_BEGIN; }
           C3
           c3c build smoke
+      - name: fetch script test
+        run: bash c3imgui.c3l/tests/fetch_linked_libs_test.sh
+      - name: fetch linked libs
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: bash c3imgui.c3l/fetch_linked_libs.sh "$GITHUB_REF_NAME"
       - name: draw data runtime smoke
+        if: startsWith(github.ref, 'refs/tags/v')
         run: |
           c3c compile-run \
             c3imgui.c3l/tests/draw_data_smoke.c3 \

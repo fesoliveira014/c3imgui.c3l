@@ -1,2 +1,4 @@
 generated/
 build/
+linked-libs/**/*.a
+linked-libs/**/*.lib

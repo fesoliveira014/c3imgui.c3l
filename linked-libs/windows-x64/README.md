@@ -1,34 +1,19 @@
 # windows-x64 linked libs
 
-- `dcimgui.lib` — MSVC static archive containing imgui core + dear_bindings C
-  wrapper + every backend referenced by `manifest.json` windows-x64. Build it
-  with one of:
-  - `c3imgui.c3l/scripts/build_windows_x64_msvc.sh` (WSL, cl.exe via cmd.exe
-    interop — repo must live under `/mnt/<drive>/`).
-  - `c3imgui.c3l/scripts/build_windows_x64.bat` (native Windows shell,
-    no WSL required).
+Not tracked in git. Run `../../fetch_linked_libs.sh` from a tagged checkout,
+or `fetch_linked_libs.sh vX.Y.Z`, to download them from the matching GitHub
+release. Both files are built by the `c3imgui-build` repo's CI on
+`windows-latest` with MSVC.
 
-  `build_windows_x64.sh` (MinGW-w64 cross from POSIX) outputs `.a`, which
-  lld-link MSVC — c3c's default Windows linker — cannot consume. Use the
-  MSVC paths above for c3c.
-
-- `SDL3.lib` — **static** SDL3 archive (`SDL3-static.lib` from vcpkg's
-  `sdl3:x64-windows-static`, renamed). Bundled here so `c3c build windows-x64`
-  resolves the `SDL3` entry in `manifest.json` without any consumer-side
-  `linker-search-paths`. **No SDL3.dll** ships next to the exe at runtime
-  because SDL3 is fully statically linked.
-
-  The MSVC build scripts (`build_windows_x64_msvc.{sh,bat}`) refresh this
-  file by copying whichever `SDL3-static.lib` they discover. Discovery
-  priority: `SDL3_STATIC` env, then `SDL_DIR/lib`, then `VCPKG_ROOT`, then a
-  short list of common vcpkg checkout locations. See
-  `c3imgui.c3l/scripts/common/sdl3_discovery.sh` (POSIX) and the `.bat`
-  script's `:find_sdl3_static_lib` block (native Windows).
-
-  To switch back to the SDL3.dll import lib, replace this file with the
-  `SDL3.lib` from `SDL3-devel-<ver>-VC.zip` and remove the
-  winmm/version/ole32/oleaut32/advapi32/setupapi/uuid/dinput8 entries from
-  `manifest.json`'s windows-x64 `linked-libraries` (they exist solely because
-  SDL3-static needs them).
+- `dcimgui.lib` - static archive with imgui core, the dear_bindings C wrapper,
+  the `c3imgui_*` shims, and every backend `manifest.json` lists for
+  windows-x64 (sdl3, opengl2/3, null, sdlrenderer3, sdlgpu3, vulkan, dx9-12,
+  win32).
+- `SDL3.lib` - the SDL3 **static** archive (`SDL3-static.lib` renamed), built
+  from the SDL3 release the build repo pins. It is bundled so
+  `c3c build windows-x64` resolves the `SDL3` entry in `manifest.json`
+  without consumer-side `linker-search-paths`, and no SDL3.dll is needed at
+  runtime. The winmm/version/ole32/oleaut32/advapi32/setupapi/uuid/dinput8
+  entries in `manifest.json` exist because SDL3-static needs them.
 
 SDL3 is zlib-licensed; see https://www.libsdl.org/.
