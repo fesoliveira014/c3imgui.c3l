@@ -4,7 +4,7 @@
   // package root. c3c discovers them via these directory entries.
   // Note: bare `**` only works on POSIX c3c; Windows c3c requires explicit
   //       file or `<dir>/**` form.
-  "sources" : [ "./**", "backend/**" ],
+  "sources" : [ "./*", "backend/**" ],
   "linklib-dir" : "linked-libs",
   "targets" : {
     "android-aarch64" : {

@@ -40,3 +40,12 @@ jobs:
           fn void use() { int k = imgui::KEY_NAMED_KEY_BEGIN; }
           C3
           c3c build smoke
+      - name: draw data runtime smoke
+        run: |
+          c3c compile-run \
+            c3imgui.c3l/tests/draw_data_smoke.c3 \
+            c3imgui.c3l/imgui.c3i \
+            --run-once \
+            --safe=yes \
+            -L c3imgui.c3l/linked-libs/linux-x64 \
+            -l dcimgui -l stdc++ -l m

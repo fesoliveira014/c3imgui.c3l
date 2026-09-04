@@ -196,6 +196,13 @@ struct DrawCmd {
 }
 $assert DrawCmd::size == 72;
 
+struct DrawVert {
+    Vec2 pos;
+    Vec2 uv;
+    uint col;
+}
+$assert DrawVert::size == 20;
+
 struct FontAtlasRect {
     ushort x;
     ushort y;
@@ -1481,6 +1488,21 @@ extern fn int draw_data_cmd_list_count(DrawData draw_data) @cname("c3imgui_draw_
 extern fn int draw_data_total_vtx_count(DrawData draw_data) @cname("c3imgui_draw_data_total_vtx_count");
 extern fn int draw_data_total_idx_count(DrawData draw_data) @cname("c3imgui_draw_data_total_idx_count");
 extern fn bool draw_data_valid(DrawData draw_data) @cname("c3imgui_draw_data_valid");
+// Draw-list buffer pointers borrow ImGui-owned frame data and are valid only
+// after render() and before the next new_frame(). C3 pointers appear mutable
+// because the translator does not preserve pointee constness.
+// If draw_idx_size() == uint::size, cast draw_list_idx_ptr() to uint*.
+extern fn DrawList draw_data_cmd_list(DrawData draw_data, int index) @cname("c3imgui_draw_data_cmd_list");
+extern fn void draw_data_display_pos(DrawData draw_data, float* out_x, float* out_y) @cname("c3imgui_draw_data_display_pos");
+extern fn void draw_data_display_size(DrawData draw_data, float* out_x, float* out_y) @cname("c3imgui_draw_data_display_size");
+extern fn void draw_data_framebuffer_scale(DrawData draw_data, float* out_x, float* out_y) @cname("c3imgui_draw_data_framebuffer_scale");
+extern fn DrawVert* draw_list_vtx_ptr(DrawList draw_list) @cname("c3imgui_draw_list_vtx_ptr");
+extern fn int draw_list_vtx_count(DrawList draw_list) @cname("c3imgui_draw_list_vtx_count");
+extern fn DrawIdx* draw_list_idx_ptr(DrawList draw_list) @cname("c3imgui_draw_list_idx_ptr");
+extern fn int draw_list_idx_count(DrawList draw_list) @cname("c3imgui_draw_list_idx_count");
+extern fn DrawCmd* draw_list_cmd_ptr(DrawList draw_list) @cname("c3imgui_draw_list_cmd_ptr");
+extern fn int draw_list_cmd_count(DrawList draw_list) @cname("c3imgui_draw_list_cmd_count");
+extern fn usz draw_idx_size() @cname("c3imgui_draw_idx_size");
 extern fn uint col32(char r, char g, char b, char a) @cname("c3imgui_col32");
 extern fn TextureRef texture_ref_from_id(ulong id) @cname("c3imgui_texture_ref_from_id");
 
