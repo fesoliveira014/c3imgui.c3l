@@ -141,6 +141,8 @@
       // winmm/ole32/oleaut32/version/uuid/advapi32/setupapi/dinput8 entries
       // are SDL3-static's transitive Win32 deps. If you switch back to the
       // SDL3.dll import lib, those extras can be removed.
+      // Both archives are built /MT; a consumer on the dynamic CRT fails to link.
+      "wincrt" : "static",
       "link-args" : [],
       "dependencies" : [],
       "linked-libraries" : [
