@@ -3,7 +3,10 @@
 Not tracked in git. Run `../../fetch_linked_libs.sh` from a tagged checkout,
 or `fetch_linked_libs.sh vX.Y.Z`, to download them from the matching GitHub
 release. Both files are built by the `c3imgui-build` repo's CI on
-`windows-latest` with MSVC.
+`windows-latest` with MSVC against the static CRT (`/MT`). The manifest
+declares `"wincrt": "static"` to match; a consumer built against the dynamic
+CRT fails at link with `lld-link: error: /failifmismatch: mismatch detected
+for 'RuntimeLibrary'`.
 
 - `dcimgui.lib` - static archive with imgui core, the dear_bindings C wrapper,
   the `c3imgui_*` shims, and every backend `manifest.json` lists for
