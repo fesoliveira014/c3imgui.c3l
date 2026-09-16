@@ -1475,6 +1475,7 @@ alias Vec4 = float[<4>];
 // (exposes a handful of ImGuiIO fields without binding the full 116-field struct)
 extern fn void io_set_display_size(float w, float h) @cname("c3imgui_io_set_display_size");
 extern fn void io_set_delta_time(float dt) @cname("c3imgui_io_set_delta_time");
+extern fn void io_set_display_framebuffer_scale(float x, float y) @cname("c3imgui_io_set_display_framebuffer_scale");
 extern fn void io_set_config_flags(ConfigFlags flags) @cname("c3imgui_io_set_config_flags");
 extern fn ConfigFlags io_get_config_flags() @cname("c3imgui_io_get_config_flags");
 extern fn void io_set_backend_flags(BackendFlags flags) @cname("c3imgui_io_set_backend_flags");
