@@ -1482,6 +1482,11 @@ extern fn BackendFlags io_get_backend_flags() @cname("c3imgui_io_get_backend_fla
 extern fn FontAtlas io_get_fonts() @cname("c3imgui_io_get_fonts");
 extern fn bool io_get_want_capture_mouse() @cname("c3imgui_io_get_want_capture_mouse");
 extern fn bool io_get_want_capture_keyboard() @cname("c3imgui_io_get_want_capture_keyboard");
+extern fn bool io_get_want_text_input() @cname("c3imgui_io_get_want_text_input");
+alias ClipboardGetTextFn = fn ZString (Context context);
+alias ClipboardSetTextFn = fn void (Context context, ZString text);
+extern fn void platform_io_set_clipboard_handlers(ClipboardGetTextFn get_text, ClipboardSetTextFn set_text, void* user) @cname("c3imgui_platform_io_set_clipboard_handlers");
+extern fn void* platform_io_get_clipboard_user_data() @cname("c3imgui_platform_io_get_clipboard_user_data");
 extern fn void io_set_ini_filename(ZString p) @cname("c3imgui_io_set_ini_filename");
 extern fn bool fonts_build(FontAtlas atlas) @cname("c3imgui_fonts_build");
 extern fn int draw_data_cmd_list_count(DrawData draw_data) @cname("c3imgui_draw_data_cmd_list_count");
