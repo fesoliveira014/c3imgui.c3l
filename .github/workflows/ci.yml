@@ -17,9 +17,9 @@ jobs:
           # vk.c3l is private; the default GITHUB_TOKEN is scoped to this repo
           # only. CI_PAT is a fine-grained PAT with Contents:read on vk.c3l.
           token: ${{ secrets.CI_PAT }}
-      - name: install c3c 0.8.0
+      - name: install c3c 0.8.3
         run: |
-          curl -L -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.0/c3-linux.tar.gz
+          curl -L -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.3/c3-linux.tar.gz
           tar xf c3c.tar.gz
           echo "$PWD/c3" >> "$GITHUB_PATH"
       - name: smoke compile (static-lib, no dcimgui/SDL3/GL link needed)
