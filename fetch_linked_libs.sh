@@ -3,10 +3,11 @@
 #
 # Usage: fetch_linked_libs.sh [tag]
 #
-# The tag defaults to the exact tag this checkout is on. Assets come from the
-# GitHub release of that tag; C3IMGUI_RELEASE_URL overrides the base URL (any
-# scheme curl accepts, file:// included). Needs curl, tar, and sha256sum or
-# shasum.
+# The tag defaults to the exact tag this checkout is on. Each platform's
+# c3imgui-v<version>-<platform>.c3l comes from the GitHub release of that tag;
+# its linked-libs/ directory is extracted into this package. C3IMGUI_RELEASE_URL
+# overrides the base URL (any scheme curl accepts, file:// included). Needs curl,
+# unzip, and sha256sum or shasum.
 set -euo pipefail
 
 PKG="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -43,17 +44,28 @@ fetch() {
     fi
 }
 
+artifact() {
+    echo "c3imgui-$1-$2.c3l"
+}
+
 fetch SHA256SUMS
 for p in "${PLATFORMS[@]}"; do
-    fetch "$p.tar.gz"
+    fetch "$(artifact "$tag" "$p")"
 done
 
-if ! (cd "$tmp" && sha256_check SHA256SUMS); then
+# SHA256SUMS covers every release file; check only the ones fetched here.
+(
+    cd "$tmp"
+    for p in "${PLATFORMS[@]}"; do
+        grep -F -- " $(artifact "$tag" "$p")" SHA256SUMS
+    done > fetched.sums
+)
+if ! (cd "$tmp" && sha256_check fetched.sums); then
     echo "error: checksum mismatch for $tag assets" >&2
     exit 1
 fi
 
 for p in "${PLATFORMS[@]}"; do
-    tar -xzf "$tmp/$p.tar.gz" -C "$PKG"
+    unzip -q -o "$tmp/$(artifact "$tag" "$p")" 'linked-libs/*' -d "$PKG"
 done
 echo "linked-libs for $tag installed under $PKG/linked-libs"

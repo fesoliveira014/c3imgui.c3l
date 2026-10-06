@@ -12,9 +12,10 @@ mkdir -p "$rel"
 for p in linux-x64 windows-x64; do
     mkdir -p "$work/src/$p/linked-libs/$p"
     echo "$p" > "$work/src/$p/linked-libs/$p/payload.bin"
-    tar -czf "$rel/$p.tar.gz" -C "$work/src/$p" linked-libs
+    echo '{}' > "$work/src/$p/manifest.json"
+    (cd "$work/src/$p" && zip -X -q -r "$rel/c3imgui-v9.9.9-$p.c3l" manifest.json linked-libs)
 done
-(cd "$rel" && sha256sum linux-x64.tar.gz windows-x64.tar.gz > SHA256SUMS)
+(cd "$rel" && sha256sum ./*.c3l | sed 's|\./||' > SHA256SUMS)
 
 dst="$work/pkg"
 mkdir -p "$dst"
@@ -24,7 +25,7 @@ C3IMGUI_RELEASE_URL="file://$rel" bash "$dst/fetch_linked_libs.sh" v9.9.9
 [[ "$(cat "$dst/linked-libs/linux-x64/payload.bin")" == linux-x64 ]]
 [[ "$(cat "$dst/linked-libs/windows-x64/payload.bin")" == windows-x64 ]]
 
-echo corrupt >> "$rel/linux-x64.tar.gz"
+echo corrupt >> "$rel/c3imgui-v9.9.9-linux-x64.c3l"
 rm -rf "$dst/linked-libs"
 if C3IMGUI_RELEASE_URL="file://$rel" bash "$dst/fetch_linked_libs.sh" v9.9.9 2>/dev/null; then
     echo "FAIL: corrupted archive accepted" >&2
