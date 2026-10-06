@@ -48,6 +48,19 @@ jobs:
           c3c build smoke
       - name: fetch script test
         run: bash c3imgui.c3l/tests/fetch_linked_libs_test.sh
+      - name: wait for the release assets
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 40); do
+            if gh release view "$GITHUB_REF_NAME" -R "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -qx SHA256SUMS; then
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "release $GITHUB_REF_NAME has no assets after 20 minutes" >&2
+          exit 1
       - name: fetch linked libs
         if: startsWith(github.ref, 'refs/tags/v')
         run: bash c3imgui.c3l/fetch_linked_libs.sh "$GITHUB_REF_NAME"
