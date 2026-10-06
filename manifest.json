@@ -44,12 +44,13 @@
       "linked-libraries" : ["dcimgui", "SDL3", "GL"]
     },
     "linux-x64" : {
-      // Adds /usr/local/lib to search path (where SDL3 lives on this host).
-      "link-args" : ["-L/usr/local/lib"],
-      "dependencies" : [],
+      "link-args" : [],
+      "dependencies" : ["sdl3"],
       // Order matters: dcimgui first (consumer-facing), then its transitive deps
       // (SDL3, GL) so the linker can resolve them when dcimgui's backend objects
-      // reference them. Consumer must still link `-lstdc++` AFTER these — easiest
+      // reference them. SDL3 itself comes from the sdl3 library (a static archive);
+      // it is listed again here because GNU ld needs the archive after its user.
+      // Consumer must still link `-lstdc++` AFTER these — easiest
       // way is to add it to the consumer's project.json link-args.
       //
       // If you enable optional backends (glfw/vulkan/glut/allegro/SDL2) via
@@ -136,20 +137,15 @@
       // use it when targeting a MinGW/clang toolchain you control end-to-end.
       // d3d9/10/11/12 are all listed because the build bundles every dx*
       // backend; if you trim that down, remove the matching d3d<N> entries.
-      // SDL3 is linked statically (linked-libs/windows-x64/SDL3.lib is the
-      // SDL3-static archive from vcpkg or an equivalent build); the extra
-      // winmm/ole32/oleaut32/version/uuid/advapi32/setupapi/dinput8 entries
-      // are SDL3-static's transitive Win32 deps. If you switch back to the
-      // SDL3.dll import lib, those extras can be removed.
-      // Both archives are built /MT; a consumer on the dynamic CRT fails to link.
+      // SDL3 comes from the sdl3 library, which carries the static SDL3 archive
+      // and the Win32 libraries it needs; this target lists only dcimgui's own.
+      // dcimgui is built /MT; a consumer on the dynamic CRT fails to link.
       "wincrt" : "static",
       "link-args" : [],
-      "dependencies" : [],
+      "dependencies" : ["sdl3"],
       "linked-libraries" : [
-        "dcimgui", "SDL3",
-        "opengl32", "user32", "gdi32", "shell32", "kernel32",
-        "winmm", "ole32", "oleaut32", "version", "uuid",
-        "advapi32", "setupapi", "dinput8",
+        "dcimgui",
+        "opengl32", "user32", "gdi32", "shell32", "kernel32", "uuid",
         "dxgi", "d3d9", "d3d10", "d3d11", "d3d12",
         "d3dcompiler", "dwmapi", "imm32"
       ]
