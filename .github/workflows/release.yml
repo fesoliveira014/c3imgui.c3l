@@ -155,8 +155,8 @@ jobs:
             mkdir -p "$stage/backend" "$stage/linked-libs/$platform"
             cp c3imgui.c3l/manifest.json c3imgui.c3l/LICENSE c3imgui.c3l/README.md c3imgui.c3l/*.c3i "$stage/"
             cp c3imgui.c3l/backend/*.c3i "$stage/backend/"
-            cp generated/LICENSE.IMGUI.txt "$stage/"
-            cp native/$platform/* "$stage/linked-libs/$platform/"
+            find generated -name LICENSE.IMGUI.txt -exec cp {} "$stage/" \;
+            find "native/$platform" \( -name '*.a' -o -name '*.lib' \) -exec cp {} "$stage/linked-libs/$platform/" \;
             (cd "$stage" && find . -type f | sed 's|^\./||' | LC_ALL=C sort | zip -X -q "$GITHUB_WORKSPACE/dist/c3imgui-v$version-$platform.c3l" -@)
           done
           (cd dist && sha256sum ./*.c3l | sed 's|\./||' > SHA256SUMS && cat SHA256SUMS)
