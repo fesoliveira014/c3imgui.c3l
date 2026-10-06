@@ -1,9 +1,8 @@
 // Stub implementations of __report_rangecheckfailure and __report_gsfailure
 // to keep MSVC's msvcrt.lib(gs_report.obj) from being pulled in. That obj
-// supplies a static body for both symbols, which clashes against vcruntime
-// .lib's DLL-import thunk for __report_gsfailure when /MD code from a
-// different MSVC toolchain (e.g. vcpkg's prebuilt SDL3-static) is mixed
-// with c3c-driven lld-link MSVC.
+// supplies a static body for both symbols, which can clash against
+// vcruntime.lib's DLL-import thunk for __report_gsfailure when the archive
+// is linked by c3c-driven lld-link MSVC.
 //
 // Behaviour matches MSVC's intent: terminate the process via __fastfail
 // with the matching FAST_FAIL_* code. Compiled with /GS- (Makefile flag)
