@@ -59,7 +59,7 @@ jobs:
           fi
       - name: install c3c 0.8.3
         run: |
-          curl -fsSL -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.3/c3-linux.tar.gz
+          curl -fsSL -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.3/c3-linux-static.tar.gz
           tar xf c3c.tar.gz
           echo "$PWD/c3" >> "$GITHUB_PATH"
       - name: draw data runtime smoke against the fresh archive
@@ -147,7 +147,7 @@ jobs:
           path: vk.c3l
       - name: install c3c 0.8.3
         run: |
-          curl -fsSL -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.3/c3-linux.tar.gz
+          curl -fsSL -o c3c.tar.gz https://github.com/c3lang/c3c/releases/download/v0.8.3/c3-linux-static.tar.gz
           tar xf c3c.tar.gz
           echo "$PWD/c3" >> "$GITHUB_PATH"
       - name: pack
